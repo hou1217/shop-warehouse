@@ -3,25 +3,34 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
+    "serve": "vue-cli-service serve --mode serve",
     "build": "vue-cli-service build",
+    "fat": "vue-cli-service build --mode fat",
+    "uat": "vue-cli-service build --mode uat",
+    "prod": "vue-cli-service build --mode prod",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "better-scroll": "^1.15.2",
     "core-js": "^2.6.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.6.0",
+    "@vue/cli-plugin-babel": "^3.5.0",
     "@vue/cli-plugin-unit-jest": "^3.6.0",
-    "@vue/cli-service": "^3.6.0",
+    "@vue/cli-service": "^3.5.0",
     "@vue/test-utils": "1.0.0-beta.29",
     "babel-core": "7.0.0-bridge.0",
-    "babel-jest": "^23.6.0",
+    "babel-jest": "^24.7.1",
+    "babel-plugin-dynamic-import-webpack": "^1.1.0",
+    "babel-polyfill": "^6.26.0",
+    "postcss-px-to-viewport": "^1.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
+    "uglifyjs-webpack-plugin": "^2.1.2",
     "vue-template-compiler": "^2.5.21"
   }
 }

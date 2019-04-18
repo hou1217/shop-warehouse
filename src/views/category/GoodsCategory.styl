@@ -1,0 +1,124 @@
+>>> img{
+  width 100%
+  height 100%
+  // object-fit cover
+}
+.container{
+  height calc(100% - 62px)
+  overflow hidden
+  .goods-category{
+    height 100%
+    padding-left 160px  
+    // position relative
+    .category-title{
+      width 590px
+      height 72px
+      // position: absolute
+      // top 0
+      // right 0
+      // border-bottom 1px solid rgba(238,238,238,1)
+      background: #fff;
+      // overflow-x: auto;
+      padding 20px
+      ul{
+        width 490px
+        overflow hidden
+        overflow-x: auto;
+        white-space: nowrap;
+        // height 100%
+        // width 580px
+        li{
+          display inline-block
+          margin-right 40px
+          font-size: 24px;
+          color: #575C68;
+          &.active{
+            color: #F2BF00; 
+          }
+        }
+      }  
+      .btn-shadow{
+        width 100px
+        height 72px
+        display flex
+        align-items center
+        justify-content center
+        background url(../../assets/images/shop_shadow@2x.png) no-repeat center
+        position absolute
+        right 0px
+        top 0px
+        .btn-more{
+          width 28px
+          height 28px
+        }
+      }
+    }
+    .goods-detail{
+      height  calc(100% - 72px)
+      overflow: hidden
+      // padding-top 72px
+      .detail-box{
+        width: 100%; 
+        .title{
+          padding 0 24px
+          text-align left
+          height 64px
+          line-height 64px
+          font-size: 24px;
+          color: #ADB1BE;
+          border-top 1px solid rgba(238,238,238,0.6)
+          border-bottom 1px solid rgba(238,238,238,0.6)
+        }
+        .list-item{
+          display flex
+          padding 28px 16px
+          .portrait{
+            width 192px
+            height 192px  
+          }
+          .content{
+            width 350px
+            position relative
+            h3{
+              text-align left
+              font-size: 28px;
+              color: #262626;
+            }  
+            .good-num{
+              text-align left
+              font-size: 24px;
+              color: #8D93A4;  
+            }
+            .price{
+              margin-top 16px
+              margin-bottom 16px
+              text-align left
+              font-size: 32px;
+              color: #E93A0F;  
+            }
+            .labels{
+              display flex
+              flex-wrap wrap
+              .label{
+                
+                font-size: 20px;
+                color: #F2604D;
+                padding 8px
+                background: rgba(255,242,238,0.5);
+                border: 1px solid #F2604D;
+              }  
+            }
+            .add-goods-btn{
+              position absolute
+              right 0
+              top 83px
+              width  54px
+              height 54px 
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}
