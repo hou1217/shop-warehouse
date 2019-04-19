@@ -2,9 +2,7 @@
   <div class="container">
     <NavbarLeft/>
     <div class=goods-category >
-      <div class="category-title"
-        @click="clickHandler"
-       >
+      <div class="category-title">
         <ul>
           <li
             v-for="(item,index) in titles"
@@ -14,7 +12,7 @@
             {{item.name}}
           </li>
         </ul>
-        <div class="btn-shadow">
+        <div class="btn-shadow" @click="clickHandler">
           <div class="btn-more">
             <img src="@/assets/images/shop_drop_down@2x.png" alt="">
           </div>
