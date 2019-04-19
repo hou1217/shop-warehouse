@@ -2,14 +2,15 @@
   <div class="container">
     <NavbarLeft/>
     <div class=goods-category >
-      <div class="category-title" 
-        @click="clickHandler" 
+      <div class="category-title"
+        @click="clickHandler"
        >
         <ul>
-          <li 
-            v-for="(item,index) in titles" 
+          <li
+            v-for="(item,index) in titles"
             :key="index"
-            :class="{active: currentIndex === index}">
+            :class="{active: currentIndex === index}"
+            @click.stop="selectCategory(item, index)">
             {{item.name}}
           </li>
         </ul>
@@ -19,6 +20,7 @@
           </div>
         </div>
       </div>
+      
       <div class="goods-detail" ref="wrapper">
         <div>
           <div
@@ -59,6 +61,30 @@
         
       </div>
       
+      <!-- 选项下拉弹窗 -->
+      <div class="category-popup" v-if="titlePopupVisible">
+        <div class="title">
+          <span>全部分类</span>
+          <div class="close-btn" @click="clickHandler">
+            <div class="icon">
+              <img src="@/assets/images/shop_drop_up@2x.png"/>
+            </div>
+          </div>
+        </div>
+        <ul>
+          <li v-for="(title, titleIndex) in titles"
+              :class="{
+                active: currentIndex === titleIndex,
+                nm: (titleIndex + 1) % 3 === 0
+              }"
+              :keys="titleIndex" @click="selectCategory(title, titleIndex)">
+            {{title.name}}
+          </li>
+        </ul>
+      </div>
+      
+      <!-- 遮罩层 -->
+      <div class="goods-shade" ref="shade" v-if="shadeVisible"></div>
     </div>
   </div>
 </template>
@@ -68,7 +94,6 @@ import Bscroll from 'better-scroll'
 export default {
   components: {
     NavbarLeft,
-    
   },
   data(){
     return{
@@ -182,8 +207,93 @@ export default {
               ]
             }
           ]
+        },
+        {
+          title:'果汁',
+          value:[
+            {
+              id:5,
+              headId:require('@/assets/images/demo1.png'),
+              name:'可口可乐',
+              goodNum: 98,
+              monthNum: 43,
+              price: 39.6,
+              labels:[
+                "满25减5"
+              ]
+            },
+            {
+              id:6,
+              headId:require('@/assets/images/demo1.png'),
+              name:'百事可乐',
+              goodNum: 98,
+              monthNum: 43,
+              price: 39.6,
+              labels:[
+                "满25减5"
+              ]
+            }
+          ]
+        },
+        {
+          title:'牛奶',
+          value:[
+            {
+              id:5,
+              headId:require('@/assets/images/demo1.png'),
+              name:'可口可乐',
+              goodNum: 98,
+              monthNum: 43,
+              price: 39.6,
+              labels:[
+                "满25减5"
+              ]
+            },
+            {
+              id:6,
+              headId:require('@/assets/images/demo1.png'),
+              name:'百事可乐',
+              goodNum: 98,
+              monthNum: 43,
+              price: 39.6,
+              labels:[
+                "满25减5"
+              ]
+            }
+          ]
+        },
+        {
+          title:'其他',
+          value:[
+            {
+              id:5,
+              headId:require('@/assets/images/demo1.png'),
+              name:'可口可乐',
+              goodNum: 98,
+              monthNum: 43,
+              price: 39.6,
+              labels:[
+                "满25减5"
+              ]
+            },
+            {
+              id:6,
+              headId:require('@/assets/images/demo1.png'),
+              name:'百事可乐',
+              goodNum: 98,
+              monthNum: 43,
+              price: 39.6,
+              labels:[
+                "满25减5"
+              ]
+            }
+          ]
         }
-      ]
+      ],
+      titlePopupVisible: false,
+      shadeVisible: false,
+      
+      listHeight: []
     }
   },
   created(){
@@ -191,16 +301,55 @@ export default {
   },
   mounted(){
     if (this.$refs.wrapper) {
-      console.log(this.$refs.wrapper)
+      // console.log(this.$refs.wrapper);
       this.scroll = new Bscroll(this.$refs.wrapper, {
-        click: true
+        click: true,
+        probeType: 2
       });
     }
+    
+    // this.scroll.on('scroll', (e) => {
+    //   console.debug(e);
+    // })
+  
+    let nodeList = document.querySelectorAll('.detail-box');
+    let listHeight = [];
+    for (let item of nodeList) {
+      listHeight.push(item.offsetTop - 36);
+    }
+  
+    this.scroll.on('scroll', (pos) => {
+      const y = pos.y;
+
+      for (let i = 0; i < listHeight.length - 1; i++) {
+        let height1 = listHeight[i];
+        let height2 = listHeight[i + 1];
+        if (-y >= height1 && -y < height2) {
+          this.currentIndex = i
+        }
+      }
+    });
   },
   methods:{
     clickHandler(){
-      
-    }
+      console.debug('clickHandler');
+      this.shadeVisible = !this.shadeVisible;
+      this.titlePopupVisible = !this.titlePopupVisible;
+    },
+    
+    // 点击分类
+    selectCategory(category, index) {
+      console.debug('selectCategory');
+      if (this.$refs[category.name]) {
+        const element = this.$refs[category.name][0];
+        this.scroll.scrollToElement(element);
+      }
+      this.currentIndex = index;
+      if (this.shadeVisible && this.titlePopupVisible) {
+        this.shadeVisible = !this.shadeVisible;
+        this.titlePopupVisible = !this.titlePopupVisible;
+      }
+    },
   }
 }
 </script>

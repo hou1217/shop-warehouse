@@ -8,7 +8,8 @@
   overflow hidden
   .goods-category{
     height 100%
-    padding-left 160px  
+    padding-left 160px
+    position relative
     // position relative
     .category-title{
       width 590px
@@ -33,10 +34,10 @@
           font-size: 24px;
           color: #575C68;
           &.active{
-            color: #F2BF00; 
+            color: #F2BF00;
           }
         }
-      }  
+      }
       .btn-shadow{
         width 100px
         height 72px
@@ -58,7 +59,7 @@
       overflow: hidden
       // padding-top 72px
       .detail-box{
-        width: 100%; 
+        width: 100%;
         .title{
           padding 0 24px
           text-align left
@@ -74,7 +75,7 @@
           padding 28px 16px
           .portrait{
             width 192px
-            height 192px  
+            height 192px
           }
           .content{
             width 350px
@@ -83,42 +84,130 @@
               text-align left
               font-size: 28px;
               color: #262626;
-            }  
+            }
             .good-num{
               text-align left
               font-size: 24px;
-              color: #8D93A4;  
+              color: #8D93A4;
             }
             .price{
               margin-top 16px
               margin-bottom 16px
               text-align left
               font-size: 32px;
-              color: #E93A0F;  
+              color: #E93A0F;
             }
             .labels{
               display flex
               flex-wrap wrap
               .label{
-                
+
                 font-size: 20px;
                 color: #F2604D;
                 padding 8px
                 background: rgba(255,242,238,0.5);
                 border: 1px solid #F2604D;
-              }  
+              }
             }
             .add-goods-btn{
               position absolute
               right 0
               top 83px
               width  54px
-              height 54px 
+              height 54px
             }
           }
         }
       }
     }
+    .category-popup{
+      position absolute
+      z-index 2
+      top 0
+      right 0
+      width 590px
+      height 254px
+      background #ffffff
+
+      .title{
+        width 100%
+        height 71px
+        line-height 71px
+        border-bottom 1px solid rgba(238,238,238,0.6)
+        position relative
+        padding 0 20px
+
+        span{
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #575C68
+          text-align justify
+        }
+
+        .close-btn{
+          position absolute
+          top 0
+          right 0
+          width 100px
+          height 100%
+          display flex
+          justify-content center
+          align-items center
+          padding 0 0 0 10px
+          font-size 0
+
+          .icon{
+            width 28px
+            height 28px
+            line-height 0
+
+            img{
+              width 100%
+              height 100%
+              object-fit cover
+            }
+          }
+        }
+      }
+      ul{
+        display flex
+        padding 20px 20px 26px
+        flex-wrap wrap
+
+        li{
+          width 166px
+          height 56px
+          line-height 56px
+          margin 0 24px 24px 0
+          text-align center
+          background #F4F4F4
+          border-radius 30px
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #575C68
+
+          &.active{
+            background #262626
+            color #FFFFFF
+          }
+
+          &.nm{
+            margin 0 0 24px 0
+          }
+        }
+      }
+    }
+    .goods-shade{
+      position absolute
+      //width 100%
+      //height 100%
+      z-index 1
+      top 0
+      right 0
+      bottom 0
+      left 160px
+      background rgba(0,0,0,0.6)
+    }
   }
-  
+
 }
