@@ -26,6 +26,10 @@ export default new Router({
         }
       ]
     },
-    
+    {
+      path: '/stock/:type',
+      name: 'stock',
+      component: () => import('@/views/stock/ShopStock.vue'),
+    }
   ]
 })

@@ -58,7 +58,10 @@
         </div>
         
       </div>
-      
+    </div>
+    <!-- 店铺仓库入口 -->
+    <div class="shop-stock" @click="goToShopStock">
+      <img src="@/assets/images/shop_warehouse@2x.png" alt="">
     </div>
   </div>
 </template>
@@ -198,8 +201,11 @@ export default {
     }
   },
   methods:{
+    goToShopStock(){
+      this.$router.push({name:'stock',params:{type:1}});
+    },
     clickHandler(){
-      
+
     }
   }
 }
