@@ -26,6 +26,11 @@ export default new Router({
         }
       ]
     },
+    {
+      path: '/goodDetail',
+      name: 'goodDetail',
+      component: () => import('@/views/goodDetail/goodDetail')
+    }
     
   ]
 })

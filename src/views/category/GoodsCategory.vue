@@ -75,7 +75,7 @@
                 active: currentIndex === titleIndex,
                 nm: (titleIndex + 1) % 3 === 0
               }"
-              :keys="titleIndex" @click="selectCategory(title, titleIndex)">
+              :key="titleIndex" @click="selectCategory(title, titleIndex)">
             {{title.name}}
           </li>
         </ul>
