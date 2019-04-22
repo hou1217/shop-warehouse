@@ -30,6 +30,11 @@ export default new Router({
       path: '/stock/:type',
       name: 'stock',
       component: () => import('@/views/stock/ShopStock.vue'),
+    },
+    {
+      path: '/goodDetail',
+      name: 'goodDetail',
+      component: () => import('@/views/goodDetail/goodDetail')
     }
   ],
   scrollBehavior(to, from, savedPosition) {

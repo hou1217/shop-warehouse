@@ -79,6 +79,16 @@
             </li>
           </ul>
         </div>
+        <ul>
+          <li v-for="(title, titleIndex) in titles"
+              :class="{
+                active: currentIndex === titleIndex,
+                nm: (titleIndex + 1) % 3 === 0
+              }"
+              :key="titleIndex" @click="selectCategory(title, titleIndex)">
+            {{title.name}}
+          </li>
+        </ul>
       </div>
     </div>
     
