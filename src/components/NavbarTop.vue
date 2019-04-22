@@ -8,6 +8,7 @@
         {{item.name}}
       </li>
     </ul>
+    
   </div>
 </template>
 <script>
@@ -15,6 +16,8 @@ export default {
   data(){
     return{
       isActive: this.$route.params.type-1,
+      
+      
       categories:[
         {
           id:1,
@@ -48,6 +51,9 @@ export default {
 <style lang="stylus" scoped>
 .navbar-top{
   background-color #fff
+  position fixed
+  top 130px
+  z-index 1
   width 100%
   height 68px
   padding 0 24px
@@ -84,6 +90,7 @@ export default {
       }
     }
   }  
+  
 }
 
 </style>

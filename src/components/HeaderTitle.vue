@@ -28,9 +28,9 @@
   .navbar {
     width 100%
     height 68px
-    // position fixed
-    // top 0
-    // z-index 99
+    position fixed
+    top 0
+    z-index 99
     background #ffffff
     display flex
     align-items center

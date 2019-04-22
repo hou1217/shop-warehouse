@@ -21,7 +21,7 @@
     width: 230px!important;
     height: 230px!important;
     /*padding-bottom: 230px;*/
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
     -webkit-transform: translate(-50%, -50%);
