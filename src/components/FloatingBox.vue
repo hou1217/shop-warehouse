@@ -1,22 +1,58 @@
 <template>
-  <div class="floating-boxes">
-    <div class="img-box">
-      <img src="@/assets/images/shop_suspension_warehouse@2x.png" alt="">
-    </div>
-    <div class="img-box">
+  <ul class="floating-boxes">
+    <router-link
+      v-for="(item,index) in btns"
+      :key="index"
+      :to="{name:item.name,params:{type:1}}"
+      tag="li">
+      <a>
+        <div 
+          class="img-box"
+          >
+          <img :src="item.url" alt="">
+        </div>
+      </a>
+    </router-link>
+
+    <!-- <div 
+      class="img-box"
+      v-for="(item,index) in btns"
+      @click="handleClick(item)"
+      :key="index">
+      <img :src="item.url" alt="">
+    </div> -->
+
+    <!-- <div class="img-box">
       <img src="@/assets/images/shop_suspension_order@2x.png" alt="">
     </div>
     <div class="img-box">
       <img src="@/assets/images/shop_suspension_stock@2x.png" alt="">
-    </div>
-  </div>
+    </div> -->
+  </ul>
 </template>
 <script>
 export default {
   data(){
     return{
-      
+      btns:[
+        {
+          type:'purchaseOrder',
+          url:require('@/assets/images/shop_suspension_warehouse@2x.png')
+        },
+        {
+          type:'order',
+          url:require('@/assets/images/shop_suspension_order@2x.png')
+        },
+        {
+          type:'purchase',
+          name:'general',
+          url:require('@/assets/images/shop_suspension_stock@2x.png')
+        },
+      ]
     }
+  },
+  methods:{
+    
   }
 }
 </script>
@@ -25,6 +61,7 @@ export default {
   position fixed
   bottom 40px
   right 24px
+  z-index 1
   .img-box{
     margin-top 24px
     width  76px

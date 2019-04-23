@@ -2,9 +2,9 @@
   <div class="navbar-top">
     <ul>
       <li v-for="(item,index) in categories" 
-      @click="changeIndex(index)"
-      :key="item.id" 
-      :class="isActive === index?'active':''">
+        @click="changeIndex(index)"
+        :key="item.id" 
+        :class="{active:isActive === index,pot:item.need}">
         {{item.name}}
       </li>
     </ul>
@@ -25,7 +25,8 @@ export default {
         },
         {
           id:2,
-          name:'特价套餐'
+          name:'特价套餐',
+          need: true
         },
         {
           id:3,
@@ -73,6 +74,19 @@ export default {
       font-size: 26px;
       color: #8D93A4; 
       position relative
+      &.pot{
+        &:after{
+          content ''
+          width 14px
+          height 14px
+          border-radius 50%
+          background-color #F2604D
+          position: absolute;
+          top: 0px;
+          right: 0px;   
+          // margin-top -18px
+        }
+      }
       &.active{
         background-color: #ADB1BE;
         border-radius: 21px;

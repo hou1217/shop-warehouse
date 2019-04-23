@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="infoBot">
     <!-- 标题 -->
-    <HeaderTitle :title="'店铺库存'"/>
+    <HeaderTitle :title="'商品总仓'"/>
     <!-- 筛选排序 -->
     <HeaderSort @PopupVisible="handlePop"/>  
     <!-- 类别分类 -->
@@ -19,9 +19,9 @@
       :shadeVisible="shadeVisible"
       @click.native="handleShadeClick()"/>
     <!-- 快捷补货 -->
-    <AddGoods 
+    <!-- <AddGoods 
       :addGoodsVisible="addGoodsVisible"
-      @addGoodsVisibleHandler="addGoodsVisibleHandler"/>
+      @addGoodsVisibleHandler="addGoodsVisibleHandler"/> -->
     <!-- 主体盒子 -->
     <div class="main-box" >
       <vue-data-loading
@@ -88,7 +88,7 @@ import { mapActions } from 'vuex'
 import LoadingBox from '@/components/common/LoadingBox'
 import Toast from '@/components/common/Toast'
 import Shade from '@/components/common/Shade'
-import AddGoods from './children/AddGoods'
+// import AddGoods from './children/AddGoods'
 import HeaderTitle from '@/components/HeaderTitle'
 import HeaderSort from '@/components/HeaderSort'
 import NavbarTop from '@/components/NavbarTop'
@@ -105,8 +105,7 @@ export default {
     VueDataLoading,
     LoadingBox,
     Toast,
-    Shade,
-    AddGoods
+    Shade
   },
   data(){
     return{
@@ -147,9 +146,7 @@ export default {
     ]),
     handleShadeClick(){
       console.warn("点击遮罩区域");
-      if(!this.addGoodsVisible){
-        eventBus.$emit('define');
-      }
+      eventBus.$emit('define');
     },
     addGoodsVisibleHandler(){
       this.shadeVisible = false;
@@ -164,11 +161,6 @@ export default {
     handlePop(val){
       console.warn(val);
       this.shadeVisible = val;
-      if(!val){
-        this.loading = true;
-        this.reload = true;
-        this.getListData();
-      }
     },
     // 触底加载
     infiniteScroll() {

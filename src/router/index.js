@@ -32,6 +32,11 @@ export default new Router({
       component: () => import('@/views/stock/ShopStock.vue'),
     },
     {
+      path: '/goodsGeneralStock/:type',
+      name: 'general',
+      component: () => import('@/views/goodsGeneralStock/GoodsGeneralStock.vue'),
+    },
+    {
       path: '/goodDetail',
       name: 'goodDetail',
       component: () => import('@/views/goodDetail/goodDetail')
