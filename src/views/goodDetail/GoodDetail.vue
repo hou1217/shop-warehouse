@@ -277,7 +277,7 @@
   // import Bscroll from 'better-scroll'
   
   export default {
-    name: "goodDetail",
+    name: "GoodDetail",
     data() {
       return {
         shopData: {
@@ -359,7 +359,7 @@
         // 测试图片地址
         src1: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
         src2: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
-        src3: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
+        src3: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg'
       }
     },
     created() {
