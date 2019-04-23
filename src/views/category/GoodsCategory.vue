@@ -56,18 +56,28 @@
             </div>
           </div>
         </div>
-        
-      </div>
-      
-      <!-- 选项下拉弹窗 -->
-      <div class="category-popup" v-if="titlePopupVisible">
-        <div class="title">
-          <span>全部分类</span>
-          <div class="close-btn" @click="clickHandler">
-            <div class="icon">
-              <img src="@/assets/images/shop_drop_up@2x.png"/>
+        <!-- 遮罩层 -->
+        <div class="goods-shade" ref="shade" v-if="shadeVisible"></div>
+        <!-- 选项下拉弹窗 -->
+        <div class="category-popup" v-if="titlePopupVisible">
+          <div class="title">
+            <span>全部分类</span>
+            <div class="close-btn" @click="clickHandler">
+              <div class="icon">
+                <img src="@/assets/images/shop_drop_up@2x.png"/>
+              </div>
             </div>
           </div>
+          <ul>
+            <li v-for="(title, titleIndex) in titles"
+                :class="{
+                  active: currentIndex === titleIndex,
+                  nm: (titleIndex + 1) % 3 === 0
+                }"
+                :key="titleIndex" @click="selectCategory(title, titleIndex)">
+              {{title.name}}
+            </li>
+          </ul>
         </div>
         <ul>
           <li v-for="(title, titleIndex) in titles"
@@ -80,9 +90,13 @@
           </li>
         </ul>
       </div>
-      
-      <!-- 遮罩层 -->
-      <div class="goods-shade" ref="shade" v-if="shadeVisible"></div>
+    </div>
+    
+    
+    
+    <!-- 店铺仓库入口 -->
+    <div class="shop-stock" @click="goToShopStock">
+      <img src="@/assets/images/shop_warehouse@2x.png" alt="">
     </div>
   </div>
 </template>
@@ -96,7 +110,8 @@ export default {
   data(){
     return{
       currentIndex: 0,
-      defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png'),
+      defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
+          + '"',
       scroll: null,
       titles:[
         {
@@ -329,6 +344,9 @@ export default {
     });
   },
   methods:{
+    goToShopStock(){
+      this.$router.push({name:'stock',params:{type:1}});
+    },
     clickHandler(){
       console.debug('clickHandler');
       this.shadeVisible = !this.shadeVisible;

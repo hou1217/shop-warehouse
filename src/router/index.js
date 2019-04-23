@@ -27,6 +27,11 @@ export default new Router({
       ]
     },
     {
+      path: '/stock/:type',
+      name: 'stock',
+      component: () => import('@/views/stock/ShopStock.vue'),
+    },
+    {
       path: '/goodDetail',
       name: 'goodDetail',
       component: () => import('@/views/goodDetail/GoodDetail')
@@ -46,6 +51,12 @@ export default new Router({
       name: 'compareSelect',
       component: () => import('@/views/compareSelect/CompareSelect')
     }
-    
-  ]
+  ],
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return {x: 0, y: 0}
+    }
+  }
 })
