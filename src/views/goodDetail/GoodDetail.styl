@@ -7,7 +7,19 @@
   .good-images-box {
     width 100%
     height 750px
+
     background #e3e3e3
+
+    .mint-swipe_good-detail {
+      .item {
+
+        img {
+          width 100%
+          height 100%
+          object-fit cover
+        }
+      }
+    }
   }
 
   .main-box_good-detail {
@@ -266,6 +278,7 @@
       }
 
       &.good_report {
+        padding 0 28px
         .title {
           margin 0 0 12px 0
           .report-icon {
@@ -540,6 +553,7 @@
     font-size 0
     padding 0 16px
     z-index 99
+    border-top 1px solid #DCDEE6
 
     .help-btn,.collect-btn {
       display flex
@@ -594,6 +608,176 @@
       background #E93A0F
       color #ffffff
       right 10px
+    }
+  }
+
+
+  .shade {
+    width 100%
+    height 100vh
+    position fixed
+    top 0
+    left 0
+    background rgba(0,0,0,0.6)
+    z-index 100
+  }
+
+  .activity-popup {
+    width 100%
+    height 700px
+    background #ffffff
+    position fixed
+    bottom 0
+    left 0
+    z-index 101
+    padding 14px 20px 0
+
+    .header {
+      width 100%
+      height 54px
+      display flex
+      align-items center
+      position relative
+      justify-content center
+      margin 0 0 43px 0
+
+      .text {
+        font-family PingFangSC-Medium
+        font-size 28px
+        color #262626
+        text-align justify
+        height 40px
+        line-height 40px
+      }
+
+      .close-btn {
+        width 54px
+        height 54px
+        position absolute
+        right -6px
+
+        img {
+          width 100%
+          height 100%
+        }
+      }
+    }
+
+    .bd {
+      width 100%
+      height auto
+
+      .activity {
+        width 100%
+        height auto
+        display flex
+        font-size 0
+        margin 0 0 30px 0
+        align-items flex-start
+        justify-content flex-start
+
+        .icon {
+          width 24px
+          height 24px
+          margin 0 18px 0 0
+
+          img {
+            width 100%
+            height 100%
+            object-fit cover
+          }
+        }
+
+        .detail {
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #262626
+          text-align justify
+          line-height 32px
+          flex 1
+        }
+      }
+
+    }
+  }
+
+  .dispatch-popup {
+    width 100%
+    height 700px
+    background #ffffff
+    position fixed
+    bottom 0
+    left 0
+    z-index 101
+    display flex
+    //padding 14px 20px 0
+
+    .dates {
+      width 278px
+      height 100%
+      background #F6F6F6
+
+      .date {
+        width 100%
+        height 120px
+        line-height 120px
+        text-align center
+        font-family PingFangSC-Regular
+        font-size 28px
+        color #575C68
+
+        &.active {
+          background #ffffff
+        }
+      }
+    }
+
+    .times {
+      width 472px
+      height 100%
+      background #ffffff
+      padding 32px 16px 0 48px
+
+      .time {
+        width 100%
+        height 31px
+        line-height 31px
+        margin 0 0 63px 0
+        font-family SFUIDisplay-Regular
+        font-size 26px
+        color #575C68
+        display flex
+        align-items center
+        position relative
+
+        .text {
+          font-family SFUIDisplay-Regular
+          font-size 26px
+          color #575C68
+        }
+
+        .icon {
+          width 44px
+          height 44px
+          position absolute
+          right 8px
+          display none
+
+          img {
+            width 100%
+            height 100%
+          }
+        }
+
+        &.active {
+          .text {
+            color #F9AB10
+          }
+          .icon {
+            display block
+          }
+        }
+      }
     }
   }
 }

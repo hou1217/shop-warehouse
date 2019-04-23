@@ -29,7 +29,22 @@ export default new Router({
     {
       path: '/goodDetail',
       name: 'goodDetail',
-      component: () => import('@/views/goodDetail/goodDetail')
+      component: () => import('@/views/goodDetail/GoodDetail')
+    },
+    {
+      path: '/stockedGoodsReport',
+      name: 'stockedGoodsReport',
+      component: () => import('@/views/stockedGoodsReport/StockedGoodsReport')
+    },
+    {
+      path: '/noStockedGoodsReport',
+      name: 'noStockedGoodsReport',
+      component: () => import('@/views/noStockedGoodsReport/NoStockedGoodsReport')
+    },
+    {
+      path: '/compareSelect',
+      name: 'compareSelect',
+      component: () => import('@/views/compareSelect/CompareSelect')
     }
     
   ]
