@@ -40,7 +40,9 @@ const APIs = {
   getStockList: params => getApi('/stock',params.params),
   //获取商品总仓列表
   getGeneralStockList: params => getApi('/generalStock',params.params),
-  //
+  //店铺报表获取单品排行
   getRankList: params => getApi('/rankList',params.params),
+  //店铺报表获取最佳伴侣
+  getMateList: params => getApi('/mateList',params.params),
 }
 export default APIs

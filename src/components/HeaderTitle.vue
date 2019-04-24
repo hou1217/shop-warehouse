@@ -60,14 +60,15 @@
     }
 
     .title {
-      width 66.7%
+      text-align left
+      width 76.7%
       height 68px
       line-height 68px
       margin 0 auto
       font-family PingFangSC-Regular
       font-size 28px
       color #262626
-      text-align center
+      // text-align center
     }
 
     .search-btn {

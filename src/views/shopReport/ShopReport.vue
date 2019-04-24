@@ -3,14 +3,11 @@
     
     <div class="bd">
       <!-- 今日业绩 -->
+      <SmallTitle 
+        :title="'今日业绩'" 
+        :rightText="'历史纪录'" 
+        :hasNextBtn="true"/>
       <div class="box box_performance">
-        <div class="box__hd box_performance__hd">
-          <div class="title">今日业绩</div>
-          <div class="text">历史记录</div>
-          <div class="next-btn">
-            <img src="@/assets/images/arrow_enter_g@2x.png">
-          </div>
-        </div>
         <div class="box__bd box_performance__bd">
           <div class="data-box">
             <div class="data">
@@ -57,16 +54,11 @@
         </div>
       </div>
       <!-- 店铺数据 -->
+      <SmallTitle 
+        :title="'店铺数据'" 
+        :hasRightImg="true"
+        :hasNextBtn="true"/>
       <div class="box box_performance">
-        <div class="box__hd box_performance__hd">
-          <div class="title">店铺数据</div>
-          <div class="report-img">
-            <img src="@/assets/images/shop_report@2x.png">
-          </div>
-          <div class="next-btn">
-            <img src="@/assets/images/arrow_enter_g@2x.png">
-          </div>
-        </div>
         <div class="box__bd box_performance__bd">
           <div class="data-box">
             <div class="data">
@@ -95,16 +87,12 @@
         </div>
       </div>
       <!-- 分类数据 -->
+      <SmallTitle 
+        :title="'分类数据'" 
+        :hasRightImg="true"
+        :hasNextBtn="true"/>
       <div class="box box_performance box_kinds">
-        <div class="box__hd box_performance__hd">
-          <div class="title">分类数据</div>
-          <div class="report-img">
-            <img src="@/assets/images/shop_report@2x.png">
-          </div>
-          <div class="next-btn">
-            <img src="@/assets/images/arrow_enter_g@2x.png">
-          </div>
-        </div>
+        
         <!-- <div class="box__bd box_kinds__bd">
           <div class="left">
             <div class="title">分类销量</div>
@@ -126,11 +114,8 @@
         </div> -->
       </div>
       <!-- 单品排行 -->
-      <div class="box box_performance">
-        <div class="box__hd box_performance__hd">
-          <div class="title">单品排行</div>
-        </div>
-      </div>
+      <SmallTitle 
+        :title="'单品排行'"/>
       <div class="container" ref="infoBot">
         <!-- 筛选排序 -->
         <HeaderSort @PopupVisible="handlePop"/> 
@@ -145,22 +130,35 @@
             <div class="card">
               <div class="portrait">
                 <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
-                <div class="addgoods">
+                <div class="rank-icon" :class="{hasRedBac:index < 3}">
+                  {{index+1}}
+                  
+                </div>
+                <!-- <div class="addgoods">
                   <img 
                     :src="card.stockNum < 10?
                     require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
                     alt="">
-                </div>
+                </div> -->
               </div>
               <div class="content">
                 <h3>{{card.name}}</h3>
                 <div class="sales-num">
                   <span>售价¥{{card.price}}</span>
-                  <span>今日销售{{card.salesNum}}</span>
+                  <span>今日销售{{card.salesNumToday}}</span>
                 </div>
                 <div class="sales-num">
                   <span>毛利¥{{card.profit}}</span>
-                  <span class="stock" :class="{red:card.stockNum < 10}">库存{{card.stockNum}}</span>
+                  <!-- <span class="stock" :class="{red:card.stockNum < 10}">库存{{card.stockNum}}</span> -->
+                  <div class="btns">
+                    <div class="btn">
+                      <img src="@/assets/images/shop_report@2x.png" alt="">
+                    </div>
+                    <div class="btn">
+                      <img src="@/assets/images/arrow_enter_g@2x.png" alt="">
+                    </div>
+                  </div>
+                  
                 </div>
                 <div class="labels">
                   <div class="icon">
@@ -178,37 +176,62 @@
           </div>
         </div>
         <!-- 查看更多 -->
-        <div class="read-more">
+        <div class="read-more" @click="getRankData()">
           查看更多
           <div class="down-img">
             <img src="@/assets/images/shop_drop_down_b@2x.png" alt="">
           </div>
         </div>
-        <!-- 单品排行 -->
-        <div class="box box_performance">
-          <div class="box__hd box_performance__hd">
-            <div class="title">最佳伴侣</div>
+        
+      </div>
+      <!-- 最佳伴侣 -->
+      <SmallTitle 
+        :title="'最佳伴侣'"/>
+      <div class="best-mate">
+        <div class="mate" v-for="(item,index) in items" :key="index">
+          <div class="prop">{{item.props}}%</div>
+          <div class="goods">
+            <div class="goods-img">
+              <img src="@/assets/images/demo2.png" alt="">
+            </div>
+            <div>
+              {{item.name1}}
+            </div>
           </div>
-        </div>
-        <!-- 查看更多 -->
-        <div class="read-more">
-          查看更多
-          <div class="down-img">
-            <img src="@/assets/images/shop_drop_down_b@2x.png" alt="">
+          
+          <div class="goods">
+            <div class="goods-img">
+              <img src="@/assets/images/demo2.png" alt="">
+            </div>
+            <div>
+              {{item.name2}}
+            </div>
           </div>
         </div>
       </div>
+      <!-- 查看更多 -->
+      <div 
+        class="read-more"
+        @click="getMateData()"
+        style="margin-bottom:30px">
+        查看更多
+        <div class="down-img">
+          <img src="@/assets/images/shop_drop_down_b@2x.png" alt="">
+        </div>
+      </div>  
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import SmallTitle from '@/components/SmallTitle'
 import HeaderSort from '@/components/HeaderSort'
 import NavbarTop from '@/components/NavbarTop'
 export default {
   name: "shopReport",
   components:{
+    SmallTitle,
     HeaderSort,
     NavbarTop,
     // FloatingBox,
@@ -223,6 +246,8 @@ export default {
       defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
             + '"',
       cards:[],
+      reload: true,
+
       goodName: '商品名称',
       timeList: [
         {
@@ -273,6 +298,9 @@ export default {
           name:'美妆护理'
         },
       ],
+      items:[
+        
+      ],
       data: {
         salesRank: 1,
         revenueRank: 5,
@@ -298,13 +326,40 @@ export default {
       ],
     }
   },
+  watch:{
+    '$route.params.type':{
+      handler(val){
+        console.debug(val);
+        // this.loading = true;
+        this.reload = true;
+        this.getRankData();
+      }
+    }
+  },
   created(){
     this.getRankData();
+    this.getMateData();
   },
   methods: {
     ...mapActions([
       'REQUEST_API'
     ]),
+    getMateData(){
+      this.REQUEST_API({
+        api: 'getMateList',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res  && res.cards.length > 0){          
+          this.items = [].concat(this.items,res.cards);     
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+    },
     getRankData(){
       this.REQUEST_API({
         api: 'getRankList',
@@ -313,19 +368,19 @@ export default {
       .then((res) => {
         console.log(res);
         if(res  && res.cards.length > 0){
-        //   if(this.reload){
-        //     this.cards =  res.cards; 
-        //   }else{
+          if(this.reload){
+            this.cards =  res.cards; 
+          }else{
             this.cards = [].concat(this.cards,res.cards);
 
-        //   }
+          }
 
         // }else{
         //   this.completed = true;
         }
         console.warn('加载结束');
         // this.loading = false;
-        // this.reload = false;
+        this.reload = false;
       })
       .catch((err) => {
         console.debug('列表数据异常：', err);
@@ -341,7 +396,7 @@ export default {
       if(!val){
         this.loading = true;
         this.reload = true;
-        this.getListData();
+        this.getRankData();
       }
     },
     // 选择时间

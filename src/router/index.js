@@ -53,8 +53,9 @@ export default new Router({
     },
     // 店铺报表
     {
-      path: '/shopReport',
+      path: '/shopReport/:type',
       name: 'shopReport',
+      meta:{ notScrollToTop: true },
       component: () => import('@/views/shopReport/ShopReport')
     },
     {
@@ -67,7 +68,11 @@ export default new Router({
     if (savedPosition) {
       return savedPosition
     } else {
-      return {x: 0, y: 0}
+      if(to.meta.notScrollToTop){
+        return 
+      }else{
+        return {x: 0, y: 0}
+      }
     }
   }
 })
