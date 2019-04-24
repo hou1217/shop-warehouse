@@ -53,10 +53,31 @@ export default new Router({
     },
     // 店铺报表
     {
-      path: '/shopReport',
+      path: '/shopReport/:type',
       name: 'shopReport',
+      meta:{ notScrollToTop: true },
       component: () => import('@/views/shopReport/ShopReport')
     },
+    // 店铺报表-历史记录
+    {
+      path: '/historyRecord',
+      name: 'historyRecord',
+      component: () => import('@/views/shopReport/HistoryRecord')
+    },
+    // 店铺报表-店铺数据
+    {
+      path: '/shopData',
+      name: 'shopData',
+      component: () => import('@/views/shopReport/ShopData')
+    },
+    // 店铺报表-分类数据
+    {
+      path: '/classifiedData',
+      name: 'classifiedData',
+      component: () => import('@/views/shopReport/ClassifiedData')
+    },  
+
+
     {
       path: '/compareSelect',
       name: 'compareSelect',
@@ -72,7 +93,11 @@ export default new Router({
     if (savedPosition) {
       return savedPosition
     } else {
-      return {x: 0, y: 0}
+      if(to.meta.notScrollToTop){
+        return 
+      }else{
+        return {x: 0, y: 0}
+      }
     }
   }
 })

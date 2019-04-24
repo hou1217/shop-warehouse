@@ -43,7 +43,7 @@ export default {
     changeIndex(index){
       this.isActive = index;
       // this.$route.params.type = index+1;
-      this.$router.push({ name: 'stock', params: { type:(index+1) } }) 
+      this.$router.push({params: { type:(index+1) } }) 
       console.log(this.$route.params);
     }
   }
