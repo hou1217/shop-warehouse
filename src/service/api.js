@@ -44,5 +44,9 @@ const APIs = {
   getRankList: params => getApi('/rankList',params.params),
   //店铺报表获取最佳伴侣
   getMateList: params => getApi('/mateList',params.params),
+  //历史记录
+  getHistoryRecord: params =>  getApi('/historyRecord',params.params),
+  getHistoryRecord1: params =>  getApi('/historyRecord1',params.params),
+
 }
 export default APIs

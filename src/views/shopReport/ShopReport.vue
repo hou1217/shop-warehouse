@@ -4,6 +4,7 @@
     <div class="bd">
       <!-- 今日业绩 -->
       <SmallTitle 
+        @click.native="goToHistoryRecord"
         :title="'今日业绩'" 
         :rightText="'历史纪录'" 
         :hasNextBtn="true"/>
@@ -55,6 +56,7 @@
       </div>
       <!-- 店铺数据 -->
       <SmallTitle 
+        @click.native="goToShopData"
         :title="'店铺数据'" 
         :hasRightImg="true"
         :hasNextBtn="true"/>
@@ -88,6 +90,7 @@
       </div>
       <!-- 分类数据 -->
       <SmallTitle 
+        @click.native="goToClassifiedData"
         :title="'分类数据'" 
         :hasRightImg="true"
         :hasNextBtn="true"/>
@@ -344,6 +347,16 @@ export default {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goToClassifiedData(){
+      console.warn('1123');
+      this.$router.push({name:'classifiedData'});
+    },
+    goToShopData(){
+      this.$router.push({name:'shopData'});
+    },
+    goToHistoryRecord(){
+      this.$router.push({name:'historyRecord'});
+    },
     getMateData(){
       this.REQUEST_API({
         api: 'getMateList',
