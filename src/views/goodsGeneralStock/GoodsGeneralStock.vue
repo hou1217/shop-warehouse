@@ -7,7 +7,7 @@
     <!-- 类别分类 -->
     <NavbarTop />
     <!-- 悬浮框 -->
-    <FloatingBox />
+    <FloatingBox :btns="btns"/>
     <!-- 加载中 -->
     <LoadingBox v-if="reload && loading"/>
     <!-- toast -->
@@ -19,9 +19,9 @@
       :shadeVisible="shadeVisible"
       @click.native="handleShadeClick()"/>
     <!-- 快捷补货 -->
-    <!-- <AddGoods 
+    <AddGoods 
       :addGoodsVisible="addGoodsVisible"
-      @addGoodsVisibleHandler="addGoodsVisibleHandler"/> -->
+      @addGoodsVisibleHandler="addGoodsVisibleHandler"/>
     <!-- 主体盒子 -->
     <div class="main-box" >
       <vue-data-loading
@@ -32,11 +32,12 @@
         @infinite-scroll="infiniteScroll">
         <div
           v-for="(card,index) in cards"
+          @click="goToDetail(card.id)"
           :key="index">
           <div class="card">
             <div class="portrait">
               <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
-              <div class="addgoods" @click="addgoods()">
+              <div class="addgoods" @click.stop="addgoods()">
                 <img 
                   :src="card.stockNum < 10?
                   require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
@@ -75,6 +76,39 @@
                   库销比 {{card.ratio}}
                 </div>
               </div>
+              <div class="labels" v-if="card.hasGoods">
+                <div class="icon">
+                  <img src="@/assets/images/icon/shop_shop@2x.png" alt="">
+                </div>
+                <div class="label">
+                  店铺库存 {{card.shopStockNum}}
+                </div>
+                <div class="label">
+                  今日销量 {{card.salesNumToday}}
+                </div>
+                <div 
+                  class="drop-btn" 
+                  @click.stop="handleDrop(card)">
+                  <img :src="card.dropVisible?
+                    require('@/assets/images/shop_drop_up@2x.png'):require('@/assets/images/shop_drop_down@2x.png')" 
+                    alt="">
+                </div>
+              </div>
+              <div class="other-data" v-if="card.hasGoods && card.dropVisible">
+                <div class="title">店铺数据</div>
+                <div class="content">
+                  <span>动销率 {{card.props}}%</span>
+                  <span>库销比 {{card.ratio}}</span>
+                </div>
+                <div class="title">相似商品推荐</div>
+                <ul class="other-goods">
+                  <li 
+                    v-for="(item,index) in card.otherGoods"
+                    :key="index">
+                    <img src="@/assets/images/demo2.png" alt="">
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
@@ -88,7 +122,7 @@ import { mapActions } from 'vuex'
 import LoadingBox from '@/components/common/LoadingBox'
 import Toast from '@/components/common/Toast'
 import Shade from '@/components/common/Shade'
-// import AddGoods from './children/AddGoods'
+import AddGoods from '@/components/AddGoods'
 import HeaderTitle from '@/components/HeaderTitle'
 import HeaderSort from '@/components/HeaderSort'
 import NavbarTop from '@/components/NavbarTop'
@@ -105,10 +139,26 @@ export default {
     VueDataLoading,
     LoadingBox,
     Toast,
-    Shade
+    Shade,
+    AddGoods
   },
   data(){
     return{
+      btns:[
+        {
+          type:'purchaseOrder',
+          url:require('@/assets/images/shop_suspension_warehouse@2x.png')
+        },
+        {
+          type:'order',
+          url:require('@/assets/images/shop_suspension_order@2x.png')
+        },
+        {
+          type:'report',
+          name:'general',
+          url:require('@/assets/images/shop_suspension_report@2x.png')
+        }
+      ],
       addGoodsVisible: false,
       toastVisible: false,
       toastData:{
@@ -121,7 +171,7 @@ export default {
         
       ],
       loading:true,
-      reload: false,
+      reload: true,
       completed: false,
       offset: -110,
       shadeVisible:false
@@ -144,9 +194,19 @@ export default {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goToDetail(id){
+      console.log(id);
+      this.$router.push({name:'goodsDetail',query:{id:id}});
+    },
+    handleDrop(card){
+      // console.log(card);
+      card.dropVisible = !card.dropVisible;
+    },
     handleShadeClick(){
       console.warn("点击遮罩区域");
-      eventBus.$emit('define');
+      if(!this.addGoodsVisible){
+        eventBus.$emit('define');
+      }
     },
     addGoodsVisibleHandler(){
       this.shadeVisible = false;
@@ -172,7 +232,7 @@ export default {
     },
     getListData(){
       this.REQUEST_API({
-        api: 'getStockList',
+        api: 'getGeneralStockList',
         params: {}
       })
       .then((res) => {
@@ -200,5 +260,5 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped src="./ShopStock.styl"></style>
+<style lang="stylus" scoped src="./GeneralStock.styl"></style>
 

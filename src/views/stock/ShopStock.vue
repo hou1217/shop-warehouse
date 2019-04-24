@@ -32,11 +32,12 @@
         @infinite-scroll="infiniteScroll">
         <div
           v-for="(card,index) in cards"
+          @click="goToDetail(card.id)"
           :key="index">
           <div class="card">
             <div class="portrait">
               <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
-              <div class="addgoods" @click="addgoods()">
+              <div class="addgoods" @click.stop="addgoods()">
                 <img 
                   :src="card.stockNum < 10?
                   require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
@@ -88,7 +89,7 @@ import { mapActions } from 'vuex'
 import LoadingBox from '@/components/common/LoadingBox'
 import Toast from '@/components/common/Toast'
 import Shade from '@/components/common/Shade'
-import AddGoods from './children/AddGoods'
+import AddGoods from '@/components/AddGoods'
 import HeaderTitle from '@/components/HeaderTitle'
 import HeaderSort from '@/components/HeaderSort'
 import NavbarTop from '@/components/NavbarTop'
@@ -122,7 +123,7 @@ export default {
         
       ],
       loading:true,
-      reload: false,
+      reload: true,
       completed: false,
       offset: -110,
       shadeVisible:false
@@ -145,6 +146,10 @@ export default {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goToDetail(id){
+      console.log(id);
+      this.$router.push({name:'goodsDetail',query:{id:id}});
+    },
     handleShadeClick(){
       console.warn("点击遮罩区域");
       if(!this.addGoodsVisible){

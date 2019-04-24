@@ -1,0 +1,371 @@
+.container_report {
+  width 100%
+  height auto
+  background #ffffff
+
+  .bd {
+    width 100%
+
+    .box {
+      width 100%
+      height auto
+
+      .box__hd {
+        width 100%
+        height 48px
+        line-height 48px
+        background #F4F4F4
+        font-family PingFangSC-Regular
+        font-size 24px
+        color #575C68
+        text-align left
+        padding 0 18px 0 30px
+      }
+
+      .box__bd {
+        width 100%
+      }
+    }
+
+    .box_performance {
+      position: relative;
+      z-index 1
+      .box_performance__hd {
+        width 100%
+        height 48px
+        display flex
+        align-items center
+        position relative
+        font-size 0
+
+        .title {
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #575C68
+          text-align center
+          height 33px
+          line-height 33px
+        }
+
+        .text {
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #8D93A4
+          text-align justify
+          height 33px
+          line-height 33px
+          position absolute
+          right 58px
+        }
+        .report-img{
+          width 30px
+          height 30px
+          position absolute
+          right 58px
+
+          img {
+            width 100%
+            height 100%
+          }
+        }
+        .next-btn {
+          width 40px
+          height 40px
+          position absolute
+          right 18px
+
+          img {
+            width 100%
+            height 100%
+          }
+        }
+      }
+
+      .box_performance__bd {
+        margin 0 0 13px 0
+
+        .data-box {
+          width 100%
+          height 166px
+          display flex
+          align-items center
+          justify-content center
+
+          .data {
+            display flex
+            flex 1
+            flex-wrap wrap
+            align-items center
+            justify-content center
+
+            .num {
+              width 100%
+              height 50px
+              line-height 50px
+              text-align center
+              margin 0 0 2px 0
+              font-family SFUIDisplay-Regular
+              font-size 42px
+              color #262626
+
+              &.hasIcon {
+                font-size 0
+                display flex
+                justify-content center
+                align-items center
+
+                .icon {
+                  font-family: PingFangSC-Regular
+                  font-size: 26px
+                  color: #262626
+                  height 37px
+                  line-height 37px
+                  margin-top 10px
+                }
+
+                .money {
+                  height 50px
+                  line-height 50px
+                  font-family SFUIDisplay-Regular
+                  font-size 42px
+                  color #262626
+                }
+              }
+
+              &.last {
+                height 40px
+                line-height 40px
+                font-size 34px
+
+                &.hasIcon {
+                  font-size 0
+                  display flex
+                  justify-content center
+                  align-items center
+
+                  .icon {
+                    font-family SFUIDisplay-Regular
+                    font-size 22px
+                    color #262626
+                    height 30px
+                    line-height 30px
+                    margin 0
+                  }
+
+                  .money {
+                    height 40px
+                    line-height 40px
+                    font-family SFUIDisplay-Regular
+                    font-size 34px
+                    color #262626
+                  }
+                }
+              }
+            }
+
+            .character {
+              width 100%
+              height 30px
+              line-height 30px
+              font-family PingFangSC-Regular
+              font-size 22px
+              color #575C68
+              text-align center
+
+              &.last {
+                font-size 20px
+              }
+            }
+          }
+
+          .bc {
+            width 1px
+            height 40px
+            background #EEEEEE
+          }
+        }
+      }
+    }
+
+    .box_kinds {
+      margin 0 0 50px 0
+
+      .box_kinds__hd {}
+      .box_kinds__bd {
+        display flex
+        justify-content center
+        align-items center
+
+        
+
+        .data {
+          width 100%
+          height 72px
+          
+
+          .item {
+            flex 1
+            display flex
+            flex-wrap wrap
+            justify-content center
+            align-items center
+
+            .num {
+              width 100%
+              height 40px
+              line-height 40px
+              text-align center
+              font-family SFUIDisplay-Regular
+              font-size 34px
+              color #262626
+              margin 0 0 4px 0
+            }
+
+            .character {
+              width 100%
+              height 28px
+              line-height 28px
+              font-family PingFangSC-Regular
+              font-size 20px
+              color #575C68
+              text-align center
+            }
+          }
+
+          .bc {
+            width 1px
+            height 40px
+            background #EEEEEE
+          }
+        }
+      }
+    }
+
+    .box_analysis {
+      .box_analysis__hd {}
+      .box_analysis__bd {
+        padding 26px 30px 0
+
+        .time-box {
+          width 100%
+          margin 0 0 16px 0
+
+          .time-box__hd {
+            width 100%
+            height 33px
+            line-height 33px
+            margin 0 0 10px 0
+            font-family PingFangSC-Regular
+            font-size 24px
+            color #8D93A4
+            text-align justify
+          }
+
+          .time-box__bd {
+            width 100%
+            display flex
+            flex-wrap wrap
+
+            .time {
+              width 148px
+              height 56px
+              border-radius 8px
+              background #F4F4F4
+              line-height 56px
+              text-align center
+              font-family PingFangSC-Regular
+              font-size 26px
+              color #575C68
+              margin 0 20px 24px 0
+
+              &.active {
+                background #262626
+                color #FFFFFF
+              }
+            }
+          }
+        }
+
+        .compare-box {
+          width 100%
+          margin 0 0 16px 0
+
+          .compare-box__hd {
+            width 100%
+            height 33px
+            line-height 33px
+            font-family PingFangSC-Regular
+            font-size 24px
+            color #8D93A4
+            text-align justify
+            margin 0 0 10px 0
+          }
+
+          .compare-box__bd {
+            width 100%
+            display flex
+            flex-wrap wrap
+
+            .compare-good {
+              width 78px
+              height 78px
+              border-radius 18.83px
+              position relative
+              margin 0 24px 24px 0
+              background #e3e3e3
+
+              img {
+                width 100%
+                height 100%
+              }
+
+              .delete-btn {
+                width 28px
+                height 28px
+                position absolute
+                top -10px
+                right -10px
+
+                img {
+                  width 100%
+                  height 100%
+                }
+              }
+
+              &.compare-good_add {
+                background #ffffff
+              }
+            }
+          }
+        }
+
+        .echarts-box {
+          width 100%
+
+          .echart-box {
+            width 690px
+            height 538px
+            margin 0 0 40px 0
+            background rgba(253,14,14,0.11)
+          }
+        }
+      }
+    }
+    .container{
+      transform: translateY(-68px)  
+      height: auto
+      .read-more{
+        padding-top: 20px
+        display: flex
+        justify-content: center
+        font-size: 24px;
+        color: #386DB4;
+        .down-img{
+          width 28px
+          height 28px
+        }
+      }
+      
+    }
+  }
+}

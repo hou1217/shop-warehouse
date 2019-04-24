@@ -1,5 +1,5 @@
 html,body,#app {height: 100%;}
-html {touch-action: none;}
+/* html {touch-action: none;} */
 *{
   margin: 0;
   padding: 0;

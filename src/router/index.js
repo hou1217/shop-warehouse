@@ -37,9 +37,9 @@ export default new Router({
       component: () => import('@/views/goodsGeneralStock/GoodsGeneralStock.vue'),
     },
     {
-      path: '/goodDetail',
-      name: 'goodDetail',
-      component: () => import('@/views/goodDetail/GoodDetail')
+      path: '/goodsDetail',
+      name: 'goodsDetail',
+      component: () => import('@/views/goodsDetail/GoodsDetail')
     },
     {
       path: '/stockedGoodsReport',
@@ -50,6 +50,12 @@ export default new Router({
       path: '/noStockedGoodsReport',
       name: 'noStockedGoodsReport',
       component: () => import('@/views/noStockedGoodsReport/NoStockedGoodsReport')
+    },
+    // 店铺报表
+    {
+      path: '/shopReport',
+      name: 'shopReport',
+      component: () => import('@/views/shopReport/ShopReport')
     },
     {
       path: '/compareSelect',

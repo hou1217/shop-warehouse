@@ -38,5 +38,9 @@ const fetchApi = function (url, params) {
 const APIs = {
   //获取stock列表
   getStockList: params => getApi('/stock',params.params),
+  //获取商品总仓列表
+  getGeneralStockList: params => getApi('/generalStock',params.params),
+  //
+  getRankList: params => getApi('/rankList',params.params),
 }
 export default APIs

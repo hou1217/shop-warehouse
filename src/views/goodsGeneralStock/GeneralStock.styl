@@ -81,6 +81,56 @@
           // 
           border: 1px solid #ADB1BE;
         }
+        .drop-btn{
+          position absolute
+          right 0
+          // top 50%
+          width 26px
+          height 26px 
+        }
+      }
+      .other-data{
+        &::before{
+          content ''
+          width 30px
+          height 14px
+          background url('../../assets/images/icon/shop_bgarrow@2x.png') no-repeat center
+          position absolute
+          top -14px 
+          left 0
+        }
+        position relative
+        margin-top: 20px
+        background: #F6F6F6;
+        border-radius: 8px; 
+        width 100%
+        padding 22px 16px
+        .title{
+          font-size: 20px;
+          color: #8D93A4;
+          text-align: left  
+          &:last-of-type{
+            margin-top:  24px
+          }
+        }
+        .content{
+          text-align: left
+          font-size: 24px;
+          color: #575C68; 
+          span:last-child{
+            margin-left:  30px
+          }
+        }
+        .other-goods{
+          display: flex
+          margin-top: 8px
+          justify-content: flex-start
+          li{
+            width 70px
+            height 70px
+            margin-right: 12px
+          }  
+        }
       }
     }
   }

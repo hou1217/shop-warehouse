@@ -32,9 +32,10 @@
 </template>
 <script>
 export default {
-  data(){
-    return{
-      btns:[
+  props:{
+    btns:{
+      type: Array,
+      default: () => [
         {
           type:'purchaseOrder',
           url:require('@/assets/images/shop_suspension_warehouse@2x.png')
@@ -49,6 +50,11 @@ export default {
           url:require('@/assets/images/shop_suspension_stock@2x.png')
         },
       ]
+    }
+  },
+  data(){
+    return{
+      
     }
   },
   methods:{

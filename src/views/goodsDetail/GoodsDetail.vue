@@ -86,11 +86,13 @@
         </div>
       </div>
       
-      <!-- 商品数据 -->
+      <!-- 商品数据或店铺数据 -->
       <div class="good good_report">
         <div class="title">
           <div class="left-block"></div>
-          <div class="text">商品数据</div>
+          <div class="text" v-if="isStocked">店铺数据</div>
+          <div class="text" v-else>商品数据</div>
+
           <div class="report-icon" @click.stop="turnToReport">
             <img src="@/assets/images/shop_report@2x.png">
           </div>
@@ -354,7 +356,7 @@
         currentTimeIndex: 0,
         
         // 测试商品是否未已进货商品
-        isStocked: false,
+        isStocked: true,
         
         // 测试图片地址
         src1: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
@@ -426,4 +428,4 @@
   }
 </script>
 
-<style scoped lang="stylus" src="./GoodDetail.styl"></style>
+<style scoped lang="stylus" src="./GoodsDetail.styl"></style>
