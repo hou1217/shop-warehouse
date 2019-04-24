@@ -61,6 +61,11 @@ export default new Router({
       path: '/compareSelect',
       name: 'compareSelect',
       component: () => import('@/views/compareSelect/CompareSelect')
+    },
+    {
+      path: '/map',
+      name: 'map',
+      component: () => import('@/views/map/index')
     }
   ],
   scrollBehavior(to, from, savedPosition) {
