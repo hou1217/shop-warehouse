@@ -84,34 +84,41 @@ export default new Router({
       name: 'compareSelect',
       component: () => import('@/views/compareSelect/CompareSelect')
     },
-      // 进货单及进货单管理
+      // 进货单-列表
     {
       path: '/purchaseOrder',
       name: 'purchaseOrder',
       component: () => import('@/views/purchaseOrder/PurchaseOrder')
     },
+      // 进货单-进货单管理
     {
       path: '/purchaseOrderManage',
       name: 'purchaseOrderManage',
-      component: () => import('@/views/purchaseOrderManage/PurchaseOrderManage')
+      component: () => import('@/views/purchaseOrder/PurchaseOrderManage')
     },
-      // 进货确认
+      // 进货单-进货确认
     {
       path: '/purchaseOrderConfirm',
       name: 'purchaseOrderConfirm',
-      component: () => import('@/views/purchaseOrderConfirm/PurchaseOrderConfirm')
+      component: () => import('@/views/purchaseOrder/PurchaseOrderConfirm')
     },
-      // 进货订单详情
+      // 进货单-进货订单详情
     {
       path: '/purchaseOrderDetail',
       name: 'purchaseOrderDetail',
-      component: () => import('@/views/purchaseOrderDetail/PurchaseOrderDetail')
+      component: () => import('@/views/purchaseOrder/PurchaseOrderDetail')
     },
-      // 进货清单列表
+      // 进货单-进货清单列表
     {
       path: '/purchaseOrderList',
       name: 'purchaseOrderList',
-      component: () => import('@/views/purchaseOrderList/PurchaseOrderList')
+      component: () => import('@/views/purchaseOrder/PurchaseOrderList')
+    },
+      // 进货单-下单状态
+    {
+      path: '/purchaseOrderStatus',
+      name: 'purchaseOrderStatus',
+      component: () => import('@/views/purchaseOrder/PurchaseOrderStatus')
     },
       // 店铺订单
     {
@@ -119,12 +126,13 @@ export default new Router({
       name: 'shopOrder',
       component: () => import('@/views/shopOrder/ShopOrder')
     },
-      // 主管报表
+      // 主管-报表
     {
       path: '/generalManagerReport',
       name: 'generalManagerReport',
       component: () => import('@/views/generalManagerReport/GeneralManagerReport')
     },
+      // 主管-地图
     {
       path: '/map',
       name: 'map',
