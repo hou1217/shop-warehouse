@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <NavbarLeft/>
+
     <div class=goods-category >
       <div class="category-title">
         <ul>
@@ -32,7 +33,7 @@
               class="list-item">
               
               <div class="portrait">
-                <img :src="oitem.headId" :onerror="defaultSrc"/>
+                <img src="@/assets/images/demo/goods_3.png" :onerror="defaultSrc"/>
               </div>
               <div class="content">
                 <h3>{{oitem.name}}</h3>
@@ -79,7 +80,7 @@
             </li>
           </ul>
         </div>
-        <ul>
+        <!-- <ul>
           <li v-for="(title, titleIndex) in titles"
               :class="{
                 active: currentIndex === titleIndex,
@@ -88,12 +89,13 @@
               :key="titleIndex" @click="selectCategory(title, titleIndex)">
             {{title.name}}
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
     
     
-    
+    <!-- 加载中 -->
+    <LoadingBox v-if="loading"/>
     <!-- 店铺仓库入口 -->
     <div class="shop-stock" @click="goToShopStock">
       <img src="@/assets/images/shop_warehouse@2x.png" alt="">
@@ -101,15 +103,19 @@
   </div>
 </template>
 <script>
+import { mapActions } from 'vuex'
+import LoadingBox from '@/components/common/LoadingBox'
 import NavbarLeft from '@/components/NavbarLeft'
 import Bscroll from 'better-scroll'
 export default {
   components: {
     NavbarLeft,
+    LoadingBox
   },
   data(){
     return{
       currentIndex: 0,
+      loading: true,
       defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
           + '"',
       scroll: null,
@@ -140,168 +146,7 @@ export default {
         }
       ],
       details:[
-        {
-          title:'饮用水',
-          value:[
-            {
-              id:1,
-              headId:require('@/assets/images/demo1.png'),
-              name:'哇哈哈',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            },
-            {
-              id:2,
-              headId:require('@/assets/images/demo1.png'),
-              name:'农夫山泉',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            }
-          ]
-        },
-        {
-          title:'茶饮料',
-          value:[
-            {
-              id:3,
-              headId:require('@/assets/images/demo1.png'),
-              name:'康师傅冰红茶',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            },
-            {
-              id:4,
-              headId:require('@/assets/images/demo1.png'),
-              name:'统一绿茶',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            }
-          ]
-        },
-        {
-          title:'碳酸饮料',
-          value:[
-            {
-              id:5,
-              headId:require('@/assets/images/demo1.png'),
-              name:'可口可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            },
-            {
-              id:6,
-              headId:require('@/assets/images/demo1.png'),
-              name:'百事可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            }
-          ]
-        },
-        {
-          title:'果汁',
-          value:[
-            {
-              id:5,
-              headId:require('@/assets/images/demo1.png'),
-              name:'可口可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            },
-            {
-              id:6,
-              headId:require('@/assets/images/demo1.png'),
-              name:'百事可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            }
-          ]
-        },
-        {
-          title:'牛奶',
-          value:[
-            {
-              id:5,
-              headId:require('@/assets/images/demo1.png'),
-              name:'可口可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            },
-            {
-              id:6,
-              headId:require('@/assets/images/demo1.png'),
-              name:'百事可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            }
-          ]
-        },
-        {
-          title:'其他',
-          value:[
-            {
-              id:5,
-              headId:require('@/assets/images/demo1.png'),
-              name:'可口可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            },
-            {
-              id:6,
-              headId:require('@/assets/images/demo1.png'),
-              name:'百事可乐',
-              goodNum: 98,
-              monthNum: 43,
-              price: 39.6,
-              labels:[
-                "满25减5"
-              ]
-            }
-          ]
-        }
+        
       ],
       titlePopupVisible: false,
       shadeVisible: false,
@@ -309,8 +154,19 @@ export default {
       listHeight: []
     }
   },
+  watch:{
+    '$route.params.type':{
+      handler(val){
+        console.log(val);
+        this.loading = true;
+        this.details = [];
+        this.getListData();
+      }
+    }
+  },
   created(){
-    console.log(this.$route.params)
+    console.log(this.$route.params);
+    this.getListData();
   },
   mounted(){
     if (this.$refs.wrapper) {
@@ -344,6 +200,9 @@ export default {
     });
   },
   methods:{
+    ...mapActions([
+      'REQUEST_API'
+    ]),
     goToShopStock(){
       this.$router.push({name:'stock',params:{type:1}});
     },
@@ -366,6 +225,24 @@ export default {
         this.titlePopupVisible = !this.titlePopupVisible;
       }
     },
+    getListData(){
+      this.REQUEST_API({
+        api: 'getCategoryList',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res  && res.cards.length > 0){
+          this.details =  res.cards;
+        }
+        console.warn('加载结束');
+        this.loading = false;
+        // this.reload = false;
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="infoBot">
     <!-- 标题 -->
-    <HeaderTitle :title="'店铺库存'"/>
+    <HeaderTitle :title="'店铺库存'" :name="'category'"/>
     <!-- 筛选排序 -->
     <HeaderSort @PopupVisible="handlePop"/>  
     <!-- 类别分类 -->
@@ -146,6 +146,9 @@ export default {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goBack(){
+      this.$router.push({name:'category'});
+    },
     goToDetail(id){
       console.log(id);
       this.$router.push({name:'goodsDetail',query:{id:id}});

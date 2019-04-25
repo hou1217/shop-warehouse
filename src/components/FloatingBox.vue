@@ -38,10 +38,12 @@ export default {
       default: () => [
         {
           type:'purchaseOrder',
+          name:'purchaseOrder',
           url:require('@/assets/images/shop_suspension_warehouse@2x.png')
         },
         {
           type:'order',
+          name:'shopOrder',
           url:require('@/assets/images/shop_suspension_order@2x.png')
         },
         {

@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="infoBot">
     <!-- 标题 -->
-    <HeaderTitle :title="'商品总仓'"/>
+    <HeaderTitle :title="'商品总仓'" :name="'stock'"/>
     <!-- 筛选排序 -->
     <HeaderSort @PopupVisible="handlePop"/>  
     <!-- 类别分类 -->
@@ -148,10 +148,12 @@ export default {
       btns:[
         {
           type:'purchaseOrder',
+          name:'purchaseOrder',
           url:require('@/assets/images/shop_suspension_warehouse@2x.png')
         },
         {
           type:'order',
+          name:'shopOrder',
           url:require('@/assets/images/shop_suspension_order@2x.png')
         },
         {
@@ -222,6 +224,11 @@ export default {
     handlePop(val){
       console.warn(val);
       this.shadeVisible = val;
+      if(!val){
+        this.loading = true;
+        this.reload = true;
+        this.getListData();
+      }
     },
     // 触底加载
     infiniteScroll() {
