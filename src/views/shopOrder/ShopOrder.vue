@@ -83,119 +83,118 @@
           num: 0
         }],
         currentTabIndex: 0,
-        orderList: [{
-          status: '等待仓库确认',
-          goodsList:
-              [{image: require('@/assets/images/demo/goods_1.png')},
-                {image: require('@/assets/images/demo/goods_2.png')},
-                {image: require('@/assets/images/demo/goods_3.png')},
-                {image: require('@/assets/images/demo/goods_4.png')},
-                {image: require('@/assets/images/demo/goods_5.png')}],
-          goodsNum: 15,
-          id: '1'
-        },{
-          status: '仓库已确认',
-          goodsList:
-              [{image: require('@/assets/images/demo/goods_1.png')},
-                {image: require('@/assets/images/demo/goods_2.png')}],
-          goodsNum: 2,
-          id: '1'
-        },{
-          status: '仓库已发货',
-          goodsList:
-              [{image: require('@/assets/images/demo/goods_1.png')},
-                {image: require('@/assets/images/demo/goods_2.png')},
-                {image: require('@/assets/images/demo/goods_3.png')},
-                {image: require('@/assets/images/demo/goods_4.png')},{
-            image: ''}],
-          goodsNum: 15,
-          id: '1'
-        },{
-          status: '订单已完成',
-          goodsList:
-              [{image: require('@/assets/images/demo/goods_1.png')},
-                {image: require('@/assets/images/demo/goods_2.png')},
-                {image: require('@/assets/images/demo/goods_3.png')},
-                {image: require('@/assets/images/demo/goods_4.png')},
-                {image: require('@/assets/images/demo/goods_5.png')}],
-          goodsNum: 15,
-          id: '1'
-        }],
+        orderList: [],
         testData: [
           [{
             status: '等待仓库确认',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           },{
             status: '仓库已确认',
             goodsList:
-                [{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')}],
             goodsNum: 2,
             id: '1'
           },{
             status: '仓库已发货',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           },{
             status: '订单已完成',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           }],
           [{
             status: '等待仓库确认',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           },{
             status: '仓库已确认',
             goodsList:
-                [{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')}],
             goodsNum: 2,
             id: '1'
           }],
           [{
             status: '等待仓库确认',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           }],
           [{
             status: '等待仓库确认',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           },{
             status: '仓库已确认',
             goodsList:
-                [{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')}],
             goodsNum: 2,
             id: '1'
           },{
             status: '仓库已发货',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           }],
           [{
             status: '等待仓库确认',
             goodsList:
-                [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')},
+                  {image: require('@/assets/images/demo/goods_3.png')},
+                  {image: require('@/assets/images/demo/goods_4.png')},
+                  {image: require('@/assets/images/demo/goods_5.png')}],
             goodsNum: 15,
             id: '1'
           },{
             status: '仓库已确认',
             goodsList:
-                [{image: ''},{image: ''}],
+                [{image: require('@/assets/images/demo/goods_1.png')},
+                  {image: require('@/assets/images/demo/goods_2.png')}],
             goodsNum: 2,
             id: '1'
           }]
@@ -206,7 +205,10 @@
       }
     },
     created() {
-      console.debug(this.defaultSrc);
+      // console.debug(this.defaultSrc);
+      for (let item of this.testData[this.currentTabIndex]) {
+        this.orderList.push(item);
+      }
     },
     methods: {
       // 选择订单类型
