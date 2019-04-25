@@ -2,10 +2,12 @@
   <div class="shop-data">
     <HeaderTitle :title="'分类数据'"/>
     <div class="content">
-      <!-- 分类数据 -->
+      <!-- 小标题 -->
       <SmallTitle 
         :title="'分类数据'"/>
-      <DataBox />
+      <!-- 数据盒子 -->
+      <DataBox :datas="datas"/>
+      <!-- 小标题 -->
       <SmallTitle 
         :title="'数据分析'"
         :hasRightImg="true"/>
@@ -13,9 +15,9 @@
         <div class="time-box__hd">时间</div>
         <div class="time-box__bd">
           <div class="time"
-                :class="{active: currentTimeIndex === timeIndex}"
-                v-for="(time, timeIndex) in timeList"
-                :key="timeIndex" @click="choseTime(timeIndex)">
+            :class="{active: currentTimeIndex === timeIndex}"
+            v-for="(time, timeIndex) in timeList"
+            :key="timeIndex" @click="choseTime(timeIndex)">
             {{time.label}}
           </div>
         </div>
@@ -42,22 +44,36 @@ export default {
     return{
       currentTimeIndex: 0,
       kind: 0,
+      datas:[
+        {
+          num:8,
+          character:"商品分类"
+        },
+        {
+          num:1,
+          character:"新增分类"
+        },
+      ],
       timeList: [
         
         {
-          label: '近一周',
+          label: '今日',
+          value: 'today'
+        },
+        {
+          label: '本周',
           value: 'week'
         },
         {
-          label: '近一个月',
+          label: '本月',
           value: 'month'
         },
         {
-          label: '近三个月',
-          value: 'threeMonth'
+          label: '本季度',
+          value: 'quarter'
         },
         {
-          label: '近一年',
+          label: '本年',
           value: 'year'
         }
       ],

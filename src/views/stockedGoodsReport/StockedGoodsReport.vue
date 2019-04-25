@@ -106,9 +106,9 @@
             <div class="compare-box__hd">对比</div>
             <div class="compare-box__bd">
               <div class="compare-good"
-                   v-for="(good, goodIndex) in compareGoods"
+                   v-for="(goods, goodIndex) in compareGoods"
                    :key="goodIndex">
-                <!--<img :src="good.icon">-->
+                <img :src="goods.image">
                 <div class="delete-btn" @click.stop="deleteGood(goodIndex)">
                   <img src="@/assets/images/search_close@2x.png">
                 </div>
@@ -131,78 +131,79 @@
 </template>
 
 <script>
-  export default {
-    name: "stockedGoodsReport",
-    data() {
-      return {
-        goodName: '商品名称',
-        timeList: [
-          {
-            label: '今日',
-            value: 'today'
-          },
-          {
-            label: '近一周',
-            value: 'week'
-          },
-          {
-            label: '近一个月',
-            value: 'month'
-          },
-          {
-            label: '近三个月',
-            value: 'threeMonth'
-          },
-          {
-            label: '近一年',
-            value: 'year'
-          }
-        ],
-        currentTimeIndex: 0,
-        data: {
-          salesRank: 1,
-          revenueRank: 5,
-          strike: 642.32,
-          strikeNum: 102,
-          gross: 212.09,
-          netProfit: 143.43,
-          stock: 98,
-          mprate: '105%',
-          sinkToPin: 2
+import eventBus from '@/assets/js/eventBus'
+export default {
+  name: "stockedGoodsReport",
+  data() {
+    return {
+      goodName: '商品名称',
+      timeList: [
+        {
+          label: '今日',
+          value: 'today'
         },
-        compareGoods: [
-          {
-            icon: '',
-          },{
-            icon: '',
-          },{
-            icon: '',
-          },{
-            icon: '',
-          }
-        ],
-      }
-    },
-    methods: {
-      // 选择时间
-      choseTime(index) {
-        this.currentTimeIndex = index;
+        {
+          label: '近一周',
+          value: 'week'
+        },
+        {
+          label: '近一个月',
+          value: 'month'
+        },
+        {
+          label: '近三个月',
+          value: 'threeMonth'
+        },
+        {
+          label: '近一年',
+          value: 'year'
+        }
+      ],
+      currentTimeIndex: 0,
+      data: {
+        salesRank: 1,
+        revenueRank: 5,
+        strike: 642.32,
+        strikeNum: 102,
+        gross: 212.09,
+        netProfit: 143.43,
+        stock: 98,
+        mprate: '105%',
+        sinkToPin: 2
       },
-      
-      // 删除对比商品
-      deleteGood(index) {
-        console.debug('删除第' + index + '件对比的商品');
-      },
-      
-      // 新增对比商品
-      addGood() {
-        console.debug('跳转至商品选择页');
-        this.$router.push({
-          path: '/compareSelect'
-        });
-      },
+      compareGoods: [],
     }
+  },
+  created(){
+    eventBus.$on('selectCompareGoods',this.onGoodsUpdate)
+  },
+  beforeDestroy(){
+    eventBus.$off("selectCompareGoods", this.onGoodsUpdate)
+  },
+  methods: {
+    onGoodsUpdate(data){
+      console.log(data);
+      this.compareGoods = data;
+    },
+    // 选择时间
+    choseTime(index) {
+      this.currentTimeIndex = index;
+    },
+    
+    // 删除对比商品
+    deleteGood(index) {
+      console.debug('删除第' + index + '件对比的商品');
+    },
+    
+    // 新增对比商品
+    addGood() {
+      console.debug('跳转至商品选择页');
+      this.$router.push({
+        path: '/compareSelect'
+      });
+    },
   }
+}
 </script>
 
 <style scoped lang="stylus" src="./StockedGoodsReport.styl"></style>

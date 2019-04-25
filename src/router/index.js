@@ -41,13 +41,13 @@ export default new Router({
       name: 'goodsDetail',
       component: () => import('@/views/goodsDetail/GoodsDetail')
     },
-      // 已进货数据分析
+    // 已进货数据分析
     {
       path: '/stockedGoodsReport',
       name: 'stockedGoodsReport',
       component: () => import('@/views/stockedGoodsReport/StockedGoodsReport')
     },
-      // 未进货数据分析
+    // 未进货数据分析
     {
       path: '/noStockedGoodsReport',
       name: 'noStockedGoodsReport',
@@ -78,13 +78,25 @@ export default new Router({
       name: 'classifiedData',
       component: () => import('@/views/shopReport/ClassifiedData')
     },
-        // 对比商品选择
+    // 店铺报表-单类数据
+    {
+      path: '/singleClassData',
+      name: 'singleClassData',
+      component: () => import('@/views/shopReport/SingleClassData')
+    },
+    //选择对比商品
     {
       path: '/compareSelect',
       name: 'compareSelect',
       component: () => import('@/views/compareSelect/CompareSelect')
     },
-      // 进货单-列表
+    // 总仓报表
+    {
+      path: '/warehouseReport',
+      name: 'warehouseReport',
+      component: () => import('@/views/warehouseReport/WarehouseReport')
+    },
+    // 进货单-列表
     {
       path: '/purchaseOrder',
       name: 'purchaseOrder',
@@ -120,7 +132,7 @@ export default new Router({
       name: 'purchaseOrderStatus',
       component: () => import('@/views/purchaseOrder/PurchaseOrderStatus')
     },
-      // 店铺订单
+    // 店铺订单
     {
       path: '/shopOrder',
       name: 'shopOrder',

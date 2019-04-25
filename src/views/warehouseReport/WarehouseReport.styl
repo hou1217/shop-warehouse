@@ -1,0 +1,178 @@
+>>> img{
+  width 100%
+  height 100%
+}
+.warehouse-report{
+  .select-btn{
+    // border-top 1px solid rgba(238,238,238,0.6)
+    background-color #fff
+    
+    box-sizing border-box
+    // z-index 1
+    padding 20px 33px
+    width 100% 
+    display flex
+    justify-content space-between
+    li{
+      &.active{
+        color #fff
+        background: #262626;   
+      }
+      box-sizing border-box
+      // margin-top 24px
+      width 148px
+      height 56px
+      line-height 56px
+      background: #F4F4F4;
+      border-radius: 8px;
+      font-size: 26px;
+    }
+  }  
+  .content{
+    padding-top 68px
+    .time-box {
+      width 100%
+      margin 26px 0 16px 0
+      padding 0 30px
+      .time-box__hd {
+        width 100%
+        height 33px
+        line-height 33px
+        margin 0 0 10px 0
+        font-family PingFangSC-Regular
+        font-size 24px
+        color #8D93A4
+        text-align justify
+      }
+
+      .time-box__bd {
+        width 100%
+        display flex
+        flex-wrap wrap
+
+        .time {
+          width 148px
+          height 56px
+          border-radius 8px
+          background #F4F4F4
+          line-height 56px
+          text-align center
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #575C68
+          margin 0 20px 24px 0
+
+          &.active {
+            background #262626
+            color #FFFFFF
+          }
+        }
+      }
+    }
+    .compare-box {
+      width 100%
+      margin 0 0 16px 0
+      padding 0 30px
+      .compare-box__hd {
+        width 100%
+        height 33px
+        line-height 33px
+        font-family PingFangSC-Regular
+        font-size 24px
+        color #8D93A4
+        text-align justify
+        margin 0 0 10px 0
+      }
+
+      .compare-box__bd {
+        width 100%
+        display flex
+        flex-wrap wrap
+
+        .compare-good {
+          width 78px
+          height 78px
+          border-radius 18.83px
+          position relative
+          margin 0 24px 24px 0
+          background #e3e3e3
+
+          img {
+            width 100%
+            height 100%
+          }
+
+          .delete-btn {
+            width 28px
+            height 28px
+            position absolute
+            top -10px
+            right -10px
+
+            img {
+              width 100%
+              height 100%
+            }
+          }
+
+          &.compare-good_add {
+            background #ffffff
+          }
+        }
+      }
+    }
+    .title{
+      background: #F4F4F4;
+      height 44px
+      line-height 44px
+      text-align left 
+      padding-left 20px
+    }
+    
+  }
+  .read-more{
+    padding: 20px 0 1px 
+    display: flex
+    justify-content: center
+    font-size: 24px;
+    color: #386DB4;
+    .down-img{
+      width 28px
+      height 28px
+    }
+  }
+  .best-mate{
+    display flex
+    justify-content: space-between
+    flex-wrap wrap
+    padding 0 30px 
+    .mate{
+      width 338px 
+      height 291px
+      position: relative
+      .prop{
+        margin-top 26px  
+        font-size: 26px;
+        color: #575C68;
+      }
+      .goods{
+        position absolute
+        top 57px 
+        
+        &:nth-child(2){
+          left 30px
+        }  
+        &:last-child{
+          right 30px
+        }  
+      }
+      .goods-img{
+        width  148px
+        height 148px
+        border-radius: 50%
+        border: 4px solid #EEEEEE;
+        overflow hidden
+      }
+    }
+  }
+}

@@ -144,6 +144,7 @@ export default {
   },
   data(){
     return{
+      // 悬浮框数据
       btns:[
         {
           type:'purchaseOrder',
@@ -155,7 +156,7 @@ export default {
         },
         {
           type:'report',
-          name:'general',
+          name:'warehouseReport',
           url:require('@/assets/images/shop_suspension_report@2x.png')
         }
       ],
