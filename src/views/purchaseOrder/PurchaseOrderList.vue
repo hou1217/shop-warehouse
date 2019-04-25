@@ -13,7 +13,7 @@
            v-for="(goods, goodsIndex) in goodsList"
            :key="goodsIndex">
         <div class="goods-img">
-          <!--<img :src="goods.image">-->
+          <img :src="goods.image">
         </div>
         <div class="goods-detail">
           <div class="name">{{goods.name}}</div>
@@ -45,7 +45,7 @@
       return {
         goodsList: [
           {
-            image: '',
+            image: require('@/assets/images/demo/goods_1.png'),
             name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
             price: 8.5,
             num: 54,
@@ -54,7 +54,7 @@
             activity: [],
             specifications: '商规格商品规格规商品规格商品规格商品规格…'
           },{
-            image: '',
+            image: require('@/assets/images/demo/goods_2.png'),
             name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
             price: 8.5,
             num: 9,
@@ -63,7 +63,7 @@
             activity: ['满25减5', '新品上市第二件半价'],
             specifications: '商规格商品规格规商品'
           },{
-            image: '',
+            image: require('@/assets/images/demo/goods_3.png'),
             name: '商品名称商品名称商商',
             price: 58.4,
             num: 54,

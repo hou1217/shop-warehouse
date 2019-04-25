@@ -25,7 +25,7 @@
           <img v-else src="@/assets/images/shop_multi_unselect@2x.png">
         </div>
         <div class="goods-img">
-          <!--<img :src="goods.image">-->
+          <img :src="goods.image">
         </div>
         <div class="goods-detail">
           <div class="name">{{goods.name}}</div>
@@ -96,7 +96,7 @@
       return {
         goodsList: [
           {
-            image: '',
+            image: require('@/assets/images/demo/goods_1.png'),
             name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
             price: 8.5,
             num: 34,
@@ -104,7 +104,7 @@
             countLess: true,
             activity: []
           },{
-            image: '',
+            image: require('@/assets/images/demo/goods_2.png'),
             name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
             price: 8.5,
             num: 340,
@@ -112,7 +112,7 @@
             countLess: false,
             activity: ['满25减5', '新品上市第二件半价']
           },{
-            image: '',
+            image: require('@/assets/images/demo/goods_3.png'),
             name: '商品名称商品名称商商',
             price: 58.4,
             num: 34,

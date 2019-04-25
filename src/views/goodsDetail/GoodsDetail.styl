@@ -4,11 +4,17 @@
   min-height 100%
   background #ffffff
 
+  >>> img {
+    width 100%
+    height 100%
+  }
+
   .good-images-box {
     width 100%
     height 750px
+    position relative
 
-    background #e3e3e3
+    //background #e3e3e3
 
     .mint-swipe_good-detail {
       .item {
@@ -18,6 +24,41 @@
           height 100%
           object-fit cover
         }
+      }
+    }
+
+    .btn {
+      position absolute
+      top 20px
+      width 54px
+      height 54px
+
+      &.btn_back {
+        left 20px
+      }
+
+      &.btn_warehouse {
+        right 96px
+
+        .num {
+          position absolute
+          top -6px
+          right -6px
+          width 26px
+          height 26px
+          border-radius 50%
+          background #F2604D
+          line-height 26px
+          text-align center
+          font-family SFUIDisplay-Regular
+          font-size 20px
+          color #FFFFFF
+          letter-spacing 0
+        }
+      }
+
+      &.btn_add {
+        right 20px
       }
     }
   }
@@ -425,7 +466,11 @@
                 height 132px
                 border-radius 4px
                 margin 0 2px 0 0
-                background #e3e3e3
+                //background #e3e3e3
+
+                img {
+                  border-radius 4px
+                }
               }
             }
 
@@ -450,12 +495,10 @@
               width 100%
               height 226px
               border-radius 8px
-              background #e3e3e3
+              //background #e3e3e3
               margin 0 0 20px 0
 
               img {
-                width 100%
-                height 100%
                 object-fit cover
                 border-radius 8px
               }

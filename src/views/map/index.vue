@@ -55,14 +55,15 @@
     <!-- 店铺列表弹出 -->
     <div class="shop-list-popup" v-if="shopListPopupVisible">
       <div class="shop-list-popup__hd">
-        <div class="icon">
+        <div class="icon" @click.stop="openDistancePopup">
           <img src="@/assets/images/shopl_local@2x.png">
         </div>
         <div class="text">附近</div>
       </div>
-      <div class="sort-box">
-        <div class="item item_first">
-          <div class="text">综合</div>
+      <div class="sort-box"
+           :class="{z2: sortPopupVisible}">
+        <div class="item item_first" @click.stop="openSortPopup">
+          <div class="text">{{currentProp.label}}</div>
           <div class="icon">
             <img src="@/assets/images/shop_arrow_down@2x.png">
           </div>
@@ -131,9 +132,71 @@
           </div>
         </div>
       </div>
+      
+      <!-- 盒子内部遮罩层 -->
+      <div class="popup-shade" v-if="popupShadeVisible"></div>
+      
+      <!-- 盒子内部弹窗 -->
+      <div class="sort-popup" v-if="sortPopupVisible">
+        <div class="select-box select-box_prop">
+          <div class="title">属性</div>
+          <div class="list list_props">
+            <div class="item item_prop"
+                 :class="{
+                  nm: (propIndex + 1) % 4 === 0,
+                  active: currentProp.value === prop.value
+                 }"
+                 v-for="(prop, propIndex) in props"
+                 :key="prop.value" @click="propItemClick(prop)">
+              {{prop.label}}
+            </div>
+          </div>
+        </div>
+        <div class="select-box select-box_sort">
+          <div class="title">排序</div>
+          <div class="list list_props">
+            <div class="item item_prop"
+                 :class="{active: currentSort === sort.value}"
+                 v-for="sort in sorts"
+                 :key="sort.value"
+                 @click="sortItemClick(sort)">
+              {{sort.label}}
+            </div>
+          </div>
+        </div>
+        <div class="confirm-btn" @click="sortConfirm">确定</div>
+      </div>
+      
+      <div class="distance-popup" v-if="distancePopupVisible">
+        <div class="distance-popup__tabs">
+          <div class="tab active">商区</div>
+          <div class="tab">地铁</div>
+        </div>
+        <div class="distance-popup__bd">
+          <div class="left">
+            <div class="range"
+                 :class="{active: currentRange === range}"
+                 v-for="range in ranges"
+                 :key="range" @click="rangeAreaSelect(range)">
+              {{range}}
+            </div>
+          </div>
+          <div class="right">
+            <div class="character">距离</div>
+            <div class="nearby" v-if="currentRange === '附近'">附近 (智能范围)</div>
+            <div class="distance"
+                 :class="{active: currentDistance === distance}"
+                 v-for="distance in distances"
+                 :key="distance" @click="rangeDistanceSelect(distance)">
+              <div class="text">{{distance}}</div>
+              <div class="icon">
+                <img src="@/assets/images/shop_select@2x.png">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    
-    <!-- todo 排序和门店范围待完成 -->
   </div>
 
 </template>
@@ -199,8 +262,44 @@
           time: '00:00-24:00'
         }],
         
+        popupShadeVisible: false,
         sortPopupVisible: false,
         distancePopupVisible: false,
+        
+        props: [
+          {
+            label: '综合',
+            value: 'multiple'
+          },{
+            label: '营业额',
+            value: 'turnover'
+          },{
+            label: '客单价',
+            value: 'pct'
+          },{
+            label: '坪效',
+            value: 'lge'
+          }
+        ],
+        sorts: [
+          {
+            label: '由高到低',
+            value: 'desc'
+          },{
+            label: '由低到高',
+            value: 'asc'
+          }
+        ],
+        currentProp: {
+          label: '综合',
+          value: 'multiple'
+        },
+        currentSort: '',
+        
+        ranges: ['附近','热门商区','静安区','长宁区','徐汇区','杨浦区','虹口区'],
+        distances: ['500米', '1000米', '2000米'],
+        currentRange: '附近',
+        currentDistance: '500米'
       }
     },
     methods: {
@@ -429,11 +528,63 @@
       // 关闭遮罩
       closeShade() {
         this.shopListPopupVisible = false;
+        this.sortPopupVisible = false;
+        this.distancePopupVisible = false;
+        this.popupShadeVisible = false;
         this.shadeVisible = false;
+      },
+      
+      // 打开排序弹窗
+      openSortPopup() {
+        this.popupShadeVisible = true;
+        this.sortPopupVisible = true;
+      },
+      
+      // 打开范围弹窗
+      openDistancePopup() {
+        this.popupShadeVisible = true;
+        this.distancePopupVisible = true;
+      },
+      
+      // 选择排序属性
+      propItemClick(prop) {
+        if (this.currentProp.value !== prop.value) {
+          this.currentProp.value = prop.value;
+          this.currentProp.label = prop.label;
+        }
+      },
+      
+      // 选择排序方式
+      sortItemClick(sort) {
+        if (this.currentSort !== sort.value) {
+          this.currentSort = sort.value;
+        }
+      },
+      
+      // 确认排序方式
+      sortConfirm() {
+        this.sortPopupVisible = false;
+        this.popupShadeVisible = false;
+      },
+      
+      // 选择范围区域
+      rangeAreaSelect(range) {
+        if (this.currentRange !== range) {
+          this.currentRange = range;
+        }
+      },
+      
+      // 选择范围
+      rangeDistanceSelect(distance) {
+        if (this.currentDistance !== distance) {
+          this.currentDistance = distance;
+        }
+        this.distancePopupVisible = false;
+        this.popupShadeVisible = false;
       },
     },
     mounted: function () {
-      
+
       let recaptchaScript = document.createElement('script');
       recaptchaScript.setAttribute('src', 'https://webapi.amap.com/maps?v=1.4.14&key=687288a4144c83a67b11a316ec4c35bb');
       document.head.appendChild(recaptchaScript);
@@ -456,7 +607,7 @@
 
         //加载热力度
         this.initHeapMap();
-        
+
         //添加/移除建筑物
         // let marker = new AMap.Marker({
         //   position: new AMap.LngLat(lng, lat),
@@ -473,7 +624,7 @@
         // setTimeout(() => {
         //   map.remove(marker);
         // }, 5000);
-        
+
         //热力点
         // map.plugin(["AMap.Heatmap"], function () {
         //   //初始化heatmap对象
@@ -503,9 +654,9 @@
         //   heatmap.show();
         //
         // });
-        
+
         //数据实时加载
-        
+
       }
     }
   }
@@ -756,6 +907,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
+    background: #ffffff;
   }
   
   .shop-list-popup .sort-box .item {
@@ -992,5 +1144,215 @@
   
   .btn.btn_route {
     right: -17px;
+  }
+  
+  /*店铺列表弹窗内部弹窗样式*/
+  .popup-shade {
+    width: 100%;
+    height: 1170px;
+    position: absolute;
+    top: 54px;
+    left: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 1;
+  }
+  
+  .shop-list-popup .sort-box.z2 {
+    position: relative;
+    z-index: 2;
+  }
+  
+  
+  .shop-list-popup .sort-popup {
+    width: 100%;
+    position: absolute;
+    top: 115px;
+    left: 0;
+    background: #ffffff;
+    z-index: 2;
+    padding: 28px 30px 0;
+  }
+
+  .shop-list-popup .sort-popup .select-box {
+    width: 100%;
+    margin: 0 0 38px 0;
+  }
+
+  .shop-list-popup .sort-popup .select-box .title {
+    width: 100%;
+    height: 33px;
+    line-height: 33px;
+    font-family: PingFangSC-Regular;
+    font-size: 24px;
+    color: #8D93A4;
+    text-align: justify;
+    margin: 0 0 12px 0;
+  }
+
+  .shop-list-popup .sort-popup .select-box .list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .shop-list-popup .sort-popup .select-box .list .item {
+    width: 158px;
+    height: 56px;
+    line-height: 56px;
+    background: #F4F4F4;
+    border-radius: 30px;
+    font-family: PingFangSC-Regular;
+    font-size: 26px;
+    color: #575C68;
+    text-align: center;
+    margin: 0 18px 0 0;
+  }
+
+  .shop-list-popup .sort-popup .select-box .list .item.nm {
+    margin: 0 0 0 0;
+  }
+
+  .shop-list-popup .sort-popup .select-box .list .item.active {
+    background: #262626;
+    color: #ffffff;
+  }
+  
+  .shop-list-popup .sort-popup .confirm-btn {
+    width: 240px;
+    height: 72px;
+    line-height: 72px;
+    text-align: center;
+    border-radius: 8px;
+    background: #FFE30F;
+    margin: 0 0 26px 0;
+    font-family: PingFangSC-Regular;
+    font-size: 32px;
+    color: #262626;
+    position: relative;
+    left: 454px;
+  }
+
+  
+  .shop-list-popup .distance-popup {
+    width: 100%;
+    position: absolute;
+    top: 53px;
+    left: 0;
+    background: #ffffff;
+    z-index: 2;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__tabs {
+    width: 100%;
+    height:  60px;
+    background: #ffffff;
+    display: flex;
+    border-bottom: 1px solid #EEEEEE;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__tabs .tab {
+    flex: 1;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    font-family: PingFangSC-Regular;
+    font-size: 28px;
+    color: #575C68;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__tabs .tab.active {
+    color: #F9AB10;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd {
+    width: 100%;
+    display: flex;
+    background: #ffffff;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .left {
+    flex: 1;
+    height: 750px;
+    overflow: scroll;
+    background: #F6F6F6;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .left .range {
+    width: 100%;
+    height: 98px;
+    line-height: 98px;
+    padding: 0 0 0 44px;
+    font-family: PingFangSC-Regular;
+    font-size: 28px;
+    color: #575C68;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .left .range.active {
+    background: #ffffff;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right {
+    flex: 1;
+    height: 750px;
+    overflow: scroll;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .character {
+    width: 100%;
+    height: 62px;
+    line-height: 30px;
+    padding: 32px 0 0 44px;
+    font-family: PingFangSC-Regular;
+    font-size: 22px;
+    color: #8D93A4;
+    text-align: left;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .nearby {
+    width: 100%;
+    height: 88px;
+    line-height: 88px;
+    padding: 0 0 0 44px;
+    font-family: PingFangSC-Regular;
+    font-size: 26px;
+    color: #575C68;
+    text-align: left;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .distance {
+    width: 100%;
+    height: 88px;
+    padding: 0 28px 0 44px;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .distance .text {
+    font-family: SFUIDisplay-Medium;
+    font-size: 26px;
+    color: #575C68;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .distance .icon {
+    display: none;
+    width: 44px;
+    height: 44px;
+    position: absolute;
+    right: 28px;
+  }
+  
+  .shop-list-popup .distance-popup .distance-popup__bd .right .distance .icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .distance.active .text {
+    color: #F9AB10;
+  }
+
+  .shop-list-popup .distance-popup .distance-popup__bd .right .distance.active .icon {
+    display: block;
   }
 </style>

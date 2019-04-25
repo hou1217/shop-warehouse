@@ -3,16 +3,28 @@
     <!-- 图片轮播 -->
     <div class="good-images-box">
       <mt-swipe :auto="0" class="mint-swipe_good-detail">
-        <mt-swipe-item class="swipe-item-1 item">
-          <img :src="src1">
+        <mt-swipe-item class="swipe-item-1 item"
+                       v-for="(src, srcIndex) in imageList"
+                       :key="srcIndex">
+          <img :src="src">
         </mt-swipe-item>
-        <mt-swipe-item class="swipe-item-2 item">
-          <img :src="src2">
-        </mt-swipe-item>
-        <mt-swipe-item class="swipe-item-3 item">
-          <img :src="src3">
-        </mt-swipe-item>
+        <!--<mt-swipe-item class="swipe-item-2 item">-->
+          <!--<img :src="src2">-->
+        <!--</mt-swipe-item>-->
+        <!--<mt-swipe-item class="swipe-item-3 item">-->
+          <!--<img :src="src3">-->
+        <!--</mt-swipe-item>-->
       </mt-swipe>
+      <div class="btn btn_back">
+        <img src="@/assets/images/shop_back_fill@2x.png"/>
+      </div>
+      <div class="btn btn_warehouse">
+        <img src="@/assets/images/shop_warehouse_fill@2x.png"/>
+        <div class="num">6</div>
+      </div>
+      <div class="btn btn_add">
+        <img src="@/assets/images/shop_add_fill@2x.png"/>
+      </div>
     </div>
     
     <!-- 主体盒子 -->
@@ -155,7 +167,7 @@
               <div class="image"
                    v-for="(image, imageIndex) in comment.images"
                    :key="imageIndex">
-                <!--<img :src="image.url">-->
+                <img :src="image.url">
               </div>
             </div>
           </div>
@@ -173,7 +185,7 @@
                v-for="(similar, similarIndex) in similars"
                :key="similarIndex">
             <div class="img">
-              <!--<img :src="similar.headId">-->
+              <img :src="similar.headId">
             </div>
             <div class="name">{{similar.name}}</div>
             <div class="price">
@@ -307,15 +319,15 @@
             },
             text: '2017年中国游戏直播平台市场规模为87亿元游戏直播市场稳步增长',
             images: [{
-              url: '',
+              url: require('@/assets/images/demo/comment_1.png'),
               width: 0,
               height: 0
             }, {
-              url: '',
+              url: require('@/assets/images/demo/comment_2.png'),
               width: 0,
               height: 0
             }, {
-              url: '',
+              url: require('@/assets/images/demo/comment_3.png'),
               width: 0,
               height: 0
             }],
@@ -333,15 +345,15 @@
           }
         ],
         similars: [{
-          headId: '',
+          headId: require('@/assets/images/demo/comment_4.png'),
           name: '商a品商品商品名称商品名称商名称…',
           price: 39.6
         }, {
-          headId: '',
+          headId: require('@/assets/images/demo/comment_5.png'),
           name: '商a品商品商品名称商品名称商名称…',
           price: 39.6
         }, {
-          headId: '',
+          headId: require('@/assets/images/demo/comment_6.png'),
           name: '商a品商品商品名称商品名称商名称…',
           price: 39.6
         }],
@@ -359,9 +371,12 @@
         isStocked: true,
         
         // 测试图片地址
-        src1: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
-        src2: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg',
-        src3: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1555944649990&di=67a9b1e7e63e1027497e70d997c7cbc8&imgtype=0&src=http%3A%2F%2Fpic15.nipic.com%2F20110628%2F1369025_192645024000_2.jpg'
+        imageList: [
+          require('@/assets/images/demo/goods_1.png'),
+          require('@/assets/images/demo/goods_2.png'),
+          require('@/assets/images/demo/goods_3.png'),
+          require('@/assets/images/demo/goods_4.png')
+        ]
       }
     },
     created() {
