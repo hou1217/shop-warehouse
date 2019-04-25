@@ -76,8 +76,13 @@ export default new Router({
       name: 'classifiedData',
       component: () => import('@/views/shopReport/ClassifiedData')
     },  
-
-
+    // 店铺报表-单类数据
+    {
+      path: '/singleClassData',
+      name: 'singleClassData',
+      component: () => import('@/views/shopReport/SingleClassData')
+    },  
+    //选择对比商品
     {
       path: '/compareSelect',
       name: 'compareSelect',

@@ -1,22 +1,49 @@
 <template>
   <div class="shop-data">
-    <HeaderTitle :title="'店铺数据'"/>
+    <HeaderTitle :title="singleClassName"/>
     <div class="content">
       <!-- 小标题 -->
       <SmallTitle 
-        :title="'店铺数据'"/>
-      <DataBox :datas="datas"/>
+        :title="'今日业绩'"
+        :rightText="'历史记录'"
+        :hasNextBtn="true"/>
+      <!-- 数据盒子 -->
+      <DataBox :datas="datas1"/>
+      <!-- 小标题 -->
+      <SmallTitle 
+        :title="'相关数据'"/>
+      <!-- 数据盒子 -->
+      <DataBox :datas="datas2"/>
+      <!-- 小标题 -->
       <SmallTitle 
         :title="'数据分析'"
         :hasRightImg="true"/>
+      <!-- 时间选择器 -->
       <div class="time-box">
         <div class="time-box__hd">时间</div>
         <div class="time-box__bd">
           <div class="time"
-                :class="{active: currentTimeIndex === timeIndex}"
-                v-for="(time, timeIndex) in timeList"
-                :key="timeIndex" @click="choseTime(timeIndex)">
+            :class="{active: currentTimeIndex === timeIndex}"
+            v-for="(time, timeIndex) in timeList"
+            :key="timeIndex" @click="choseTime(timeIndex)">
             {{time.label}}
+          </div>
+        </div>
+      </div>
+      <!-- 对比盒子 -->
+      <div class="compare-box">
+        <div class="compare-box__hd">对比</div>
+        <div class="compare-box__bd">
+          <div class="compare-good"
+                v-for="(good, goodIndex) in compareGoods"
+                :key="goodIndex">
+            <!--<img :src="good.icon">-->
+            <div class="delete-btn" @click.stop="deleteGood(goodIndex)">
+              <img src="@/assets/images/search_close@2x.png">
+            </div>
+          </div>
+          <div class="compare-good compare-good_add" @click.stop="addGood">
+            <img src="@/assets/images/group_add@2x.png">
           </div>
         </div>
       </div>
@@ -41,8 +68,37 @@ export default {
   data(){
     return{
       currentTimeIndex: 0,
+      singleClassName:'面包甜点',
       kind: 0,
-      datas:[
+      datas1:[
+        {
+          num:1,
+          character:"销量排名"
+        },
+        {
+          num:5,
+          character:"营收排名"
+        },
+        {
+          num:'¥642.32',
+          character:"成交金额"
+        },
+        {
+          num:102,
+          character:"成交数量"
+        },
+        {
+          num:'¥212.09',
+          small:true,
+          character:"毛利润"
+        },
+        {
+          num:'¥143.43',
+          small:true,
+          character:"净利润"
+        },
+      ],
+      datas2:[
         {
           num:102,
           character:"商品种类"
@@ -65,6 +121,10 @@ export default {
       timeList: [
         
         {
+          label: '今日',
+          value: 'today'
+        },
+        {
           label: '近一周',
           value: 'week'
         },
@@ -74,14 +134,28 @@ export default {
         },
         {
           label: '近三个月',
-          value: 'threeMonth'
+          value: 'quarter'
         },
         {
           label: '近一年',
           value: 'year'
         }
       ],
-      data:{}
+      compareGoods: [
+        {
+          icon: '',
+        },
+        {
+          icon: '',
+        },
+        {
+          icon: '',
+        },
+        {
+          icon: '',
+        }
+      ],
+      
     }
   },
   created(){
@@ -95,6 +169,17 @@ export default {
       this.currentTimeIndex = index;
       this.kind = index;
       this.getShopData();
+    },
+    // 删除对比商品
+    deleteGood(index) {
+      console.debug('删除第' + index + '件对比的商品');
+    },
+    // 新增对比商品
+    addGood() {
+      console.debug('跳转至商品选择页');
+      this.$router.push({
+        name: 'compareSelect'
+      });
     },
     getShopData(){
       
@@ -185,6 +270,58 @@ export default {
           &.active {
             background #262626
             color #FFFFFF
+          }
+        }
+      }
+    }
+    .compare-box {
+      width 100%
+      margin 0 0 16px 0
+      padding 0 30px
+      .compare-box__hd {
+        width 100%
+        height 33px
+        line-height 33px
+        font-family PingFangSC-Regular
+        font-size 24px
+        color #8D93A4
+        text-align justify
+        margin 0 0 10px 0
+      }
+
+      .compare-box__bd {
+        width 100%
+        display flex
+        flex-wrap wrap
+
+        .compare-good {
+          width 78px
+          height 78px
+          border-radius 18.83px
+          position relative
+          margin 0 24px 24px 0
+          background #e3e3e3
+
+          img {
+            width 100%
+            height 100%
+          }
+
+          .delete-btn {
+            width 28px
+            height 28px
+            position absolute
+            top -10px
+            right -10px
+
+            img {
+              width 100%
+              height 100%
+            }
+          }
+
+          &.compare-good_add {
+            background #ffffff
           }
         }
       }
