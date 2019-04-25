@@ -91,9 +91,9 @@
         console.debug('确认下单');
         
         // todo 跳转至下单成功页面
-        // this.$router.push({
-        //   path: '/'
-        // });
+        this.$router.push({
+          path: '/purchaseOrderStatus'
+        });
       },
     }
   }

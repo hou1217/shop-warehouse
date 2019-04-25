@@ -49,6 +49,9 @@ const APIs = {
   //历史记录
   getHistoryRecord: params =>  getApi('/historyRecord',params.params),
   getHistoryRecord1: params =>  getApi('/historyRecord1',params.params),
-
+  //总仓报表
+  getClassifiedNums: params =>  getApi('/report/classifiedNums',params.params),
+  getSectionSales: params =>  getApi('/report/sectionSales',params.params),
+  getClassifiedProfit: params =>  getApi('/report/classifiedProfit',params.params),
 }
 export default APIs

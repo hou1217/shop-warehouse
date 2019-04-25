@@ -36,7 +36,7 @@
           :key="index">
           <div class="card">
             <div class="portrait">
-              <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
+              <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
               <div class="addgoods" @click.stop="addgoods()">
                 <img 
                   :src="card.stockNum < 10?
@@ -178,6 +178,14 @@ export default {
       completed: false,
       offset: -110,
       shadeVisible:false
+    }
+  },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
     }
   },
   watch:{

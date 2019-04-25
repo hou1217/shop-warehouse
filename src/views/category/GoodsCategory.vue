@@ -33,7 +33,7 @@
               class="list-item">
               
               <div class="portrait">
-                <img src="@/assets/images/demo/goods_3.png" :onerror="defaultSrc"/>
+                <img :src="imgSrc(oitem.id)" :onerror="defaultSrc"/>
               </div>
               <div class="content">
                 <h3>{{oitem.name}}</h3>
@@ -152,6 +152,14 @@ export default {
       shadeVisible: false,
       
       listHeight: []
+    }
+  },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
     }
   },
   watch:{

@@ -14,7 +14,7 @@
           <div class="text">下单成功</div>
         </div>
         <div class="btn-box">
-          <div class="btn btn_return" @click.stop="$router.go(-1)">返回店铺</div>
+          <div class="btn btn_return" @click.stop="goBackToStock">返回店铺</div>
           <div class="btn btn_detail" @click.stop="turnToDetail">订单详情</div>
         </div>
       </div>
@@ -25,8 +25,21 @@
 <script>
   export default {
     name: "PurchaseOrderStatus",
-    data() {},
+    data() {
+      return {
+
+      }
+    },
     methods: {
+      //返回店铺
+      goBackToStock(){
+        this.$router.push({
+          name: 'stock',
+          params:{
+            type: 1
+          }
+        });
+      },
       // 跳转至订单详情
       turnToDetail() {
         this.$router.push({

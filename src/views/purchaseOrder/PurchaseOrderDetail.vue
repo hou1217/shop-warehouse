@@ -5,7 +5,7 @@
       <div class="back-btn" @click="$router.go(-1)">
         <img src="@/assets/images/h5_arrow_back@2x.png">
       </div>
-      <div class="text">进货清单</div>
+      <div class="text">订单详情</div>
     </div>
     
     <div class="bd">

@@ -27,12 +27,12 @@
         <!-- <div class="time-box__hd">分类销量</div> -->
         <div class="echart-box" id="chart1"></div>
         <!-- <div class="time-box__hd">时段销量</div> -->
-        <div class="echart-box" id="chart2"></div>
+        <div class="echart-box" id="chart2" v-if="isToday"></div>
         <!-- <div class="time-box__hd">分类毛利</div> -->
         <div class="echart-box" id="chart3"></div>
       </div>
 
-      </div>
+      
       <!-- 最佳伴侣 -->
       <SmallTitle 
         :title="'最佳伴侣'"/>
@@ -96,7 +96,9 @@ export default {
         },
       ],
       chart1:null,
-      seriesData:[],
+      seriesData1:[],
+      seriesData2:[],
+      seriesData3:[],
       chart2:null,
       chart3:null,
       currentTimeIndex: 0,
@@ -123,17 +125,17 @@ export default {
           value: 'year'
         }
       ],
-      items:[
-        
-      ],
+      isToday:true,
+      items:[],
     }
   },
   created(){
     this.getMateData();
   },
   mounted(){
-    this.getChartData();
-
+    this.getChartData1();
+    this.getChartData2();
+    this.getChartData3();
   },
   methods:{
     ...mapActions([
@@ -141,45 +143,72 @@ export default {
     ]),
     choseTime(index){
       this.currentTimeIndex = index;
+      if(index === 0){
+        this.isToday = true
+        this.getChartData2();
+      }else{
+        this.isToday = false
+      }
+      this.getChartData1();
+      this.getChartData3();
+
+    },
+    getChartData1(){
+      this.REQUEST_API({
+        api: 'getClassifiedNums',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData1 = res;
+          this.initChart1();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
       
     },
-    getChartData(){
-      this.seriesData1 = [
-        {"name":"美妆护理","value":5},
-        {"name":"面包甜点","value":20},
-        {"name":"特价套餐","value":10},
-        {"name":"休闲零食","value":11},
-        {"name":"湃客咖啡","value":17},
-        {"name":"精选饮料","value":3},
-        {"name":"冷藏乳饮","value":8},
-        {"name":"美味鲜食","value":26},
-      ]
-      this.seriesData2 = [
-        {"name":"美妆护理","value":5},
-        {"name":"面包甜点","value":20},
-        {"name":"特价套餐","value":10},
-        {"name":"休闲零食","value":11},
-        {"name":"湃客咖啡","value":17},
-        {"name":"精选饮料","value":3},
-        {"name":"冷藏乳饮","value":8},
-        {"name":"美味鲜食","value":26},
-      ]
-      this.seriesData3 = [
-        {"name":"美妆护理","value":15},
-        {"name":"面包甜点","value":20},
-        {"name":"特价套餐","value":15},
-        {"name":"休闲零食","value":7},
-        {"name":"湃客咖啡","value":33},
-        {"name":"精选饮料","value":2},
-        {"name":"冷藏乳饮","value":6},
-        {"name":"美味鲜食","value":2},
-      ]
-      this.initChart();
+    getChartData2(){
+      this.REQUEST_API({
+        api: 'getSectionSales',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData2 = res
+          this.initChart2();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
     },
-    initChart(){
+    getChartData3(){
+      this.REQUEST_API({
+        api: 'getClassifiedProfit',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData3 = res
+          this.initChart3();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
+    },
+    initChart1(){
       this.chart1 = echarts.init(document.getElementById("chart1"));
-      this.chart2 = echarts.init(document.getElementById("chart2"));
-      this.chart3 = echarts.init(document.getElementById("chart3"));
       const option1 = {
           title:{
             text:'分类销量',
@@ -242,6 +271,14 @@ export default {
           ]
         
         };
+      
+      
+      this.chart1.setOption(
+        option1
+      );
+    },
+    initChart2(){
+      this.chart2 = echarts.init(document.getElementById("chart2"));
       const option2 = {
         title:{
           text:'时段销量',
@@ -331,7 +368,7 @@ export default {
                 }
               }
             },
-            data: [2,2,3,4,1]
+            data: this.seriesData2[0]
           },
           {
             name: '面包甜点',
@@ -354,7 +391,7 @@ export default {
                 }
               }
             },
-            data: [7,8,8,8,12]
+            data: this.seriesData2[1]
           },
           {
             name: '特价套餐',
@@ -377,7 +414,7 @@ export default {
                 }
               }
             },
-            data: [2,2,1,1,1]
+            data: this.seriesData2[2]
           },
           {
             name: '休闲零食',
@@ -400,7 +437,7 @@ export default {
                 }
               }
             },
-            data: [4,4,3,2,3]
+            data: this.seriesData2[3]
           },
           {
             name: '湃客咖啡',
@@ -423,7 +460,7 @@ export default {
                 }
               }
             },
-            data: [5,5,5,4,5]
+            data: this.seriesData2[4]
           },
           {
             name: '精选饮料',
@@ -446,7 +483,7 @@ export default {
                 }
               }
             },
-            data: [3,4,3,4,2]
+            data: this.seriesData2[5]
           },
           {
             name: '冷藏乳饮',
@@ -469,7 +506,7 @@ export default {
                 }
               }
             },
-            data: [2,4,5,2,6]
+            data: this.seriesData2[6]
           },
           {
             name: '美味鲜食',
@@ -492,10 +529,16 @@ export default {
                 }
               }
             },
-            data: [1,1,1,1,1]
+            data: this.seriesData2[7]
           }
         ]
       }
+      this.chart2.setOption(
+        option2
+      )
+    },
+    initChart3(){
+      this.chart3 = echarts.init(document.getElementById("chart3"));
       const option3 = {
         title:{
           text:'分类毛利',
@@ -546,12 +589,6 @@ export default {
           }
         ]
       }
-      this.chart1.setOption(
-        option1
-      );
-      this.chart2.setOption(
-        option2
-      )
       this.chart3.setOption(
         option3
       )
