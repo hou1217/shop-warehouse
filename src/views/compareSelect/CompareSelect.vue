@@ -36,7 +36,10 @@
           <div class="goods-box__hd">{{listKey}}</div>
           <div class="goods-box__bd">
             <div class="goods"
-                 :class="{ nm: (goodsIndex + 1) % 4 === 0 }"
+                 :class="{
+                  nm: (goodsIndex + 1) % 4 === 0,
+                  disabled: isSelected
+                 }"
                  v-for="(goods, goodsIndex) in list"
                  :key="goodsIndex">
               <div class="image">
@@ -144,8 +147,6 @@ export default {
       // console.log(this.selected);
     },
     complete(){
-      // console.log(this.selected);
-      
       this.$router.go(-1);
     }
   }

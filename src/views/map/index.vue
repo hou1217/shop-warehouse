@@ -49,17 +49,102 @@
   
     
     <!-- 遮罩层 -->
-    <div class="shade" v-if="shadeVisible"></div>
+    <div class="shade" v-if="shadeVisible" @click.stop="closeShade"></div>
+    <!--<shade :shade-visible="shadeVisible"></shade>-->
     
     <!-- 店铺列表弹出 -->
-    <div class="shop-list-popup"></div>
+    <div class="shop-list-popup" v-if="shopListPopupVisible">
+      <div class="shop-list-popup__hd">
+        <div class="icon">
+          <img src="@/assets/images/shopl_local@2x.png">
+        </div>
+        <div class="text">附近</div>
+      </div>
+      <div class="sort-box">
+        <div class="item item_first">
+          <div class="text">综合</div>
+          <div class="icon">
+            <img src="@/assets/images/shop_arrow_down@2x.png">
+          </div>
+        </div>
+        <div class="item">
+          <div class="text">销量</div>
+          <div class="icon">
+            <img src="@/assets/images/shop_balance@2x.png">
+          </div>
+        </div>
+        <div class="item">
+          <div class="text">距离</div>
+        </div>
+      </div>
+      <div class="shop-list-popup__bd">
+        <div class="shop-box"
+             v-for="(shop, shopIndex) in shopList"
+             :key="shopIndex">
+          <div class="shop-box__bd">
+            <div class="rank">{{shopIndex}}</div>
+            <div class="shop-name">{{shop.name}}</div>
+            <div class="shop-location">
+              <div class="distance">{{shop.distance}}</div>
+              <div class="location">{{shop.location}}</div>
+            </div>
+            <div class="shop-info">
+              <div class="detail">
+                <div class="item">
+                  <div class="character">营业额</div>
+                  <div class="num">￥{{shop.turnover}}</div>
+                </div>
+                <div class="item">
+                  <div class="character">成交量</div>
+                  <div class="num">{{shop.vol}}</div>
+                </div>
+                <div class="item">
+                  <div class="character">客单价</div>
+                  <div class="num">￥{{shop.pct}}</div>
+                </div>
+                <div class="item">
+                  <div class="character">坪效</div>
+                  <div class="num">￥{{shop.lge}}</div>
+                </div>
+              </div>
+              <div class="time">
+                <div class="icon">
+                  <img src="@/assets/images/map/shopmap_tel.png">
+                </div>
+                <div class="character">营业时间：</div>
+                <div class="num">{{shop.time}}</div>
+              </div>
+            </div>
+          </div>
+  
+          <div class="btn btn_phone">
+            <div class="icon">
+              <img src="@/assets/images/map/shopmap_tel@2x.png"/>
+            </div>
+            <div class="text">电话</div>
+          </div>
+          <div class="btn btn_route">
+            <div class="icon">
+              <img src="@/assets/images/map/shopmap_route@2x.png"/>
+            </div>
+            <div class="text">路线</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- todo 排序和门店范围待完成 -->
   </div>
 
 </template>
 <script>
   import {FamilyApi} from '@/service/FamilyApi'
+  import Shade from '@/components/common/Shade'
   
   export default {
+    components: {
+      Shade
+    },
     data: () => {
       return {
         map: null,
@@ -74,7 +159,48 @@
         heatmaps: [],
         currentIndex: 0,
         
-        shadeVisible: true,
+        shadeVisible: false,
+        shopListPopupVisible: false,
+        shopList: [{
+          name: '全家便利店 (虹梅路三店虹梅路三店虹梅梅路)…',
+          distance: '小于100米',
+          location: '宜山路2007号',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        },{
+          name: '全家便利店 (虹梅路二店)',
+          distance: '433米',
+          location: '宜山路2007号',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        },{
+          name: '全家便利店 (宜山路)',
+          distance: '654米',
+          location: '宜山路2007号',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        },{
+          name: '全家便利店 (虹梅路三店虹梅路三店虹梅梅路)…',
+          distance: '766米',
+          location: '宜山路2007号',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        }],
+        
+        sortPopupVisible: false,
+        distancePopupVisible: false,
       }
     },
     methods: {
@@ -296,7 +422,14 @@
       
       // 点击打开排行
       openShopList() {
+        this.shadeVisible = true;
+        this.shopListPopupVisible = true;
+      },
       
+      // 关闭遮罩
+      closeShade() {
+        this.shopListPopupVisible = false;
+        this.shadeVisible = false;
       },
     },
     mounted: function () {
@@ -305,22 +438,22 @@
       recaptchaScript.setAttribute('src', 'https://webapi.amap.com/maps?v=1.4.14&key=687288a4144c83a67b11a316ec4c35bb');
       document.head.appendChild(recaptchaScript);
       recaptchaScript.onload = () => {
-        
+
         console.debug("高德地图加载成功");
-        
+
         //初始化地图对象，加载地图
         this.map = new AMap.Map("container", {
           zoom: 15,
           resizeEnable: false,
           zoomEnable: false
         });
-        
+
         //定位
         this.initGeolocation();
-        
+
         //加载全家便利店
         this.initBuilding();
-        
+
         //加载热力度
         this.initHeapMap();
         
@@ -585,5 +718,279 @@
     background: #ffffff;
     border-radius: 20px 20px 0 0;
   }
+  
+  .shop-list-popup__hd {
+    width: 100%;
+    height: 53px;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    border-bottom: 1px solid #EEEEEE;
+  }
+  
+  .shop-list-popup__hd .icon {
+    width: 32px;
+    height: 32px;
+    margin: 0 8px 0 0;
+  }
 
+  .shop-list-popup__hd .icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shop-list-popup__hd .text {
+    height: 33px;
+    line-height: 33px;
+    font-family: PingFangSC-Regular;
+    font-size: 24px;
+    color: #575C68;
+  }
+  
+  .shop-list-popup .sort-box {
+    width: 100%;
+    height: 62px;
+    border-bottom: 1px solid #EEEEEE;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .shop-list-popup .sort-box .item {
+    padding: 0 30px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+  }
+
+  .shop-list-popup .sort-box .item .text {
+    height: 37px;
+    line-height: 37px;
+    font-family: PingFangSC-Regular;
+    font-size: 26px;
+    color: #8D93A4;
+    text-align: justify;
+    margin: 0 4px 0 0;
+  }
+
+  .shop-list-popup .sort-box .item.item_first .text {
+    font-family: PingFangSC-Medium;
+    color: #262626;
+  }
+
+  .shop-list-popup .sort-box .item .icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .shop-list-popup .sort-box .item .icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shop-list-popup__bd {
+    width: 100%;
+    height: 1108px;
+    background: #ffffff;
+    padding: 0 30px;
+  }
+
+  .shop-list-popup__bd .shop-box {
+    width: 100%;
+    height: 262px;
+    padding: 30px 0 0 30px;
+    border-bottom: 1px solid rgba(238,238,238,0.6);
+    position: relative;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd {
+    width: 100%;
+    position: relative;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .rank {
+    position: absolute;
+    top: 0;
+    left: -30px;
+    font-family: SFUIDisplay-Regular;
+    font-size: 24px;
+    color: #8D93A4;
+    text-align: justify;
+    height: 42px;
+    line-height: 42px;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-name {
+    width: 100%;
+    height: 42px;
+    line-height: 42px;
+    font-family: PingFangSC-Medium;
+    font-size: 30px;
+    color: #262626;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 0 6px 0;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-location {
+    width: 100%;
+    height: 37px;
+    display: flex;
+    align-items: center;
+    font-size: 0;
+    margin: 0 0 19px 0;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-location .distance {
+    height: 37px;
+    line-height: 37px;
+    font-family: PingFangSC-Regular;
+    font-size: 26px;
+    color: #575C68;
+    margin: 0 25px 0 0;
+    position: relative;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-location .distance:after {
+    content: '';
+    width: 1px;
+    height: 22px;
+    background: #D8D8D8;
+    position: absolute;
+    right: -12px;
+    top: 50%;
+    -webkit-transform: translate(0, -50%);
+    -moz-transform: translate(0, -50%);
+    -ms-transform: translate(0, -50%);
+    -o-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-location .location {
+    height: 37px;
+    line-height: 37px;
+    font-family: PingFangSC-Regular;
+    font-size: 26px;
+    color: #575C68;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info {
+    width: 100%;
+    
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+    margin: 0 0 6px 0;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail .item {
+    height: 33px;
+    display: flex;
+    align-items: center;
+    margin: 0 60px 2px 0;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail .item .character {
+    height: 33px;
+    line-height: 33px;
+    margin: 0 10px 0 0;
+    font-family: PingFangSC-Regular;
+    font-size: 24px;
+    color: #8D93A4;
+    text-align: justify;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail .item .num {
+    height: 31px;
+    line-height: 31px;
+    font-family: SFUIDisplay-Regular;
+    font-size: 26px;
+    color: #8D93A4;
+    text-align: justify;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .icon {
+    width: 22px;
+    height: 22px;
+    margin: 0 6px 0 0;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .character {
+    height: 30px;
+    line-height: 30px;
+    font-family: PingFangSC-Regular;
+    font-size: 22px;
+    color: #8D93A4;
+    text-align: justify;
+  }
+
+  .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .num {
+    height: 30px;
+    line-height: 30px;
+    font-family: SFUIDisplay-Regular;
+    font-size: 22px;
+    color: #8D93A4;
+    text-align: justify;
+  }
+
+  .shop-list-popup__bd .shop-box > .btn {
+    width: 92px;
+    height: 131px;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    bottom: 0;
+  }
+
+  .shop-list-popup__bd .shop-box > .btn .icon {
+    width: 50px;
+    height: 50px;
+    margin: 0 0 4px 0;
+  }
+
+  .shop-list-popup__bd .shop-box > .btn .icon img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .shop-list-popup__bd .shop-box > .btn .text {
+    height: 25px;
+    line-height: 25px;
+    font-family: PingFangSC-Regular;
+    font-size: 18px;
+    color: #8D93A4;
+    text-align: justify;
+  }
+  
+  .btn.btn_phone {
+    right: 75px;
+  }
+  
+  .btn.btn_route {
+    right: -17px;
+  }
 </style>
