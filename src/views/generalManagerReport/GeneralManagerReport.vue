@@ -1,9 +1,9 @@
 <template>
   <div class="container container_gm-report" ref="container">
     <!-- todo 替换为通用组件 -->
-    <div class="hd" @click.stop="selectLocation">
+    <div class="hd">
       <div class="text">{{location ? location : '选择定位'}}</div>
-      <div class="location-icon">
+      <div class="location-icon" @click.stop="selectLocation">
         <img src="@/assets/images/shopl_local@2x.png">
       </div>
     </div>
@@ -181,9 +181,9 @@
     watch: {
       shadeVisible(val) {
         if (val) {
-          document.querySelector('.container_gm-report').classList.add('noScroll');
+          document.querySelector('.container_gm-report').classList.add('notScroll');
         } else {
-          document.querySelector('.container_gm-report').classList.remove('noScroll');
+          document.querySelector('.container_gm-report').classList.remove('notScroll');
         }
       }
     },
