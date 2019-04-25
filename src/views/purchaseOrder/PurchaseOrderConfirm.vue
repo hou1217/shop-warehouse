@@ -26,7 +26,7 @@
           <div class="goods"
                v-for="(goods, goodsIndex) in goodsList"
                :key="goodsIndex">
-            <!--<img :src="goods.image">-->
+            <img :src="goods.image">
           </div>
           <div class="goods goods_more">
             <div class="text">共{{goodsNum}}件</div>
@@ -69,13 +69,13 @@
         },
         goodsList: [
           {
-            image: ''
+            image: require('@/assets/images/demo/goods_1.png')
           },{
-            image: ''
+            image: require('@/assets/images/demo/goods_2.png')
           },{
-            image: ''
+            image: require('@/assets/images/demo/goods_3.png')
           },{
-            image: ''
+            image: require('@/assets/images/demo/goods_4.png')
           }
         ],
         goodsNum: 15,

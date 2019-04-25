@@ -33,7 +33,7 @@
           <div class="goods"
                v-for="(goods, goodsIndex) in order.goodsList"
                :key="goodsIndex">
-            <!--<img :src="goods.image">-->
+            <img :src="goods.image" :onerror="defaultSrc">
           </div>
         </div>
         <div class="goods-num">
@@ -86,25 +86,38 @@
         orderList: [{
           status: '等待仓库确认',
           goodsList:
-              [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+              [{image: require('@/assets/images/demo/goods_1.png')},
+                {image: require('@/assets/images/demo/goods_2.png')},
+                {image: require('@/assets/images/demo/goods_3.png')},
+                {image: require('@/assets/images/demo/goods_4.png')},
+                {image: require('@/assets/images/demo/goods_5.png')}],
           goodsNum: 15,
           id: '1'
         },{
           status: '仓库已确认',
           goodsList:
-              [{image: ''},{image: ''}],
+              [{image: require('@/assets/images/demo/goods_1.png')},
+                {image: require('@/assets/images/demo/goods_2.png')}],
           goodsNum: 2,
           id: '1'
         },{
           status: '仓库已发货',
           goodsList:
-              [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+              [{image: require('@/assets/images/demo/goods_1.png')},
+                {image: require('@/assets/images/demo/goods_2.png')},
+                {image: require('@/assets/images/demo/goods_3.png')},
+                {image: require('@/assets/images/demo/goods_4.png')},{
+            image: ''}],
           goodsNum: 15,
           id: '1'
         },{
           status: '订单已完成',
           goodsList:
-              [{image: ''},{image: ''},{image: ''},{image: ''},{image: ''}],
+              [{image: require('@/assets/images/demo/goods_1.png')},
+                {image: require('@/assets/images/demo/goods_2.png')},
+                {image: require('@/assets/images/demo/goods_3.png')},
+                {image: require('@/assets/images/demo/goods_4.png')},
+                {image: require('@/assets/images/demo/goods_5.png')}],
           goodsNum: 15,
           id: '1'
         }],
@@ -186,8 +199,14 @@
             goodsNum: 2,
             id: '1'
           }]
-        ]
+        ],
+        
+        defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
+            + '"'
       }
+    },
+    created() {
+      console.debug(this.defaultSrc);
     },
     methods: {
       // 选择订单类型
