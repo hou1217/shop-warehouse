@@ -34,10 +34,11 @@
       <div class="compare-box">
         <div class="compare-box__hd">对比</div>
         <div class="compare-box__bd">
-          <div class="compare-good"
-                v-for="(good, goodIndex) in compareGoods"
-                :key="goodIndex">
-            <!--<img :src="good.icon">-->
+          <div 
+            class="compare-good"
+            v-for="(goods, goodIndex) in compareGoods"
+            :key="goodIndex">
+            <img :src="goods.image">
             <div class="delete-btn" @click.stop="deleteGood(goodIndex)">
               <img src="@/assets/images/search_close@2x.png">
             </div>
@@ -55,6 +56,7 @@
   </div>
 </template>
 <script>
+import eventBus from '@/assets/js/eventBus'
 import { mapActions } from 'vuex'
 import HeaderTitle from '@/components/HeaderTitle'
 import SmallTitle from '@/components/SmallTitle'
@@ -141,30 +143,26 @@ export default {
           value: 'year'
         }
       ],
-      compareGoods: [
-        {
-          icon: '',
-        },
-        {
-          icon: '',
-        },
-        {
-          icon: '',
-        },
-        {
-          icon: '',
-        }
-      ],
+      compareGoods: [],
       
     }
   },
   created(){
-    this.getShopData();
+    eventBus.$on('selectCompareGoods',this.onGoodsUpdate)
+  },
+  beforeDestroy(){
+    eventBus.$off("selectCompareGoods", this.onGoodsUpdate)
   },
   methods:{
     ...mapActions([
       'REQUEST_API'
     ]),
+    
+    onGoodsUpdate(data){
+      console.log(data);
+      this.compareGoods = data;
+    },
+    
     choseTime(index){
       this.currentTimeIndex = index;
       this.kind = index;

@@ -1,0 +1,198 @@
+.container_shop-order {
+  width 100%
+  height auto
+  background #ffffff
+  padding 130px 0 0 0
+
+  >>> img {
+    width 100%
+    height 100%
+  }
+
+  .hd {
+    width 100%
+    height 68px
+    display flex
+    align-items center
+    position fixed
+    top 0
+    left 0
+    border-bottom 1px solid rgba(238, 238, 238, 0.6)
+    background #ffffff
+
+    .back-btn {
+      width 44px
+      height 44px
+      margin 0 6px 0 0
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .text {
+      font-family PingFangSC-Medium
+      font-size 28px
+      color #262626
+      text-align center
+      height 40px
+      line-height 40px
+      margin 0 6px 0 0
+    }
+
+    .search-btn {
+      width 44px
+      height 44px
+      position absolute
+      right 18px
+    }
+  }
+
+
+  .tabbar {
+    width 100%
+    height 62px
+    display flex
+    align-items center
+    position fixed
+    top 68px
+    left 0
+    border-bottom 1px solid #EEEEEE
+    background #ffffff
+
+    .tab {
+      flex 1
+      height 100%
+      display flex
+      justify-content center
+      align-items center
+      font-family PingFangSC-Regular
+      font-size 26px
+      color #8D93A4
+      text-align justify
+      position relative
+
+      .num {
+        width 28px
+        height 28px
+        line-height 28px
+        text-align center
+        border-radius 50%
+        background #F2604D
+        font-family SFUIDisplay-Regular
+        font-size 22px
+        color #FFFFFF
+        letter-spacing: 0
+        position absolute
+        top 7.1px
+        right 10%
+      }
+
+      .bb {
+        display none
+        width 28px
+        height 4px
+        background #262626
+        border-radius 2px
+        position absolute
+        bottom 3px
+      }
+
+      &.active {
+        color #262626
+
+        .bb {
+          display block
+        }
+      }
+    }
+  }
+
+  .bd {
+    width 100%
+    padding 0 24px
+
+    .order-box {
+      width 100%
+      height 351px
+      padding 30px 0 0 0
+      border-bottom 1px solid #EEEEEE
+
+      .status {
+        width 100%
+        height 37px
+        line-height 37px
+        font-family PingFangSC-Regular
+        font-size 26px
+        color #575C68
+        text-align left
+        padding 0 4px
+        margin 0 0 8px 0
+      }
+
+      .goods-list {
+        width 100%
+        height 152px
+        background #F4F4F4
+        border-radius 12px
+        display flex
+        align-items center
+        margin 0 0 4px 0
+
+        .goods {
+          width 120px
+          height 120px
+          margin 0 16px 0 0
+          background aliceblue
+          border-radius 8px
+
+          img {
+            border-radius 8px
+          }
+
+          &:first-child {
+            margin 0 16px 0
+          }
+        }
+      }
+
+      .goods-num {
+        width 100%
+        height 28px
+        line-height 28px
+        text-align right
+        font-family PingFangSC-Regular
+        font-size 20px
+        color #8D93A4
+        margin 0 0 12px 0
+      }
+
+      .btn-box {
+        width 100%
+        display flex
+        justify-content flex-end
+
+        .btn {
+          width 136px
+          height 46px
+          line-height 46px
+          text-align center
+          background rgba(220,222,230,0.10)
+          border 1px solid #8D93A4
+          border-radius 35px
+          font-family PingFangSC-Regular
+          font-size 22px
+          color #8D93A4
+          margin 0 14px 0 0
+
+          &.btn_remind,.btn_another {
+            background rgba(249,171,16,0.10)
+            border 1px solid #F9AB10
+            color #F9AB10
+          }
+        }
+      }
+    }
+  }
+}

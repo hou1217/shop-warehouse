@@ -1,0 +1,438 @@
+.container_gm-report {
+  width 100%
+  height auto
+  background #ffffff
+  padding 68px 0 0 0
+
+  >>> img {
+    width 100%
+    height 100%
+  }
+
+  .hd {
+    width 100%
+    height 68px
+    display flex
+    align-items center
+    justify-content center
+    position fixed
+    top 0
+    left 0
+    border-bottom 1px solid rgba(238, 238, 238, 0.6)
+    background #ffffff
+    z-index 2
+
+    .back-btn {
+      width 44px
+      height 44px
+      margin 0 6px 0 0
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .text {
+      font-family PingFangSC-Medium
+      font-size 28px
+      color #262626
+      text-align center
+      height 40px
+      line-height 40px
+      margin 0 8px 0 0
+    }
+
+    .location-icon {
+      width 32px
+      height 32px
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+  }
+
+  .bd {
+    width 100%
+
+    .box {
+      width 100%
+      height auto
+
+      .box__hd {
+        width 100%
+        height 48px
+        line-height 48px
+        background #F4F4F4
+        font-family PingFangSC-Regular
+        font-size 24px
+        color #575C68
+        text-align left
+        padding 0 18px 0 30px
+      }
+
+      .box__bd {
+        width 100%
+      }
+    }
+
+    .box_performance {
+
+      .box_performance__hd {
+        width 100%
+        height 48px
+        display flex
+        align-items center
+        position relative
+        font-size 0
+
+        .title {
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #575C68
+          text-align center
+          height 33px
+          line-height 33px
+        }
+
+        .text {
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #8D93A4
+          text-align justify
+          height 33px
+          line-height 33px
+          position absolute
+          right 58px
+        }
+
+        .next-btn {
+          width 40px
+          height 40px
+          position absolute
+          right 18px
+
+          img {
+            width 100%
+            height 100%
+          }
+        }
+      }
+
+      .box_performance__bd {
+        margin 0 0 13px 0
+
+        .data-box {
+          width 100%
+          height 166px
+          display flex
+          align-items center
+          justify-content center
+
+          .data {
+            display flex
+            flex 1
+            flex-wrap wrap
+            align-items center
+            justify-content center
+
+            .num {
+              width 100%
+              height 50px
+              line-height 50px
+              text-align center
+              margin 0 0 2px 0
+              font-family SFUIDisplay-Regular
+              font-size 42px
+              color #262626
+
+              &.hasIcon {
+                font-size 0
+                display flex
+                justify-content center
+                align-items center
+
+                .icon {
+                  font-family: PingFangSC-Regular
+                  font-size: 26px
+                  color: #262626
+                  height 37px
+                  line-height 37px
+                  margin-top 10px
+                }
+
+                .money {
+                  height 50px
+                  line-height 50px
+                  font-family SFUIDisplay-Regular
+                  font-size 42px
+                  color #262626
+                }
+              }
+
+              &.last {
+                height 40px
+                line-height 40px
+                font-size 34px
+
+                &.hasIcon {
+                  font-size 0
+                  display flex
+                  justify-content center
+                  align-items center
+
+                  .icon {
+                    font-family SFUIDisplay-Regular
+                    font-size 22px
+                    color #262626
+                    height 30px
+                    line-height 30px
+                    margin 0
+                  }
+
+                  .money {
+                    height 40px
+                    line-height 40px
+                    font-family SFUIDisplay-Regular
+                    font-size 34px
+                    color #262626
+                  }
+                }
+              }
+            }
+
+            .character {
+              width 100%
+              height 30px
+              line-height 30px
+              font-family PingFangSC-Regular
+              font-size 22px
+              color #575C68
+              text-align center
+
+              &.last {
+                font-size 20px
+              }
+            }
+          }
+
+          .bc {
+            width 1px
+            height 40px
+            background #EEEEEE
+          }
+        }
+      }
+    }
+
+    .box_analysis {
+      .box_analysis__hd {}
+      .box_analysis__bd {
+        padding 26px 30px 0
+
+        .time-box {
+          width 100%
+          margin 0 0 16px 0
+
+          .time-box__hd {
+            width 100%
+            height 33px
+            line-height 33px
+            margin 0 0 10px 0
+            font-family PingFangSC-Regular
+            font-size 24px
+            color #8D93A4
+            text-align justify
+          }
+
+          .time-box__bd {
+            width 100%
+            display flex
+            flex-wrap wrap
+
+            .time {
+              width 148px
+              height 56px
+              border-radius 8px
+              background #F4F4F4
+              line-height 56px
+              text-align center
+              font-family PingFangSC-Regular
+              font-size 26px
+              color #575C68
+              margin 0 20px 24px 0
+
+              &.active {
+                background #262626
+                color #FFFFFF
+              }
+            }
+          }
+        }
+        .echarts-box {
+          width 100%
+
+          .echart-box {
+            width 690px
+            height 538px
+            margin 0 0 40px 0
+            background rgba(253,14,14,0.11)
+          }
+        }
+      }
+    }
+  }
+
+  .shade {
+    width 100%
+    height 100vh
+    position fixed
+    top 0
+    left 0
+    z-index 99
+    background rgba(0,0,0,0.6)
+  }
+
+  .location-popup {
+    width 100%
+    height 1044px
+    position fixed
+    bottom 0
+    left 0
+    background #ffffff
+    z-index 100
+
+    .show-location {
+      width 100%
+      display flex
+      flex-wrap wrap
+      align-items center
+      padding 44px 30px
+      border-bottom 1px solid #EEEEEE
+      background #ffffff
+      //position absolute
+      //top 0
+      //left 0
+
+      .province,.city {
+        width 100%
+        display flex
+        align-items center
+        margin 0
+
+        .icon {
+          width 16px
+          height 16px
+          border-radius 50%
+          border 1px solid #F9AB10
+          margin 0 30px 0 0
+        }
+
+        .text {
+          line-height 42px
+          font-family PingFangSC-Regular
+          font-size 30px
+          color #F9AB10
+          text-align justify
+        }
+
+        &.selected {
+          margin 0 0 48px 0
+
+          .icon {
+            background #F9AB10
+          }
+
+          .text {
+            color #262626
+          }
+        }
+      }
+
+      .city {
+        &.selected {
+          margin 0
+        }
+      }
+    }
+
+    .select-box {
+      width 100%
+      height 828px
+      background #F6F6F6
+      overflow scroll
+
+      .list {
+        width 100%
+        height auto
+
+        .item {
+          width 100%
+          height 88px
+          display flex
+          align-items center
+          font-family PingFangSC-Regular
+          font-size 30px
+          color #262626
+          text-align justify
+          padding 0 0 0 76px
+          position relative
+
+          .icon {
+            width 44px
+            height 44px
+            position absolute
+            right 28px
+            display none
+          }
+
+          &.selected {
+            background #ffffff
+
+            .icon {
+              display block
+
+              img {
+                width 100%
+                height 100%
+                z-index 99
+              }
+            }
+          }
+        }
+      }
+
+      &.province-selected {
+        height 734px
+      }
+    }
+    .btn-box {
+      width 100%
+      display flex
+
+      .btn {
+        flex 1
+        height 90px
+        line-height 90px
+        text-align center
+        background #EEEEEE
+        font-family PingFangSC-Regular
+        font-size 32px
+        color #575C68
+        letter-spacing 0
+      }
+
+      .btn_confirm {
+        background #E93A0F
+        color #ffffff
+      }
+    }
+  }
+}
+
+.notScroll {
+  overflow-y hidden
+  height 100%
+}

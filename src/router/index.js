@@ -41,11 +41,13 @@ export default new Router({
       name: 'goodsDetail',
       component: () => import('@/views/goodsDetail/GoodsDetail')
     },
+    // 已进货数据分析
     {
       path: '/stockedGoodsReport',
       name: 'stockedGoodsReport',
       component: () => import('@/views/stockedGoodsReport/StockedGoodsReport')
     },
+    // 未进货数据分析
     {
       path: '/noStockedGoodsReport',
       name: 'noStockedGoodsReport',
@@ -82,11 +84,58 @@ export default new Router({
       name: 'singleClassData',
       component: () => import('@/views/shopReport/SingleClassData')
     },  
-    //选择对比商品
+    //选择对比商品 
     {
       path: '/compareSelect',
       name: 'compareSelect',
       component: () => import('@/views/compareSelect/CompareSelect')
+    },
+    // 总仓报表
+    {
+      path: '/warehouseReport',
+      name: 'warehouseReport',
+      component: () => import('@/views/warehouseReport/WarehouseReport')
+    },
+    // 进货单及进货单管理
+    {
+      path: '/purchaseOrder',
+      name: 'purchaseOrder',
+      component: () => import('@/views/purchaseOrder/PurchaseOrder')
+    },
+    {
+      path: '/purchaseOrderManage',
+      name: 'purchaseOrderManage',
+      component: () => import('@/views/purchaseOrderManage/PurchaseOrderManage')
+    },
+    // 进货确认
+    {
+      path: '/purchaseOrderConfirm',
+      name: 'purchaseOrderConfirm',
+      component: () => import('@/views/purchaseOrderConfirm/PurchaseOrderConfirm')
+    },
+    // 进货订单详情
+    {
+      path: '/purchaseOrderDetail',
+      name: 'purchaseOrderDetail',
+      component: () => import('@/views/purchaseOrderDetail/PurchaseOrderDetail')
+    },
+    // 进货清单列表
+    {
+      path: '/purchaseOrderList',
+      name: 'purchaseOrderList',
+      component: () => import('@/views/purchaseOrderList/PurchaseOrderList')
+    },
+    // 店铺订单
+    {
+      path: '/shopOrder',
+      name: 'shopOrder',
+      component: () => import('@/views/shopOrder/ShopOrder')
+    },
+    // 主管报表
+    {
+      path: '/generalManagerReport',
+      name: 'generalManagerReport',
+      component: () => import('@/views/generalManagerReport/GeneralManagerReport')
     },
     {
       path: '/map',
@@ -99,7 +148,7 @@ export default new Router({
       return savedPosition
     } else {
       if(to.meta.notScrollToTop){
-        return 
+        return
       }else{
         return {x: 0, y: 0}
       }

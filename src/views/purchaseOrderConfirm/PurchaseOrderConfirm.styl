@@ -1,0 +1,296 @@
+.container_purchase-order-confirm {
+  width 100%
+  height auto
+  background #ffffff
+
+  >>> img {
+    width 100%
+    height 100%
+  }
+
+  .hd {
+    width 100%
+    height 68px
+    display flex
+    align-items center
+    position relative
+    border-bottom 1px solid rgba(238, 238, 238, 0.6)
+
+    .back-btn {
+      width 44px
+      height 44px
+      margin 0 6px 0 0
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .text {
+      font-family PingFangSC-Medium
+      font-size 28px
+      color #262626
+      text-align center
+      height 40px
+      line-height 40px
+      margin 0 6px 0 0
+    }
+
+    .location-icon {
+      width 32px
+      height 32px
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .manage-btn {
+      //width 44px
+      height 37px
+      line-height 37px
+      position absolute
+      right 24px
+      font-family PingFangSC-Regular
+      font-size 26px
+      color #575C68
+      text-align justify
+    }
+  }
+
+  .bd {
+    width 100%
+    padding 30px 30px 0
+
+    .consignee-info {
+      width 100%
+      border-bottom 1px solid #EEEEEE
+
+      .consignee {
+        display flex
+        align-items center
+        margin 0 0 12px 0
+        font-size 0
+
+        .consignee__name {
+          max-width 180px
+          white-space nowrap
+          overflow hidden
+          text-overflow ellipsis
+          font-family PingFangSC-Medium
+          font-size 30px
+          color #262626
+          text-align left
+          height 42px
+          line-height 42px
+          margin 0 40px 0 0
+        }
+
+        .consignee__phone {
+          height 38px
+          line-height 38px
+          font-family SFUIDisplay-Medium
+          font-size 32px
+          color #262626
+        }
+      }
+      .address {
+        width 100%
+        display flex
+        align-items center
+        position relative
+        margin 0 0 38px 0
+
+        .text {
+          width 644px
+          max-height 64px
+          line-height 32px
+          margin 0
+          display -webkit-box
+          -webkit-box-orient: vertical
+          -webkit-line-clamp 2
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #575C68
+          text-align justify
+        }
+
+        .next-btn {
+          width 40px
+          height 40px
+          position absolute
+          right -8px
+        }
+      }
+    }
+
+
+    .goods-info {
+      width 100%
+      height 216px
+      display flex
+      align-items center
+      border-bottom 1px solid #EEEEEE
+
+      .goods-list {
+        width 100%
+        height 152px
+        background #F4F4F4
+        border-radius 12px
+        display flex
+        align-items center
+
+        .goods {
+          width 120px
+          height 120px
+          margin 0 16px 0 0
+          border-radius 8px
+          background aliceblue
+
+          img {
+            border-radius 8px
+          }
+
+          &.goods_more {
+            width 130px
+            height 152px
+            display flex
+            align-items center
+            justify-content center
+            font-size 0
+            background #F4F4F4
+            margin 0
+
+            .text {
+              height 30px
+              line-height 30px
+              font-family PingFangSC-Regular
+              font-size 22px
+              color #8D93A4
+              text-align justify
+            }
+
+            .icon {
+              width 32px
+              height 32px
+            }
+          }
+
+          &:first-child {
+            margin 0 16px 0
+          }
+        }
+      }
+    }
+
+    .dispatch-info {
+      display flex
+      height 88px
+      align-items center
+      border-bottom 1px solid #EEEEEE
+      position relative
+
+      .character {
+        height 37px
+        line-height 37px
+        font-family PingFangSC-Regular
+        font-size 26px
+        color #8D93A4
+        text-align left
+      }
+
+      .detail {
+        position absolute
+        right 0
+        display flex
+        align-items center
+
+        .time {
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #262626
+          text-align left
+          line-height 37px
+          margin 0 15.3px 0 0
+        }
+
+        .icon {
+          width 40px
+          height 40px
+        }
+      }
+    }
+
+    .leave-message {
+      width 100%
+      padding 26px 0 22px 0
+      border-bottom 1px solid #EEEEEE
+
+      .character {
+        height 37px
+        line-height 37px
+        margin 0 0 14px 0
+        font-family PingFangSC-Regular
+        font-size 26px
+        color #8D93A4
+        text-align left
+      }
+
+      textarea {
+        width 100%
+        max-height 74px
+        line-height 37px
+        font-family PingFangSC-Regular
+        font-size 26px
+        color #262626
+        text-align left
+        border none
+        outline none
+        resize none
+
+        &::-webkit-input-placeholder{
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #DCDEE6
+          text-align left
+        }    /* 使用webkit内核的浏览器 */
+        &:-moz-placeholder{
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #DCDEE6
+          text-align left
+        }                  /* Firefox版本4-18 */
+        &::-moz-placeholder{
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #DCDEE6
+          text-align left
+        }                  /* Firefox版本19+ */
+        &:-ms-input-placeholder{
+          font-family PingFangSC-Regular
+          font-size 26px
+          color #DCDEE6
+          text-align left
+        }           /* IE浏览器 */
+      }
+    }
+  }
+
+  .confirm-btn {
+    position fixed
+    left 50%
+    bottom 70px
+    transform translate(-50%, 0)
+    width 670px
+    height 92px
+    border-radius 12px
+    background #E93A0F
+    line-height 92px
+    text-align center
+    font-family PingFangSC-Regular
+    font-size 34px
+    color #FFFFFF
+  }
+}
