@@ -41,11 +41,13 @@ export default new Router({
       name: 'goodsDetail',
       component: () => import('@/views/goodsDetail/GoodsDetail')
     },
+      // 已进货数据分析
     {
       path: '/stockedGoodsReport',
       name: 'stockedGoodsReport',
       component: () => import('@/views/stockedGoodsReport/StockedGoodsReport')
     },
+      // 未进货数据分析
     {
       path: '/noStockedGoodsReport',
       name: 'noStockedGoodsReport',
@@ -57,10 +59,52 @@ export default new Router({
       name: 'shopReport',
       component: () => import('@/views/shopReport/ShopReport')
     },
+      // 对比商品选择
     {
       path: '/compareSelect',
       name: 'compareSelect',
       component: () => import('@/views/compareSelect/CompareSelect')
+    },
+      // 进货单及进货单管理
+    {
+      path: '/purchaseOrder',
+      name: 'purchaseOrder',
+      component: () => import('@/views/purchaseOrder/PurchaseOrder')
+    },
+    {
+      path: '/purchaseOrderManage',
+      name: 'purchaseOrderManage',
+      component: () => import('@/views/purchaseOrderManage/PurchaseOrderManage')
+    },
+      // 进货确认
+    {
+      path: '/purchaseOrderConfirm',
+      name: 'purchaseOrderConfirm',
+      component: () => import('@/views/purchaseOrderConfirm/PurchaseOrderConfirm')
+    },
+      // 进货订单详情
+    {
+      path: '/purchaseOrderDetail',
+      name: 'purchaseOrderDetail',
+      component: () => import('@/views/purchaseOrderDetail/PurchaseOrderDetail')
+    },
+      // 进货清单列表
+    {
+      path: '/purchaseOrderList',
+      name: 'purchaseOrderList',
+      component: () => import('@/views/purchaseOrderList/PurchaseOrderList')
+    },
+      // 店铺订单
+    {
+      path: '/shopOrder',
+      name: 'shopOrder',
+      component: () => import('@/views/shopOrder/ShopOrder')
+    },
+      // 主管报表
+    {
+      path: '/generalManagerReport',
+      name: 'generalManagerReport',
+      component: () => import('@/views/generalManagerReport/GeneralManagerReport')
     }
   ],
   scrollBehavior(to, from, savedPosition) {

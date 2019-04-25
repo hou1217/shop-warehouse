@@ -1,0 +1,289 @@
+.container_purchase-order-manage {
+  width 100%
+  height auto
+  background #ffffff
+
+  >>> img {
+    width 100%
+    height 100%
+  }
+
+  .hd {
+    width 100%
+    height 68px
+    display flex
+    align-items center
+    position relative
+    border-bottom 1px solid rgba(238, 238, 238, 0.6)
+
+    .back-btn {
+      width 44px
+      height 44px
+      margin 0 6px 0 0
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .text {
+      font-family PingFangSC-Medium
+      font-size 28px
+      color #262626
+      text-align center
+      height 40px
+      line-height 40px
+      margin 0 6px 0 0
+    }
+
+    .location-icon {
+      width 32px
+      height 32px
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .complete-btn {
+      //width 44px
+      height 37px
+      line-height 37px
+      position absolute
+      right 24px
+      font-family PingFangSC-Regular
+      font-size 26px
+      color #E93A0F
+      text-align justify
+    }
+  }
+
+  .bd {
+    width 100%
+    padding 0 24px 0
+
+    .goods-box {
+      width 100%
+      padding 30px 0 38px 0
+      border-bottom 1px solid #EEEEEE
+      display flex
+
+      .select-btn {
+        width 52px
+        height 52px
+        margin 54px 24px 0 0
+      }
+
+      .goods-img {
+        width 160px
+        height 160px
+        border-radius 8px
+        background #e3e3e3
+        margin 0 12px 0 0
+
+        img {
+          border-radius 8px
+        }
+      }
+
+      .goods-detail {
+        flex 1
+        margin 12px 0 0 0
+
+        //height 200px
+        //background aliceblue
+
+        .name {
+          width 100%
+          line-height 36px
+          font-family PingFangSC-Regular
+          font-size 28px
+          color #262626
+          text-align justify
+          display -webkit-box
+          -webkit-box-orient: vertical
+          -webkit-line-clamp 2
+        }
+
+        .tip {
+          width 100%
+          height 58px
+          display flex
+          align-items center
+          position relative
+
+          .specifications {
+            width 160px
+            height 100%
+            display flex
+            align-items center
+
+            .text {
+              font-family PingFangSC-Regular
+              font-size 24px
+              color #8D93A4
+              text-align justify
+              height 33px
+              line-height 33px
+              margin 0 10px 0 0
+            }
+
+            .icon {
+              width 26px
+              height 26px
+            }
+          }
+
+          .count-less-tip {
+            font-family PingFangSC-Regular
+            font-size 22px
+            color #E93A0F
+            text-align justify
+            height 30px
+            line-height 30px
+            position absolute
+            right 0
+          }
+        }
+
+        .option {
+          width 100%
+          height 38px
+          display flex
+          align-items center
+          position relative
+
+          .price {
+            height 100%
+            display flex
+            align-items center
+
+            .icon {
+              width 16.4px
+              height 20px
+              margin 0 3.6px 0 0
+            }
+
+            .num {
+              font-family SFUIDisplay-Regular
+              font-size 30px
+              color #E93A0F
+              text-align justify
+              height 36px
+              line-height 36px
+            }
+          }
+
+          .num-control {
+            position absolute
+            right -14px
+            font-size 0
+          }
+        }
+
+        .activities {
+          width 100%
+          height 32px
+          margin 15px 0 0 0
+          display flex
+          align-items center
+
+          .icon {
+            width 32px
+            height 32px
+            margin 0 8px 0 0
+          }
+
+          .activity {
+            height 32px
+            line-height 32px
+            border 1px solid
+            padding 0 8px
+            font-family PingFangSC-Regular
+            font-size 20px
+            text-align justify
+            margin 0 10px 0 0
+
+            &.activity_1 {
+              color #F2604D
+              background #FFF2EE
+              border-color #F2604D
+            }
+
+            &.activity_2 {
+              color #42C772
+              background #E8FFF0
+              border-color #42C772
+            }
+          }
+        }
+      }
+    }
+  }
+  .footer {
+    position fixed
+    left 0
+    bottom 0
+    z-index 2
+    width 100%
+    height 90px
+    background #ffffff
+    border-top 1px solid #DCDEE6
+    display flex
+    align-items center
+    font-size 0
+    padding 0 24px
+
+    .select-all-btn {
+      height 52px
+      display flex
+      align-items center
+
+      .icon {
+        width 52px
+        height 52px
+        margin 0 8px 0 0
+      }
+
+      .text {
+        font-family PingFangSC-Regular
+        font-size 26px
+        color #ADB1BE
+        height 37px
+        line-height 37px
+      }
+    }
+
+    .collect-btn {
+      height 54px
+      line-height 54px
+      padding 0 30px
+      background rgba(249,171,16,0.10)
+      border-radius 27px
+      border 1px solid #F9AB10
+      color #F9AB10
+      position absolute
+      right 200px
+      font-family PingFangSC-Regular
+      font-size 24px
+      text-align center
+    }
+
+    .delete-btn {
+      height 54px
+      line-height 54px
+      padding 0 54px
+      background rgba(233,58,15,0.10)
+      border-radius 27px
+      border 1px solid #E93A0F
+      color #E93A0F
+      position absolute
+      right 24px
+      font-family PingFangSC-Regular
+      font-size 24px
+      text-align center
+    }
+  }
+}

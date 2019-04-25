@@ -1,5 +1,6 @@
 <template>
   <div class="container container_stocked">
+    <!-- todo 替换为通用组件 -->
     <div class="hd">
       <div class="back-btn" @click="$router.go(-1)">
         <img src="@/assets/images/h5_arrow_back@2x.png">
@@ -196,9 +197,9 @@
       // 新增对比商品
       addGood() {
         console.debug('跳转至商品选择页');
-        // this.$router.push({
-        //   path: '/'
-        // });
+        this.$router.push({
+          path: '/compareSelect'
+        });
       },
     }
   }

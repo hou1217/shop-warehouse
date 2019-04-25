@@ -1,0 +1,233 @@
+.container_compare-select {
+  width 100%
+  height auto
+  background #ffffff
+
+  .hd {
+    width 100%
+    height 68px
+    display flex
+    align-items center
+    position relative
+    border-bottom 1px solid rgba(238,238,238,0.6)
+
+    .back-btn {
+      width 44px
+      height 44px
+      margin 0 6px 0 0
+
+      img {
+        width 100%
+        height 100%
+      }
+    }
+
+    .text {
+      font-family PingFangSC-Medium
+      font-size 28px
+      color #262626
+      text-align center
+      height 40px
+      line-height 40px
+    }
+
+    .complete-btn {
+      //width 44px
+      height 37px
+      line-height 37px
+      position absolute
+      right 24px
+      font-family PingFangSC-Regular
+      font-size 26px
+      color #E93A0F
+      text-align justify
+    }
+  }
+
+
+  .bd {
+    width 100%
+    padding 20px 16px 0
+
+    .search-box {
+      width 690px
+      height 72px
+      margin 0 auto
+      border 1px solid #DCDEE6
+      border-radius 8px
+      position relative
+      display flex
+      align-items center
+      padding 0 14px 0
+      font-size 0
+      margin 0 0 20px 0
+
+      .icon {
+        width 36.2px
+        height 36.2px
+        margin 0 9.8px 0 0
+
+        img {
+          width 100%
+          height 100%
+        }
+      }
+
+      .search-input {
+        flex 1
+        height 42px
+        line-height 42px
+        border none
+        outline none
+        font-size 30px
+
+        &::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+          font-family PingFangSC-Regular
+          font-size 30px
+          color #ADB1BE
+        }
+        &:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+          font-family PingFangSC-Regular
+          font-size 30px
+          color #ADB1BE
+        }
+        &::-moz-placeholder { /* Mozilla Firefox 19+ */
+          font-family PingFangSC-Regular
+          font-size 30px
+          color #ADB1BE
+        }
+        &:-ms-input-placeholder { /* Internet Explorer 10-11 */
+          font-family PingFangSC-Regular
+          font-size 30px
+          color #ADB1BE
+        }
+      }
+    }
+
+    .category-box {
+      width 100%
+      display flex
+      flex-wrap wrap
+
+      .category {
+        display flex
+        height 42px
+        line-height 42px
+        padding 0 24px
+        border-radius 21px
+        background #ffffff
+        font-family PingFangSC-Regular
+        font-size 26px
+        color #8D93A4
+        position relative
+
+        .hasItem {
+          position absolute
+          top 0
+          right 4px
+          width 14px
+          height 14px
+          border 1px solid #ffffff
+          background #F2604D
+          border-radius 50%
+        }
+
+        &.active {
+          background #ADB1BE
+          color #ffffff
+        }
+      }
+    }
+
+    .list-box {
+      width 100%
+
+      .goods-box {
+        width 100%
+
+        .goods-box__hd {
+          width 694px
+          height 64px
+          display flex
+          align-items center
+          padding 10px 0 0 0
+          font-family PingFangSC-Regular
+          font-size 24px
+          color #ADB1BE
+          text-align justify
+          border-bottom 1px solid #EEEEEE
+          margin 0 auto 22px
+          text-indent 2px
+        }
+
+        .goods-box__bd {
+          width 100%
+          display flex
+          flex-wrap wrap
+
+          .goods {
+            width 166px
+            margin 0 18px 20px 0
+
+            .image {
+              width 166px
+              height 166px
+              margin 0 0 8px 0
+              position relative
+              background #e3e3e3
+              border-radius 8px
+
+              .select-btn {
+                width 44px
+                height 44px
+                line-height 44px
+                position absolute
+                top 6px
+                right 6px
+                background-image url("../../assets/images/select_unselect_img@2x.png")
+                background-size cover
+                background-repeat no-repeat
+                font-family PingFangSC-Regular
+                font-size 30px
+                color #262626
+                text-align center
+
+                &.selected {
+                  background-image url("../../assets/images/choose_sel@2x.png")
+                  font-family PingFangSC-Regular
+                  font-size 30px
+                  color #262626
+                  text-align center
+                }
+              }
+
+              img {
+                width 100%
+                height 100%
+                border-radius 8px
+                object-fit cover
+              }
+            }
+
+            .name {
+              width 160px
+              height 33px
+              line-height 33px
+              font-family PingFangSC-Regular
+              font-size 24px
+              color #575C68
+              text-align center
+              overflow hidden
+              text-overflow ellipsis
+              white-space nowrap
+            }
+
+            &.nm {
+              margin 0 0 20px 0
+            }
+          }
+        }
+      }
+    }
+  }
+}

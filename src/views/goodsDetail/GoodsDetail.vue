@@ -279,7 +279,7 @@
   // import Bscroll from 'better-scroll'
   
   export default {
-    name: "GoodDetail",
+    name: "GoodsDetail",
     data() {
       return {
         shopData: {
@@ -373,6 +373,9 @@
       //     bounce: false
       //   });
       // }
+      document.querySelector('.container_good-detail').addEventListener('touchStart', function(e) {
+        console.debug('touchStart')
+      });
     },
     methods: {
       // 打开活动窗口

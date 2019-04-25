@@ -1,5 +1,6 @@
 <template>
   <div class="container container_no-stocked">
+    <!-- todo 替换为通用组件 -->
     <div class="hd">
       <div class="back-btn" @click="$router.go(-1)">
         <img src="@/assets/images/h5_arrow_back@2x.png">
