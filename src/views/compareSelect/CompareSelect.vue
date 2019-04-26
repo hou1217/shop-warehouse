@@ -209,6 +209,10 @@ export default {
         let index = this.selected.indexOf(goods);
         this.selected.splice(index, 1);
       } else {
+        // 最多只能选择3个
+        if(this.selected.length > 2){
+          return false;
+        }
         this.selected.push(goods);
       }
       // console.log(this.selected);
