@@ -232,8 +232,8 @@
         </div>
         <div class="text">收藏</div>
       </div>
-      <div class="add-list-btn">加入进货单</div>
-      <div class="stock-btn">立即进货</div>
+      <div class="add-list-btn" @click="goToPurchaseOrder()">加入进货单</div>
+      <div class="stock-btn" @click="goToPurchaseOrderConfirm()">立即进货</div>
     </div>
     
     <!-- 弹出 -->
@@ -393,6 +393,18 @@
       });
     },
     methods: {
+      // 加入进货单
+      goToPurchaseOrder(){
+        this.$router.push({
+          name:"purchaseOrder"
+        })
+      },
+      //确认订单
+      goToPurchaseOrderConfirm(){
+        this.$router.push({
+          name:"purchaseOrderConfirm"
+        })
+      },
       // 打开活动窗口
       openActivityPopup() {
         this.shadeVisible = true;

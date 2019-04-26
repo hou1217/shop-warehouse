@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="infoBot">
     <!-- 标题 -->
-    <HeaderTitle :title="'商品总仓'"/>
+    <HeaderTitle :title="'商品总仓'" :name="'stock'"/>
     <!-- 筛选排序 -->
     <HeaderSort @PopupVisible="handlePop"/>  
     <!-- 类别分类 -->
@@ -36,7 +36,7 @@
           :key="index">
           <div class="card">
             <div class="portrait">
-              <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
+              <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
               <div class="addgoods" @click.stop="addgoods()">
                 <img 
                   :src="card.stockNum < 10?
@@ -148,10 +148,12 @@ export default {
       btns:[
         {
           type:'purchaseOrder',
+          name:'purchaseOrder',
           url:require('@/assets/images/shop_suspension_warehouse@2x.png')
         },
         {
           type:'order',
+          name:'shopOrder',
           url:require('@/assets/images/shop_suspension_order@2x.png')
         },
         {
@@ -176,6 +178,14 @@ export default {
       completed: false,
       offset: -110,
       shadeVisible:false
+    }
+  },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
     }
   },
   watch:{
@@ -222,6 +232,11 @@ export default {
     handlePop(val){
       console.warn(val);
       this.shadeVisible = val;
+      if(!val){
+        this.loading = true;
+        this.reload = true;
+        this.getListData();
+      }
     },
     // 触底加载
     infiniteScroll() {

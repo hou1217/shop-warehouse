@@ -1,6 +1,6 @@
 <template>
   <div class="navbar">
-    <div class="back-btn" @click="$router.go(-1)">
+    <div class="back-btn" @click="goBack()">
       <img src="@/assets/images/navi_back_w@2x.png">
     </div>
     <div class="title">{{title}}</div>
@@ -15,9 +15,19 @@
       title:{
         type:String,
         default:'设置'
+      },
+      name:{
+        type: String
       }
     },
     methods:{
+      goBack(){
+        if(!this.name){
+          this.$router.go(-1);
+        }else{
+          this.$router.push({name:this.name,params:{type:1}});
+        }
+      },
       clickSearch(){
         this.$emit('clickSearch');
       }

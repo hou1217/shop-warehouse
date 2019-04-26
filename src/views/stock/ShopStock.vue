@@ -1,7 +1,7 @@
 <template>
   <div class="container" ref="infoBot">
     <!-- 标题 -->
-    <HeaderTitle :title="'店铺库存'"/>
+    <HeaderTitle :title="'店铺库存'" :name="'category'"/>
     <!-- 筛选排序 -->
     <HeaderSort @PopupVisible="handlePop"/>  
     <!-- 类别分类 -->
@@ -36,7 +36,7 @@
           :key="index">
           <div class="card">
             <div class="portrait">
-              <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
+              <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
               <div class="addgoods" @click.stop="addgoods()">
                 <img 
                   :src="card.stockNum < 10?
@@ -129,6 +129,14 @@ export default {
       shadeVisible:false
     }
   },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
+    }
+  },
   watch:{
     '$route.params.type':{
       handler(val){
@@ -146,6 +154,9 @@ export default {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goBack(){
+      this.$router.push({name:'category'});
+    },
     goToDetail(id){
       console.log(id);
       this.$router.push({name:'goodsDetail',query:{id:id}});
