@@ -180,6 +180,7 @@ export default {
         sinkToPin: 2
       },
       compareGoods: [],
+      number: 1
     }
   },
   created(){
@@ -187,6 +188,17 @@ export default {
     this.getChartData1();
     this.getChartData2();
     this.getChartData3();
+  },
+  watch:{
+    'compareGoods.length':{
+      handler(){
+        this.number = this.compareGoods.length + 1
+        console.error(this.number);
+        this.getChartData1();
+        this.getChartData2();
+        this.getChartData3();
+      }
+    }
   },
   beforeDestroy(){
     eventBus.$off("selectCompareGoods", this.onGoodsUpdate)
@@ -202,7 +214,7 @@ export default {
       this.$router.push({name:'historyRecord'});
     },
     onGoodsUpdate(data){
-      console.log(data);
+      console.warn(data);
       this.compareGoods = data;
     },
     // 选择时间
@@ -216,12 +228,24 @@ export default {
     getChartData1(){
       this.REQUEST_API({
         api: 'getGoodsSalesNum',
-        params: {}
+        params: {
+          number:this.number
+        }
       })
       .then((res) => {
         console.log(res);
         if(res){
-          this.seriesData1 = res;
+          let arr = [];
+          for(let i = 0; i< this.compareGoods.length+1;i++){
+            let item = { 
+              type: 'line',
+              data: res[i]
+            }
+            arr.push(item);
+          }
+          this.seriesData1 = arr;
+         
+          console.log(this.seriesData1);
           this.initChart1();
         }
         console.warn('加载结束');
@@ -234,12 +258,22 @@ export default {
     getChartData2(){
       this.REQUEST_API({
         api: 'getSalesRate',
-        params: {}
+        params: {
+          number:this.number
+        }
       })
       .then((res) => {
         console.log(res);
         if(res){
-          this.seriesData2 = res
+          let arr = [];
+          for(let i = 0; i< this.compareGoods.length+1;i++){
+            let item = { 
+              type: 'line',
+              data: res[i]
+            }
+            arr.push(item);
+          }
+          this.seriesData2 = arr;
           this.initChart2();
         }
         console.warn('加载结束');
@@ -252,12 +286,22 @@ export default {
     getChartData3(){
       this.REQUEST_API({
         api: 'getSalesRatio',
-        params: {}
+        params: {
+          number:this.number
+        }
       })
       .then((res) => {
         console.log(res);
         if(res){
-          this.seriesData3 = res
+          let arr = [];
+          for(let i = 0; i< this.compareGoods.length+1;i++){
+            let item = { 
+              type: 'line',
+              data: res[i]
+            }
+            arr.push(item);
+          }
+          this.seriesData3 = arr;
           this.initChart3();
         }
         console.warn('加载结束');
@@ -336,33 +380,9 @@ export default {
             show: false
           }
         }],
-        series: [
-          {
-            name: '销量',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#9e4518',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData1
-          }
-         
-        ]
+        series: this.seriesData1 
       }
+      this.chart1.clear();
       this.chart1.setOption(
         option1
       )
@@ -436,32 +456,9 @@ export default {
             show: false
           }
         }],
-        series: [
-          {
-            name: '动销率%',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#2c5b8b',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2
-          }
-        ]
+        series: this.seriesData2 
       }
+      this.chart2.clear();
       this.chart2.setOption(
         option2
       )
@@ -535,32 +532,9 @@ export default {
             show: false
           }
         }],
-        series: [
-          {
-            name: '库销比',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#2c5b8b',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData3
-          }
-        ]
+        series: this.seriesData3
       }
+      this.chart3.clear();
       this.chart3.setOption(
         option3
       )

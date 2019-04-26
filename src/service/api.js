@@ -49,11 +49,11 @@ const APIs = {
   //获取最佳伴侣
   getMateList: params => getApi('/mateList',params.params),
   //销量
-  getGoodsSalesNum: params => getApi('/report/goodsSalesNum',params.params),
+  getGoodsSalesNum: params => getApi(`/report/goodsSalesNum/${params.params.number}`,params.params),
   //动销率
-  getSalesRate: params => getApi('/report/salesRate',params.params),
+  getSalesRate: params => getApi(`/report/salesRate/${params.params.number}`,params.params),
   //库销比
-  getSalesRatio: params => getApi('/report/salesRatio',params.params),
+  getSalesRatio: params => getApi(`/report/salesRatio/${params.params.number}`,params.params),
   //历史记录
   getHistoryRecord: params =>  getApi('/historyRecord',params.params),
   getHistoryRecord1: params =>  getApi('/historyRecord1',params.params),
