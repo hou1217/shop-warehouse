@@ -53,7 +53,11 @@
       </div>
     </div>
     
-    <div class="confirm-btn" @click.stop="orderConfirm">确认下单</div>
+    <div class="confirm-btn"
+         ref="confirmButton"
+         @click.stop="orderConfirm">
+      确认下单
+    </div>
   </div>
 </template>
 
@@ -84,6 +88,20 @@
           timeRange: '10:00-11:00'
         }
       }
+    },
+    mounted() {
+      console.debug('mounted');
+      console.debug(document.documentElement.clientHeight);
+      let oHeight = document.documentElement.clientHeight;
+      let confirmButton = document.querySelector('.confirm-btn');
+      window.addEventListener('resize', function (e) {
+        if (document.documentElement.clientHeight < oHeight) {
+          // alert(document.documentElement.clientHeight);
+          confirmButton.classList.add('mt');
+        } else {
+          confirmButton.classList.remove('mt');
+        }
+      });
     },
     methods: {
       // 确认下单

@@ -134,7 +134,9 @@
       </div>
       
       <!-- 盒子内部遮罩层 -->
-      <div class="popup-shade" v-if="popupShadeVisible"></div>
+      <div class="popup-shade"
+           v-if="popupShadeVisible"
+           @click="closePopupShade"></div>
       
       <!-- 盒子内部弹窗 -->
       <div class="sort-popup" v-if="sortPopupVisible">
@@ -582,6 +584,13 @@
         this.distancePopupVisible = false;
         this.popupShadeVisible = false;
       },
+  
+      // 点击popup内遮罩
+      closePopupShade() {
+        this.sortPopupVisible = false;
+        this.distancePopupVisible = false;
+        this.popupShadeVisible = false;
+      },
     },
     mounted: function () {
 
@@ -654,9 +663,6 @@
         //   heatmap.show();
         //
         // });
-
-        //数据实时加载
-
       }
     }
   }
@@ -861,7 +867,7 @@
   
   .shop-list-popup {
     width: 100%;
-    height: 1223px;
+    height: 91.7%;
     position: fixed;
     bottom: 0;
     left: 0;

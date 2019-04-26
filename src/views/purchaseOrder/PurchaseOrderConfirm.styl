@@ -1,6 +1,6 @@
 .container_purchase-order-confirm {
   width 100%
-  height auto
+  height 100%
   background #ffffff
 
   >>> img {
@@ -13,8 +13,10 @@
     height 68px
     display flex
     align-items center
-    position relative
+    position fixed
     border-bottom 1px solid rgba(238, 238, 238, 0.6)
+    background #ffffff
+    z-index 1
 
     .back-btn {
       width 44px
@@ -62,7 +64,7 @@
 
   .bd {
     width 100%
-    padding 30px 30px 0
+    padding 98px 30px 0
 
     .consignee-info {
       width 100%
@@ -292,5 +294,10 @@
     font-family PingFangSC-Regular
     font-size 34px
     color #FFFFFF
+
+    &.mt {
+      position static
+      margin 241px 0 0 375px
+    }
   }
 }

@@ -33,12 +33,12 @@
         <div class="goods-box"
              v-for="(list, listKey, listIndex) in goods"
              :key="listIndex">
-          <div class="goods-box__hd">{{listKey}}</div>
+          <div class="goods-box__hd">{{listKey + '(' + list.length + ')'}}</div>
           <div class="goods-box__bd">
             <div class="goods"
                  :class="{
                   nm: (goodsIndex + 1) % 4 === 0,
-                  disabled: isSelected
+                  disabled: isSelected(goods.id)
                  }"
                  v-for="(goods, goodsIndex) in list"
                  :key="goodsIndex">
@@ -121,8 +121,70 @@ export default {
           }
         ]
       },
-      selected: []
+      selected: [],
+      hasSelected: [],
+  
+      // 测试数据
+      // testData: {
+      //   '早餐': [
+      //     {
+      //       name: '商品1',
+      //       image: require('@/assets/images/demo/goods_1.png'),
+      //       id: '1'
+      //     },{
+      //       name: '商品2',
+      //       image: require('@/assets/images/demo/goods_2.png'),
+      //       id: '2'
+      //     },{
+      //       name: '商品3',
+      //       image: require('@/assets/images/demo/goods_3.png'),
+      //       id: '3'
+      //     }
+      //   ],
+      //   '午餐': [
+      //     {
+      //       name: '商品4',
+      //       image: require('@/assets/images/demo/goods_4.png'),
+      //       id: '4'
+      //     },{
+      //       name: '商品5',
+      //       image: require('@/assets/images/demo/goods_5.png'),
+      //       id: '5'
+      //     },{
+      //       name: '商品6',
+      //       image: require('@/assets/images/demo/goods_6.png'),
+      //       id: '6'
+      //     },{
+      //       name: '商品7',
+      //       image: require('@/assets/images/demo/goods_7.png'),
+      //       id: '7'
+      //     },{
+      //       name: '商品8',
+      //       image: require('@/assets/images/demo/goods_8.png'),
+      //       id: '8'
+      //     },{
+      //       name: '商品9',
+      //       image: require('@/assets/images/demo/goods_9.png'),
+      //       id: '9'
+      //     },{
+      //       name: '商品10',
+      //       image: require('@/assets/images/demo/goods_10.png'),
+      //       id: '10'
+      //     },{
+      //       name: '商品11',
+      //       image: require('@/assets/images/demo/goods_11.png'),
+      //       id: '11'
+      //     }
+      //   ]
+      // },
     }
+  },
+  created() {
+    eventBus.$on('selectedCompareGoods', this.comparedGoods);
+    // this.getGoodsListData();
+  },
+  beforeDestroy() {
+    eventBus.$off("selectedCompareGoods", this.comparedGoods)
   },
   destroyed(){
     eventBus.$emit('selectCompareGoods',this.selected);
@@ -130,14 +192,19 @@ export default {
   methods: {
     // 切换分类
     selectCategory(category, index) {
-      console.debug('切换分类');
+      // console.debug('切换分类');
       this.currentCategoryIndex = index;
     },
     
     // 选择商品
     select(goods) {
-      console.debug('选择商品');
+      // console.debug('选择商品');
       // console.debug(goods);
+      let event = window.event;
+      if (event.target.parentNode.parentNode.classList.contains('disabled')) {
+        return false;
+      }
+      
       if (this.selected.indexOf(goods) > -1) {
         let index = this.selected.indexOf(goods);
         this.selected.splice(index, 1);
@@ -148,7 +215,43 @@ export default {
     },
     complete(){
       this.$router.go(-1);
-    }
+    },
+    
+    // 处理已参加对比的商品
+    comparedGoods(data) {
+      // 获得已选择过的商品列表data
+      // console.debug(data);
+      
+      this.hasSelected = data;
+    },
+    
+    isSelected(id) {
+      for (let i = 0; i < this.hasSelected.length; i++) {
+        if (this.hasSelected[i].id === id) {
+          return true;
+          break;
+        } else {
+          if (i === this.hasSelected.length - 1) {
+            return false;
+          }
+        }
+      }
+    },
+    
+    // 获取数据
+    getGoodsListData() {
+      // console.debug('getGoodsListData');
+      if (this.testData) {
+        // console.debug(this.testData);
+        for (let key in this.testData) {
+          this.goods[key] = [];
+          for (let item of this.testData[key]) {
+            this.goods[key].push(item);
+          }
+        }
+        // console.debug(this.goods);
+      }
+    },
   }
 }
 </script>
