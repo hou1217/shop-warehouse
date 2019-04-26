@@ -41,18 +41,7 @@ export default new Router({
       name: 'goodsDetail',
       component: () => import('@/views/goodsDetail/GoodsDetail')
     },
-    // 已进货数据分析
-    {
-      path: '/stockedGoodsReport',
-      name: 'stockedGoodsReport',
-      component: () => import('@/views/stockedGoodsReport/StockedGoodsReport')
-    },
-    // 未进货数据分析
-    {
-      path: '/noStockedGoodsReport',
-      name: 'noStockedGoodsReport',
-      component: () => import('@/views/noStockedGoodsReport/NoStockedGoodsReport')
-    },
+   
     // 店铺报表
     {
       path: '/shopReport/:type',
@@ -83,6 +72,18 @@ export default new Router({
       path: '/singleClassData',
       name: 'singleClassData',
       component: () => import('@/views/shopReport/SingleClassData')
+    },
+    // 店铺报表-已进货商品数据分析
+     {
+      path: '/stockedGoodsReport',
+      name: 'stockedGoodsReport',
+      component: () => import('@/views/shopReport/StockedGoodsReport')
+    },
+    // 未进货数据分析
+    {
+      path: '/noStockedGoodsReport',
+      name: 'noStockedGoodsReport',
+      component: () => import('@/views/noStockedGoodsReport/NoStockedGoodsReport')
     },
     //选择对比商品
     {

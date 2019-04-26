@@ -94,6 +94,13 @@
         :title="'分类数据'" 
         :hasRightImg="true"
         :hasNextBtn="true"/>
+      <div class="echarts-box">
+        <!-- <div class="time-box__hd">分类销量</div> -->
+        <div class="echart-box" id="chart1"></div>
+        
+        <!-- <div class="time-box__hd">分类毛利</div> -->
+        <div class="echart-box" id="chart3"></div>
+      </div>
       <div class="box box_performance box_kinds">
         
         <!-- <div class="box__bd box_kinds__bd">
@@ -132,7 +139,7 @@
           :key="index">
             <div class="card">
               <div class="portrait">
-                <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
+                <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
                 <div class="rank-icon" :class="{hasRedBac:index < 3}">
                   {{index+1}}
                   
@@ -157,7 +164,7 @@
                     <div class="btn">
                       <img src="@/assets/images/shop_report@2x.png" alt="">
                     </div>
-                    <div class="btn">
+                    <div class="btn" @click.stop="goToGoodsReport(card.id)">
                       <img src="@/assets/images/arrow_enter_g@2x.png" alt="">
                     </div>
                   </div>
@@ -195,7 +202,7 @@
           <div class="prop">{{item.props}}%</div>
           <div class="goods">
             <div class="goods-img">
-              <img src="@/assets/images/demo2.png" alt="">
+              <img :src="imgSrc(item.id)" alt="">
             </div>
             <div>
               {{item.name1}}
@@ -204,7 +211,7 @@
           
           <div class="goods">
             <div class="goods-img">
-              <img src="@/assets/images/demo2.png" alt="">
+              <img :src="imgSrc(item.id+1)" alt="">
             </div>
             <div>
               {{item.name2}}
@@ -227,6 +234,7 @@
 </template>
 
 <script>
+import echarts from 'echarts'
 import { mapActions } from 'vuex'
 import SmallTitle from '@/components/SmallTitle'
 import HeaderSort from '@/components/HeaderSort'
@@ -274,6 +282,10 @@ export default {
           value: 'year'
         }
       ],
+      chart1:null,
+      chart3:null,
+      seriesData1:[],
+      seriesData3:[],
       currentTimeIndex: 0,
       kinds:[
         {
@@ -329,6 +341,14 @@ export default {
       ],
     }
   },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
+    }
+  },
   watch:{
     '$route.params.type':{
       handler(val){
@@ -343,10 +363,184 @@ export default {
     this.getRankData();
     this.getMateData();
   },
+  mounted(){
+    this.getChartData1();
+    this.getChartData3();
+  },
   methods: {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goToGoodsReport(id){
+      this.$router.push({
+        name:'stockedGoodsReport',
+        query:{
+          id:id
+        }
+      })
+    },
+    getChartData1(){
+      this.REQUEST_API({
+        api: 'getClassifiedNums',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData1 = res;
+          this.initChart1();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
+    },
+    getChartData3(){
+      this.REQUEST_API({
+        api: 'getClassifiedProfit',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData3 = res
+          this.initChart3();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
+    },
+    initChart1(){
+      this.chart1 = echarts.init(document.getElementById("chart1"));
+      const option1 = {
+          title:{
+            text:'分类销量',
+            textStyle:{
+              fontSize: '12',
+              color: '#8d93a4',
+              fontWeight: 'normal'
+            },
+            top: 0
+          },
+          tooltip: {
+            trigger: 'item',
+            formatter: "{b} <br/> {d}%"
+          },
+        
+          // legend: {
+          //   orient: 'horizontal',
+          //   right: 70,
+          //   top: 30,
+          //   textStyle: {
+          //     color: '#90979c'
+          //   },
+          //   data: ['美妆护理', '面包甜点', '特价套餐','休闲零食', '湃客咖啡', '精选饮料','冷藏乳饮', '美味鲜食']
+          // },
+          color:['#9e4518', '#fdb92b','#6197cd','#74a84b','#eb7739','#4b6fbc','#a7a0a0','#2c5b8b'],
+          
+          series: [
+            {
+              name:'分类销量',
+              type: 'pie',
+              
+              startAngle: 0,
+              // avoidLabelOverlap: false,
+              label: {
+                normal: {
+                  show: true,
+                  position: 'outside',
+                  formatter: "{b}\n{d}%",
+                  
+                  textStyle: {
+                    fontSize: '12',
+                    fontWeight: 'normal'
+                  }
+                },
+                emphasis: {
+                  show: true,
+                  textStyle: {
+                      fontSize: '14',
+                      // fontWeight: 'bold'
+                  }
+                }
+              },
+              // itemStyle:{
+              //   normal:{
+              //   }
+              // },
+              data:this.seriesData1
+              
+            }
+          ]
+        
+        };
+      
+      
+      this.chart1.setOption(
+        option1
+      );
+    },
+    initChart3(){
+      this.chart3 = echarts.init(document.getElementById("chart3"));
+      const option3 = {
+        title:{
+          text:'分类毛利',
+          textStyle:{
+            fontSize: '12',
+            color: '#8d93a4',
+            fontWeight: 'normal'
+          },
+          top: 0
+        },
+        tooltip: {
+          trigger: 'item',
+          formatter: "{b} <br/> {d}%"
+        },
+        color:['#9e4518', '#fdb92b','#6197cd','#74a84b','#eb7739','#4b6fbc','#a7a0a0','#2c5b8b'],
+        series: [
+          {
+            name:'分类毛利',
+            type: 'pie',
+            
+            startAngle: 0,
+            avoidLabelOverlap: false,
+            label: {
+              normal: {
+                show: true,
+                position: 'outside',
+                formatter: "{b}\n{d}%",
+                
+                textStyle: {
+                    fontSize: '12',
+                    fontWeight: 'normal'
+                }
+              },
+              emphasis: {
+                show: true,
+                textStyle: {
+                    fontSize: '14',
+                    // fontWeight: 'bold'
+                }
+              }
+            },
+            // itemStyle:{
+            //   normal:{
+            //   }
+            // },
+            data:this.seriesData3
+            
+          }
+        ]
+      }
+      this.chart3.setOption(
+        option3
+      )
+    },
     goToClassifiedData(){
       console.warn('1123');
       this.$router.push({name:'classifiedData'});

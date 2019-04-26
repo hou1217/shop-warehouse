@@ -14,7 +14,7 @@
       <li 
         v-for="(item,index) in data.cards"
         :key="index">
-        {{item.name}}周销量
+        {{item.name}}{{getTypeName}}销量
         <div class="right-text">¥{{item.totalSales}}</div>
         <div class="next-btn">
           <img src="@/assets/images/arrow_enter_g@2x.png">
@@ -56,6 +56,22 @@ export default {
       items:["日","周","月","年"],
       data:{}
     }
+  },
+  computed:{
+    getTypeName(){
+      switch(this.kind){
+        case 1:
+          return '周'
+          break;
+        case 2:
+          return '月'
+          break;
+        case 3:
+          return '年'
+          break;
+      }
+    }
+    
   },
   created(){
     this.getHistoryRecordData();

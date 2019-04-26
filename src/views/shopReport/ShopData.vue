@@ -20,14 +20,17 @@
           </div>
         </div>
       </div>
-      
+      <div class="echarts-box">
+        <div class="echart-box" id="chart1"></div>
+        <div class="echart-box" id="chart2"></div>
+        
+      </div>
+
     </div>
-    
-    
-    
   </div>
 </template>
 <script>
+import echarts  from 'echarts'
 import { mapActions } from 'vuex'
 import HeaderTitle from '@/components/HeaderTitle'
 import SmallTitle from '@/components/SmallTitle'
@@ -62,6 +65,10 @@ export default {
           character:"库销比"
         },
       ],
+      chart1:null,
+      chart2:null,
+      seriesData1:[],
+      seriesData2:[],
       timeList: [
         
         {
@@ -86,6 +93,8 @@ export default {
   },
   created(){
     this.getShopData();
+    this.getChartData1();
+    this.getChartData2();
   },
   methods:{
     ...mapActions([
@@ -95,6 +104,243 @@ export default {
       this.currentTimeIndex = index;
       this.kind = index;
       this.getShopData();
+      this.getChartData1();
+      this.getChartData2();
+    },
+    getChartData1(){
+      this.REQUEST_API({
+        api: 'getSalesRate',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData1 = res;
+          this.initChart1();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
+    },
+    getChartData2(){
+      this.REQUEST_API({
+        api: 'getSalesRatio',
+        params: {}
+      })
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData2 = res
+          this.initChart2();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
+    },
+    initChart1(){
+      this.chart1 = echarts.init(document.getElementById("chart1"));
+      const option1 = {
+        title:{
+          text:'动销率%',
+          textStyle:{
+            fontSize: '12',
+            color: '#8d93a4',
+            fontWeight: 'normal'
+          },
+          top: 0
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            textStyle: {
+              color: '#fff'
+            }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitArea: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+
+          },
+          data:  ['09点', '10点', '11点', '12点', '13点']
+        }],
+        yAxis: [{
+          type: 'value',
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+          },
+          splitArea: {
+            show: false
+          }
+        }],
+        series: [
+          {
+            name: '动销率%',
+            type: 'line',
+            // stack: 'total',
+            barMaxWidth: 35,
+            barGap: '10%',
+            itemStyle: {
+              normal: {
+                color: '#9e4518',
+                label: {
+                  show: true,
+                  textStyle: {
+                    color: '#fff'
+                  },
+                  position: 'insideTop',
+                  formatter(p) {
+                    return p.value > 0 ? p.value : ''
+                  }
+                }
+              }
+            },
+            data: this.seriesData1
+          }
+         
+        ]
+      }
+      this.chart1.setOption(
+        option1
+      )
+    },
+    initChart2(){
+      this.chart2 = echarts.init(document.getElementById("chart2"));
+      const option2 = {
+        title:{
+          text:'库销比',
+          textStyle:{
+            fontSize: '12',
+            color: '#8d93a4',
+            fontWeight: 'normal'
+          },
+          top: 0
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            textStyle: {
+              color: '#fff'
+            }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitArea: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+
+          },
+          data:  ['09点', '10点', '11点', '12点', '13点']
+        }],
+        yAxis: [{
+          type: 'value',
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+          },
+          splitArea: {
+            show: false
+          }
+        }],
+        series: [
+          {
+            name: '库销比',
+            type: 'line',
+            // stack: 'total',
+            barMaxWidth: 35,
+            barGap: '10%',
+            itemStyle: {
+              normal: {
+                color: '#2c5b8b',
+                label: {
+                  show: true,
+                  textStyle: {
+                    color: '#fff'
+                  },
+                  position: 'insideTop',
+                  formatter(p) {
+                    return p.value > 0 ? p.value : ''
+                  }
+                }
+              }
+            },
+            data: this.seriesData2
+          }
+        ]
+      }
+      this.chart2.setOption(
+        option2
+      )
     },
     getShopData(){
       
@@ -197,6 +443,17 @@ export default {
       padding-left 20px
     }
     
+  }
+  .echarts-box {
+    width 100%
+
+    .echart-box {
+      width 690px
+      height 538px
+      margin 20px auto
+      
+      // background rgba(253,14,14,0.11)
+    }
   }
 }
 </style>

@@ -42,13 +42,22 @@ const APIs = {
   getStockList: params => getApi('/stock',params.params),
   //获取商品总仓列表
   getGeneralStockList: params => getApi('/generalStock',params.params),
-  //店铺报表获取单品排行
+
+  //店铺报表--
+  //获取单品排行
   getRankList: params => getApi('/rankList',params.params),
-  //店铺报表获取最佳伴侣
+  //获取最佳伴侣
   getMateList: params => getApi('/mateList',params.params),
+  //销量
+  getGoodsSalesNum: params => getApi('/report/goodsSalesNum',params.params),
+  //动销率
+  getSalesRate: params => getApi('/report/salesRate',params.params),
+  //库销比
+  getSalesRatio: params => getApi('/report/salesRatio',params.params),
   //历史记录
   getHistoryRecord: params =>  getApi('/historyRecord',params.params),
   getHistoryRecord1: params =>  getApi('/historyRecord1',params.params),
+
   //总仓报表
   getClassifiedNums: params =>  getApi('/report/classifiedNums',params.params),
   getSectionSales: params =>  getApi('/report/sectionSales',params.params),

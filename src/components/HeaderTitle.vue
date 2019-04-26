@@ -4,7 +4,7 @@
       <img src="@/assets/images/navi_back_w@2x.png">
     </div>
     <div class="title">{{title}}</div>
-    <div class="search-btn" @click="clickSearch">
+    <div class="search-btn" @click="clickSearch" v-if="hasSearch">
       <img src="@/assets/images/shop_search@2x.png">
     </div>
   </div>
@@ -18,6 +18,10 @@
       },
       name:{
         type: String
+      },
+      hasSearch:{
+        type: Boolean,
+        default: false
       }
     },
     methods:{

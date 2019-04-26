@@ -15,7 +15,7 @@
           <!--<img :src="src3">-->
         <!--</mt-swipe-item>-->
       </mt-swipe>
-      <div class="btn btn_back">
+      <div class="btn btn_back" @click="$router.go(-1)">
         <img src="@/assets/images/shop_back_fill@2x.png"/>
       </div>
       <div class="btn btn_warehouse">
