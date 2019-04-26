@@ -568,6 +568,7 @@ export default {
     // 删除对比商品
     deleteGood(index) {
       console.debug('删除第' + index + '件对比的商品');
+      this.compareGoods.splice(index, 1);
     },
     
     // 新增对比商品
