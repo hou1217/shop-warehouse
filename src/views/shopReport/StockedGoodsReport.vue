@@ -191,6 +191,9 @@ export default {
   beforeDestroy(){
     eventBus.$off("selectCompareGoods", this.onGoodsUpdate)
   },
+  destroyed() {
+    eventBus.$emit('selectedCompareGoods', this.compareGoods);
+  },
   methods: {
     ...mapActions([
       'REQUEST_API'
