@@ -12,7 +12,7 @@
     </div>
     <div class="bd">
       <div class="box box_performance">
-        <div class="box__hd box_performance__hd">
+        <div class="box__hd box_performance__hd" @click="goToHistoryRecord">
           <div class="title">今日业绩</div>
           <div class="text">历史记录</div>
           <div class="next-btn">
@@ -131,9 +131,9 @@
 </template>
 
 <script>
-import eventBus from '@/assets/js/eventBus'
-import echarts from 'echarts'
+import echarts  from 'echarts'
 import { mapActions } from 'vuex'
+import eventBus from '@/assets/js/eventBus'
 export default {
   name: "stockedGoodsReport",
   data() {
@@ -161,6 +161,12 @@ export default {
           value: 'year'
         }
       ],
+      chart1:null,
+      chart2:null,
+      chart3:null,
+      seriesData1:[],
+      seriesData2:[],
+      seriesData3:[],
       currentTimeIndex: 0,
       data: {
         salesRank: 1,
@@ -174,18 +180,10 @@ export default {
         sinkToPin: 2
       },
       compareGoods: [],
-      chart1: null,
-      chart2: null,
-      chart3: null,
-      seriesData1:[],
-      seriesData2:[],
-      seriesData3:[],
     }
   },
   created(){
-    eventBus.$on('selectCompareGoods',this.onGoodsUpdate)
-  },
-  mounted() {
+    eventBus.$on('selectCompareGoods',this.onGoodsUpdate);
     this.getChartData1();
     this.getChartData2();
     this.getChartData3();
@@ -193,21 +191,13 @@ export default {
   beforeDestroy(){
     eventBus.$off("selectCompareGoods", this.onGoodsUpdate)
   },
-  destroyed() {
-    eventBus.$emit('selectedCompareGoods', this.compareGoods);
-  },
-  // beforeRouteLeave(to, form, next) {
-  //   console.debug(to);
-  //   if (to.path === '/compareSelect') {
-  //     console.debug(this.compareGoods);
-  //    eventBus.$emit('selectedCompareGoods', this.compareGoods);
-  //   }
-  //   next();
-  // },
   methods: {
     ...mapActions([
       'REQUEST_API'
     ]),
+    goToHistoryRecord(){
+      this.$router.push({name:'historyRecord'});
+    },
     onGoodsUpdate(data){
       console.log(data);
       this.compareGoods = data;
@@ -215,151 +205,70 @@ export default {
     // 选择时间
     choseTime(index) {
       this.currentTimeIndex = index;
+      this.getChartData1();
+      this.getChartData2();
+      this.getChartData3();
+
     },
-    
-    // 删除对比商品
-    deleteGood(index) {
-      console.debug('删除第' + index + '件对比的商品');
-    },
-    
-    // 新增对比商品
-    addGood() {
-      console.debug('跳转至商品选择页');
-      this.$router.push({
-        path: '/compareSelect'
-      });
-    },
-    
-    // echarts
     getChartData1(){
       this.REQUEST_API({
-        api: 'getClassifiedNums',
+        api: 'getGoodsSalesNum',
         params: {}
       })
-          .then((res) => {
-            console.log(res);
-            if(res){
-              this.seriesData1 = res;
-              this.initChart1();
-            }
-            console.warn('加载结束');
-          })
-          .catch((err) => {
-            console.debug('列表数据异常：', err);
-          });
-    
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData1 = res;
+          this.initChart1();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
     },
     getChartData2(){
       this.REQUEST_API({
-        api: 'getSectionSales',
+        api: 'getSalesRate',
         params: {}
       })
-          .then((res) => {
-            console.log(res);
-            if(res){
-              this.seriesData2 = res
-              this.initChart2();
-            }
-            console.warn('加载结束');
-          })
-          .catch((err) => {
-            console.debug('列表数据异常：', err);
-          });
-    
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData2 = res
+          this.initChart2();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
     },
     getChartData3(){
       this.REQUEST_API({
-        api: 'getClassifiedProfit',
+        api: 'getSalesRatio',
         params: {}
       })
-          .then((res) => {
-            console.log(res);
-            if(res){
-              this.seriesData3 = res
-              this.initChart3();
-            }
-            console.warn('加载结束');
-          })
-          .catch((err) => {
-            console.debug('列表数据异常：', err);
-          });
-    
+      .then((res) => {
+        console.log(res);
+        if(res){
+          this.seriesData3 = res
+          this.initChart3();
+        }
+        console.warn('加载结束');
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
+      
     },
     initChart1(){
       this.chart1 = echarts.init(document.getElementById("chart1"));
       const option1 = {
         title:{
-          text:'分类销量',
-          textStyle:{
-            fontSize: '12',
-            color: '#8d93a4',
-            fontWeight: 'normal'
-          },
-          top: 0
-        },
-        tooltip: {
-          trigger: 'item',
-          formatter: "{b} <br/> {d}%"
-        },
-      
-        // legend: {
-        //   orient: 'horizontal',
-        //   right: 70,
-        //   top: 30,
-        //   textStyle: {
-        //     color: '#90979c'
-        //   },
-        //   data: ['美妆护理', '面包甜点', '特价套餐','休闲零食', '湃客咖啡', '精选饮料','冷藏乳饮', '美味鲜食']
-        // },
-        color:['#9e4518', '#fdb92b','#6197cd','#74a84b','#eb7739','#4b6fbc','#a7a0a0','#2c5b8b'],
-      
-        series: [
-          {
-            name:'分类销量',
-            type: 'pie',
-          
-            startAngle: 0,
-            // avoidLabelOverlap: false,
-            label: {
-              normal: {
-                show: true,
-                position: 'outside',
-                formatter: "{b}\n{d}%",
-              
-                textStyle: {
-                  fontSize: '12',
-                  fontWeight: 'normal'
-                }
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: '14',
-                  // fontWeight: 'bold'
-                }
-              }
-            },
-            // itemStyle:{
-            //   normal:{
-            //   }
-            // },
-            data:this.seriesData1
-          
-          }
-        ]
-      
-      };
-    
-    
-      this.chart1.setOption(
-          option1
-      );
-    },
-    initChart2(){
-      this.chart2 = echarts.init(document.getElementById("chart2"));
-      const option2 = {
-        title:{
-          text:'时段销量',
+          text:'销量',
           textStyle:{
             fontSize: '12',
             color: '#8d93a4',
@@ -400,7 +309,7 @@ export default {
           },
           axisLabel: {
             interval: 0
-          
+
           },
           data:  ['09点', '10点', '11点', '12点', '13点']
         }],
@@ -426,7 +335,7 @@ export default {
         }],
         series: [
           {
-            name: '美妆护理',
+            name: '销量',
             type: 'line',
             // stack: 'total',
             barMaxWidth: 35,
@@ -446,148 +355,87 @@ export default {
                 }
               }
             },
-            data: this.seriesData2[0]
+            data: this.seriesData1
+          }
+         
+        ]
+      }
+      this.chart1.setOption(
+        option1
+      )
+    },
+    initChart2(){
+      this.chart2 = echarts.init(document.getElementById("chart2"));
+      const option2 = {
+        title:{
+          text:'动销率%',
+          textStyle:{
+            fontSize: '12',
+            color: '#8d93a4',
+            fontWeight: 'normal'
           },
-          {
-            name: '面包甜点',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#fdb92b',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2[1]
+          top: 0
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            textStyle: {
+              color: '#fff'
+            }
+          }
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
           },
-          {
-            name: '特价套餐',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#6197cd',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2[2]
+          splitLine: {
+            show: false
           },
-          {
-            name: '休闲零食',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#74a84b',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2[3]
+          axisTick: {
+            show: false
           },
-          {
-            name: '湃客咖啡',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#eb7739',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2[4]
+          splitArea: {
+            show: false
           },
-          {
-            name: '精选饮料',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#4b6fbc',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2[5]
+          axisLabel: {
+            interval: 0
+
           },
-          {
-            name: '冷藏乳饮',
-            type: 'line',
-            // stack: 'total',
-            barMaxWidth: 35,
-            barGap: '10%',
-            itemStyle: {
-              normal: {
-                color: '#a7a0a0',
-                label: {
-                  show: true,
-                  textStyle: {
-                    color: '#fff'
-                  },
-                  position: 'insideTop',
-                  formatter(p) {
-                    return p.value > 0 ? p.value : ''
-                  }
-                }
-              }
-            },
-            data: this.seriesData2[6]
+          data:  ['09点', '10点', '11点', '12点', '13点']
+        }],
+        yAxis: [{
+          type: 'value',
+          splitLine: {
+            show: false
           },
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+          },
+          splitArea: {
+            show: false
+          }
+        }],
+        series: [
           {
-            name: '美味鲜食',
+            name: '动销率%',
             type: 'line',
             // stack: 'total',
             barMaxWidth: 35,
@@ -607,19 +455,19 @@ export default {
                 }
               }
             },
-            data: this.seriesData2[7]
+            data: this.seriesData2
           }
         ]
       }
       this.chart2.setOption(
-          option2
+        option2
       )
     },
     initChart3(){
       this.chart3 = echarts.init(document.getElementById("chart3"));
       const option3 = {
         title:{
-          text:'分类毛利',
+          text:'库销比',
           textStyle:{
             fontSize: '12',
             color: '#8d93a4',
@@ -628,48 +476,103 @@ export default {
           top: 0
         },
         tooltip: {
-          trigger: 'item',
-          formatter: "{b} <br/> {d}%"
+          trigger: 'axis',
+          axisPointer: {
+            textStyle: {
+              color: '#fff'
+            }
+          }
         },
-        color:['#9e4518', '#fdb92b','#6197cd','#74a84b','#eb7739','#4b6fbc','#a7a0a0','#2c5b8b'],
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        calculable: true,
+        xAxis: [{
+          type: 'category',
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          splitLine: {
+            show: false
+          },
+          axisTick: {
+            show: false
+          },
+          splitArea: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+
+          },
+          data:  ['09点', '10点', '11点', '12点', '13点']
+        }],
+        yAxis: [{
+          type: 'value',
+          splitLine: {
+            show: false
+          },
+          axisLine: {
+            lineStyle: {
+              color: '#90979c'
+            }
+          },
+          axisTick: {
+            show: false
+          },
+          axisLabel: {
+            interval: 0
+          },
+          splitArea: {
+            show: false
+          }
+        }],
         series: [
           {
-            name:'分类毛利',
-            type: 'pie',
-          
-            startAngle: 0,
-            avoidLabelOverlap: false,
-            label: {
+            name: '库销比',
+            type: 'line',
+            // stack: 'total',
+            barMaxWidth: 35,
+            barGap: '10%',
+            itemStyle: {
               normal: {
-                show: true,
-                position: 'outside',
-                formatter: "{b}\n{d}%",
-              
-                textStyle: {
-                  fontSize: '12',
-                  fontWeight: 'normal'
-                }
-              },
-              emphasis: {
-                show: true,
-                textStyle: {
-                  fontSize: '14',
-                  // fontWeight: 'bold'
+                color: '#2c5b8b',
+                label: {
+                  show: true,
+                  textStyle: {
+                    color: '#fff'
+                  },
+                  position: 'insideTop',
+                  formatter(p) {
+                    return p.value > 0 ? p.value : ''
+                  }
                 }
               }
             },
-            // itemStyle:{
-            //   normal:{
-            //   }
-            // },
-            data:this.seriesData3
-          
+            data: this.seriesData3
           }
         ]
       }
       this.chart3.setOption(
-          option3
+        option3
       )
+    },
+    // 删除对比商品
+    deleteGood(index) {
+      console.debug('删除第' + index + '件对比的商品');
+    },
+    
+    // 新增对比商品
+    addGood() {
+      console.debug('跳转至商品选择页');
+      this.$router.push({
+        path: '/compareSelect'
+      });
     },
   }
 }

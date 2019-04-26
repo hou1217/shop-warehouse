@@ -89,10 +89,16 @@ export default {
       this.currentIndex = val;
     },
     joinLists(){
-      this.$emit('addGoodsVisibleHandler',false);
+      this.$router.push({
+        name:"purchaseOrder"
+      })
+      // this.$emit('addGoodsVisibleHandler',false);
     },
     handleImmediate(){
-      this.$emit('addGoodsVisibleHandler',false);
+      this.$router.push({
+        name:"purchaseOrderConfirm"
+      })
+      // this.$emit('addGoodsVisibleHandler',false);
     }
   }
 }

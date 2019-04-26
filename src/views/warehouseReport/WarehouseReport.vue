@@ -41,7 +41,7 @@
           <div class="prop">{{item.props}}%</div>
           <div class="goods">
             <div class="goods-img">
-              <img src="@/assets/images/demo2.png" alt="">
+              <img :src="imgSrc(item.id)" alt="">
             </div>
             <div>
               {{item.name1}}
@@ -50,7 +50,7 @@
           
           <div class="goods">
             <div class="goods-img">
-              <img src="@/assets/images/demo2.png" alt="">
+              <img :src="imgSrc(item.id+1)" alt="">
             </div>
             <div>
               {{item.name2}}
@@ -96,11 +96,12 @@ export default {
         },
       ],
       chart1:null,
+      chart2:null,
+      chart3:null,
       seriesData1:[],
       seriesData2:[],
       seriesData3:[],
-      chart2:null,
-      chart3:null,
+      
       currentTimeIndex: 0,
       timeList: [
         
@@ -129,6 +130,14 @@ export default {
       items:[],
     }
   },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
+    }
+  },
   created(){
     this.getMateData();
   },
@@ -151,7 +160,6 @@ export default {
       }
       this.getChartData1();
       this.getChartData3();
-
     },
     getChartData1(){
       this.REQUEST_API({
