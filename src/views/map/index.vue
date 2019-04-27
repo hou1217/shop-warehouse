@@ -1,6 +1,6 @@
 <template>
   
-  <div id="container" draggable="false" ondrag.prevent ondragstart.prevent>
+  <div id="container">
     
     <div class="map-bar">
       <div class="map-bar__search"></div>
@@ -593,6 +593,10 @@
       },
     },
     mounted: function () {
+
+      document.querySelector("#container").addEventListener('touchmove', function (e) {
+        e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+      }, {passive: false}); //passive 参数不能省略，用来兼容ios和android
 
       let recaptchaScript = document.createElement('script');
       recaptchaScript.setAttribute('src', 'https://webapi.amap.com/maps?v=1.4.14&key=687288a4144c83a67b11a316ec4c35bb');
