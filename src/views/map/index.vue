@@ -1,6 +1,6 @@
 <template>
   
-  <div id="container">
+  <div id="container" draggable="false">
     
     <div class="map-bar">
       <div class="map-bar__search"></div>
