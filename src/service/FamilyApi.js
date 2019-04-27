@@ -27319,8 +27319,8 @@ var buildingList = dataList.map((building) => {
   var geo = bd09_To_Gcj02(parseFloat(building.jd), parseFloat(building.wd));
   return {
     name: `全家便利店（${building.name}）`,
-    icon: "http://pqgihe8li.bkt.clouddn.com/shopmap_headimg@3x.png",
-    selectedIcon: "http://pqgihe8li.bkt.clouddn.com/shopmap_headimg_select@3x.png",
+    icon: "https://assets.8xin.im:8999/img/quanjia/shopmap_headimg@3x.png",
+    selectedIcon: "https://assets.8xin.im:8999/img/quanjia/shopmap_headimg_select@3x.png",
     lng: geo[0],
     lat: geo[1],
     score: Math.random() * 100,
