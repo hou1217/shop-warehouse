@@ -83,7 +83,7 @@
              v-for="(shop, shopIndex) in shopList"
              :key="shopIndex">
           <div class="shop-box__bd">
-            <div class="rank">{{shopIndex}}</div>
+            <div class="rank">{{shopIndex + 1}}</div>
             <div class="shop-name">{{shop.name}}</div>
             <div class="shop-location">
               <div class="distance">{{shop.distance}}</div>
@@ -1046,6 +1046,7 @@
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail {
     display: flex;
     width: 100%;
+    padding: 0 184px 0 0;
     flex-wrap: wrap;
     margin: 0 0 6px 0;
   }
@@ -1136,12 +1137,13 @@
   }
 
   .shop-list-popup__bd .shop-box > .btn .text {
+    width: 100%;
     height: 25px;
     line-height: 25px;
     font-family: PingFangSC-Regular;
     font-size: 18px;
     color: #8D93A4;
-    text-align: justify;
+    text-align: center;
   }
   
   .btn.btn_phone {

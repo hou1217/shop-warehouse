@@ -204,6 +204,7 @@ export default {
     eventBus.$off("selectCompareGoods", this.onGoodsUpdate)
   },
   destroyed() {
+    console.debug('destroyed');
     eventBus.$emit('selectedCompareGoods', this.compareGoods);
   },
   methods: {
@@ -237,7 +238,7 @@ export default {
         if(res){
           let arr = [];
           for(let i = 0; i< this.compareGoods.length+1;i++){
-            let item = { 
+            let item = {
               type: 'line',
               data: res[i]
             }
@@ -263,11 +264,11 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if(res){
           let arr = [];
           for(let i = 0; i< this.compareGoods.length+1;i++){
-            let item = { 
+            let item = {
               type: 'line',
               data: res[i]
             }
@@ -291,11 +292,11 @@ export default {
         }
       })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         if(res){
           let arr = [];
           for(let i = 0; i< this.compareGoods.length+1;i++){
-            let item = { 
+            let item = {
               type: 'line',
               data: res[i]
             }
@@ -380,7 +381,7 @@ export default {
             show: false
           }
         }],
-        series: this.seriesData1 
+        series: this.seriesData1
       }
       this.chart1.clear();
       this.chart1.setOption(
@@ -456,7 +457,7 @@ export default {
             show: false
           }
         }],
-        series: this.seriesData2 
+        series: this.seriesData2
       }
       this.chart2.clear();
       this.chart2.setOption(
