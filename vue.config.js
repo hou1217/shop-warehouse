@@ -26,7 +26,7 @@ module.exports = {
   },
   runtimeCompiler: true,//是否使用包含运行时编译器的 Vue 构建版本,设置为 true 后你就可以在 Vue 组件中使用 template 选项了
   publicPath: process.env.NODE_ENV === 'production'
-      ? '/quanjia/'
+      ? './'
       : '/',
   outputDir: 'dist',//默认是dist
   assetsDir: 'static',//默认是''

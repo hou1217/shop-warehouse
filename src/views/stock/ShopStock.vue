@@ -58,10 +58,11 @@
                 <div class="icon">
                   <img src="@/assets/images/icon/shop_activity@2x.png" alt="">
                 </div>
-                <div v-for="(label,index) in  card.labels" 
-                  :key="index" 
+                <!-- <div v-for="(label,index) in  card.labels"  -->
+                  <!-- :key="index"  -->
+                <div
                   class="label pink">
-                  {{label}}
+                  {{card.labels}}
                 </div>
                 
               </div>
@@ -197,7 +198,9 @@ export default {
     getListData(){
       this.REQUEST_API({
         api: 'getStockList',
-        params: {}
+        params: {
+          type: this.$route.params.type
+        }
       })
       .then((res) => {
         console.log(res);
