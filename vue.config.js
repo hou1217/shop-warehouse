@@ -10,7 +10,7 @@ module.exports = {
     // publicPath: '/', //publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 publicPath 同步以保障正常的工作
     // historyApiFallback: true, //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代，默认是false
     compress: false,
-    host: '192.168.9.153', //host、port 和 https 可能会被命令行参数覆写
+    host: '192.168.9.211', //host、port 和 https 可能会被命令行参数覆写
     hot: true,
     port: 8088,// 端口号
     open: true, //配置自动启动浏览器
