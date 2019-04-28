@@ -317,7 +317,7 @@
             convert: true,           //自动偏移坐标，偏移后的坐标为高德坐标，默认：true
             showButton: true,        //显示定位按钮，默认：true
             buttonPosition: 'RB',    //定位按钮停靠位置，默认：'LB'，左下角
-            buttonOffset: new AMap.Pixel(16, 24),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+            buttonOffset: new AMap.Pixel(16, 54),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
             showMarker: true,        //定位成功后在定位到的位置显示点标记，默认：true
             showCircle: false,        //定位成功后用圆圈表示定位精度范围，默认：true
             panToLocation: true,     //定位成功后将定位到的位置作为地图中心点，默认：true
@@ -594,6 +594,10 @@
     },
     mounted: function () {
 
+      document.querySelector("#container").addEventListener('touchmove', function (e) {
+        e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+      }, {passive: false}); //passive 参数不能省略，用来兼容ios和android
+
       let recaptchaScript = document.createElement('script');
       recaptchaScript.setAttribute('src', 'https://webapi.amap.com/maps?v=1.4.14&key=687288a4144c83a67b11a316ec4c35bb');
       document.head.appendChild(recaptchaScript);
@@ -681,7 +685,7 @@
     z-index: 101;
     
     left: 20px;
-    bottom: 30px;
+    bottom: 80px;
     width: 710px;
     height: 166px;
     
@@ -702,7 +706,7 @@
     
     width: 138px;
     height: 138px;
-    background-image: url("http://pqgihe8li.bkt.clouddn.com/shop_4.png");
+    background-image: url("../../assets/images/map/shop_4.png");
     background-size: contain;
     
   }
@@ -798,7 +802,7 @@
     position: absolute;
     z-index: 100;
     right: 16px;
-    bottom: 130px;
+    bottom: 180px;
     
     background-image: url("../../assets/images/map/shopmap_thermal.png");
     background-size: contain;
@@ -810,7 +814,7 @@
     position: absolute;
     z-index: 100;
     right: 16px;
-    bottom: 130px;
+    bottom: 180px;
     
     background-image: url("../../assets/images/map/shopmap_map.png");
     background-size: contain;
@@ -822,7 +826,7 @@
     position: absolute;
     z-index: 100;
     left: 175px;
-    bottom: 44px;
+    bottom: 94px;
     
     display: flex;
     width: 420px;
