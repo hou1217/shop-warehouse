@@ -51,9 +51,9 @@ const APIs = {
   //获取分类数据列表
   getCategoryList: params => testApi('/categoryList',params.params),
   //获取stock列表
-  getStockList: params => testApi(`/stock/${params.params.type}`,params.params),
+  getStockList: params => testApi(`/stock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
   //获取商品总仓列表
-  getGeneralStockList: params => testApi(`/generalStock/${params.params.type}`,params.params),
+  getGeneralStockList: params => testApi(`/generalStock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
 
   //店铺报表--
   //获取单品排行

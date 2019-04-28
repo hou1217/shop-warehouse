@@ -54,28 +54,36 @@ export default {
   data(){
     return{
       sortName:'综合',
+      isAsc: false,
       staticIndex: 1,
       currentIndex: 0,
       currentIndex2: 0,
       titlePopupVisible: false,
+      orderBy:'',
       properties:[
         {
-          name:'综合'
+          name:'综合',
+          orderBy:'id'
         },
         {
-          name:'动销率'
+          name:'动销率',
+          orderBy:'props'
         },
         {
-          name:'库存'
+          name:'库存',
+          orderBy:'stockNum'
         },
         {
-          name:'利润'
+          name:'利润',
+          orderBy:'profit'
         },
         {
-          name:'库销比'
+          name:'库销比',
+          orderBy:'ratio'
         },
         {
-          name:'价格'
+          name:'价格',
+          orderBy:'price'
         }
       ],
       sorts:[
@@ -105,33 +113,53 @@ export default {
     },
     handleSelectProperties(property,index){
       this.sortName = property.name;
+      this.orderBy = property.orderBy;
       if(property.name === '综合'){
         this.currentIndex = 0;
         this.currentIndex2 = -1;
         this.titlePopupVisible = false;
-        this.$emit('PopupVisible',false)
+        this.$emit('PopupVisible',{
+          order:'id',
+          isAsc: this.isAsc,
+          visible:false
+        });
         return;
       }
+      
       this.currentIndex = index;
       this.currentIndex2 = 0;
+      this.isAsc = false;
     },
     handleSelectSorts(val){
       
       if(this.currentIndex === 0){
         this.currentIndex = -1;
       }
+      if(val === 1){
+        this.isAsc = true;
+      }else{
+        this.isAsc = false;
+      }
+      console.log(this.isAsc);
       this.currentIndex2 = val;
+      
     },
     popUp(){
       this.staticIndex = 1;
       // this.currentIndex2 = -1;
       this.titlePopupVisible = true;
-      this.$emit('PopupVisible',true)
+      this.$emit('PopupVisible',{
+        visible:true
+      })
     },
     selectSales(){
       this.staticIndex = 2;
       this.titlePopupVisible = false;
-      this.$emit('PopupVisible',false)
+      this.$emit('PopupVisible',{
+        order:'salesNum',
+        isAsc: this.isAsc,
+        visible:false
+      })
     },
     popDown(){
       if(this.currentIndex2!== -1 && this.currentIndex === -1){
@@ -139,7 +167,11 @@ export default {
         return false;
       }
       this.titlePopupVisible = false;
-      this.$emit('PopupVisible',false);
+      this.$emit('PopupVisible',{
+        order: this.orderBy,
+        isAsc: this.isAsc,
+        visible:false
+      });
     }
   }
 }

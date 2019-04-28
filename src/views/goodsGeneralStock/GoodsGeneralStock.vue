@@ -145,6 +145,8 @@ export default {
   },
   data(){
     return{
+      order:'id',
+      isAsc:false,
       // 悬浮框数据
       btns:[
         {
@@ -232,8 +234,13 @@ export default {
     },
     handlePop(val){
       console.warn(val);
-      this.shadeVisible = val;
-      if(!val){
+      this.shadeVisible = val.visible;
+      if(val.order){
+        this.order = val.order;
+      }
+      
+      this.isAsc = val.isAsc;
+      if(!val.visible){
         this.loading = true;
         this.reload = true;
         this.getListData();
@@ -251,7 +258,9 @@ export default {
       this.REQUEST_API({
         api: 'getGeneralStockList',
         params: {
-          type:this.$route.params.type
+          type:this.$route.params.type,
+          order:this.order,
+          isAsc:this.isAsc
         }
       })
       .then((res) => {

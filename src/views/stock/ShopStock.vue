@@ -20,6 +20,7 @@
       @click.native="handleShadeClick()"/>
     <!-- 快捷补货 -->
     <AddGoods 
+      :data="goodsData"
       :addGoodsVisible="addGoodsVisible"
       @addGoodsVisibleHandler="addGoodsVisibleHandler"/>
     <!-- 主体盒子 -->
@@ -37,7 +38,7 @@
           <div class="card">
             <div class="portrait">
               <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
-              <div class="addgoods" @click.stop="addgoods()">
+              <div class="addgoods" @click.stop="addgoods(card)">
                 <img 
                   :src="card.stockNum < 10?
                   require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
@@ -112,6 +113,9 @@ export default {
   },
   data(){
     return{
+      order:'id',
+      isAsc:false,
+      goodsData:{},
       addGoodsVisible: false,
       toastVisible: false,
       toastData:{
@@ -169,23 +173,32 @@ export default {
       }
     },
     addGoodsVisibleHandler(){
+       
       this.shadeVisible = false;
 
       this.addGoodsVisible = false;
     },
-    addgoods(){
+    addgoods(card){
+      this.goodsData = card;
       this.shadeVisible = true;
 
       this.addGoodsVisible = true;
     },
     handlePop(val){
       console.warn(val);
-      this.shadeVisible = val;
-      if(!val){
+      this.shadeVisible = val.visible;
+      if(val.order){
+        this.order = val.order;
+      }
+      
+      this.isAsc = val.isAsc;
+      
+      if(!val.visible){
         this.loading = true;
         this.reload = true;
         this.getListData();
       }
+      
     },
     // 触底加载
     infiniteScroll() {
@@ -199,7 +212,9 @@ export default {
       this.REQUEST_API({
         api: 'getStockList',
         params: {
-          type: this.$route.params.type
+          type: this.$route.params.type,
+          order:this.order,
+          isAsc:this.isAsc
         }
       })
       .then((res) => {

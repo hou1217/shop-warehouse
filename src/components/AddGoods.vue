@@ -4,18 +4,18 @@
     <div class="content">
       <div class="header">
         <div class="portrait">
-          <img src="@/assets/images/demo2.png" :onerror="defaultSrc"/>
+          <img :src="imgSrc(data.id)" :onerror="defaultSrc"/>
         </div>
         <div class="content">
           <div class="price">
-            ¥{{39.6}}
+            ¥{{data.price}}
           </div>
           <div class="choose">
             <div class="item">
               已选择
             </div>
             <div class="item">
-              {{'商品名称'}}
+              {{data.name}}
             </div>
           </div>
         </div>
@@ -61,6 +61,10 @@ export default {
     addGoodsVisible:{
       type: Boolean,
       default: false
+    },
+    data:{
+      type:Object,
+      
     }
   },
   data(){
@@ -82,6 +86,14 @@ export default {
           name:'商品名称'
         },
       ]
+    }
+  },
+  computed:{
+    imgSrc(){
+      return function(id){
+        id = id%16
+        return require ('@/assets/images/demo/goods_'+(id)+'.png')
+      }
     }
   },
   methods:{
