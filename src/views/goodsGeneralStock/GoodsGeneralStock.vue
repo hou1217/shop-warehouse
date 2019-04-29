@@ -20,6 +20,7 @@
       @click.native="handleShadeClick()"/>
     <!-- 快捷补货 -->
     <AddGoods 
+      :data="goodsData"
       :addGoodsVisible="addGoodsVisible"
       @addGoodsVisibleHandler="addGoodsVisibleHandler"/>
     <!-- 主体盒子 -->
@@ -37,7 +38,7 @@
           <div class="card">
             <div class="portrait">
               <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
-              <div class="addgoods" @click.stop="addgoods()">
+              <div class="addgoods" @click.stop="addgoods(card)">
                 <img 
                   :src="card.stockNum < 10?
                   require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
@@ -106,7 +107,7 @@
                   <li 
                     v-for="(item,index) in card.otherGoods"
                     :key="index">
-                    <img src="@/assets/images/demo2.png" alt="">
+                    <img :src="imgSrc(item.id)" alt="">
                   </li>
                 </ul>
               </div>
@@ -145,6 +146,7 @@ export default {
   },
   data(){
     return{
+      goodsData:{},
       order:'id',
       isAsc:false,
       // 悬浮框数据
@@ -227,7 +229,8 @@ export default {
 
       this.addGoodsVisible = false;
     },
-    addgoods(){
+    addgoods(card){
+      this.goodsData = card;
       this.shadeVisible = true;
 
       this.addGoodsVisible = true;
