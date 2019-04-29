@@ -46,7 +46,7 @@
           @click="heatmapChoose(2)">客单价
       </div>
     </div>
-  
+    
     
     <!-- 遮罩层 -->
     <div class="shade" v-if="shadeVisible" @click.stop="closeShade"></div>
@@ -79,56 +79,58 @@
         </div>
       </div>
       <div class="shop-list-popup__bd">
-        <div class="shop-box"
-             v-for="(shop, shopIndex) in shopList"
-             :key="shopIndex">
-          <div class="shop-box__bd">
-            <div class="rank">{{shopIndex + 1}}</div>
-            <div class="shop-name">{{shop.name}}</div>
-            <div class="shop-location">
-              <div class="distance">{{shop.distance}}</div>
-              <div class="location">{{shop.location}}</div>
-            </div>
-            <div class="shop-info">
-              <div class="detail">
-                <div class="item">
-                  <div class="character">营业额</div>
-                  <div class="num">￥{{shop.turnover}}</div>
+        <div>
+          <div class="shop-box"
+               v-for="(shop, shopIndex) in shopList"
+               :key="shopIndex">
+            <div class="shop-box__bd">
+              <div class="rank">{{shopIndex + 1}}</div>
+              <div class="shop-name">{{shop.name}}</div>
+              <div class="shop-location">
+                <div class="distance">{{shop.distance}}</div>
+                <div class="location">{{shop.location}}</div>
+              </div>
+              <div class="shop-info">
+                <div class="detail">
+                  <div class="item">
+                    <div class="character">营业额</div>
+                    <div class="num">￥{{shop.turnover}}</div>
+                  </div>
+                  <div class="item">
+                    <div class="character">成交量</div>
+                    <div class="num">{{shop.vol}}</div>
+                  </div>
+                  <div class="item">
+                    <div class="character">客单价</div>
+                    <div class="num">￥{{shop.pct}}</div>
+                  </div>
+                  <div class="item">
+                    <div class="character">坪效</div>
+                    <div class="num">￥{{shop.lge}}</div>
+                  </div>
                 </div>
-                <div class="item">
-                  <div class="character">成交量</div>
-                  <div class="num">{{shop.vol}}</div>
-                </div>
-                <div class="item">
-                  <div class="character">客单价</div>
-                  <div class="num">￥{{shop.pct}}</div>
-                </div>
-                <div class="item">
-                  <div class="character">坪效</div>
-                  <div class="num">￥{{shop.lge}}</div>
+                <div class="time">
+                  <div class="icon">
+                    <img src="@/assets/images/map/shopmap_tel.png">
+                  </div>
+                  <div class="character">营业时间：</div>
+                  <div class="num">{{shop.time}}</div>
                 </div>
               </div>
-              <div class="time">
-                <div class="icon">
-                  <img src="@/assets/images/map/shopmap_tel.png">
-                </div>
-                <div class="character">营业时间：</div>
-                <div class="num">{{shop.time}}</div>
+            </div>
+            
+            <div class="btn btn_phone">
+              <div class="icon">
+                <img src="@/assets/images/map/shopmap_tel@2x.png"/>
               </div>
+              <div class="text">电话</div>
             </div>
-          </div>
-  
-          <div class="btn btn_phone">
-            <div class="icon">
-              <img src="@/assets/images/map/shopmap_tel@2x.png"/>
+            <div class="btn btn_route">
+              <div class="icon">
+                <img src="@/assets/images/map/shopmap_route@2x.png"/>
+              </div>
+              <div class="text">路线</div>
             </div>
-            <div class="text">电话</div>
-          </div>
-          <div class="btn btn_route">
-            <div class="icon">
-              <img src="@/assets/images/map/shopmap_route@2x.png"/>
-            </div>
-            <div class="text">路线</div>
           </div>
         </div>
       </div>
@@ -226,7 +228,8 @@
         
         shadeVisible: false,
         shopListPopupVisible: false,
-        shopList: [{
+        shopList: [
+            {
           name: '全家便利店 (虹梅路三店虹梅路三店虹梅梅路)…',
           distance: '小于100米',
           location: '宜山路2007号',
@@ -235,7 +238,7 @@
           pct: '56.3',
           lge: '670.2',
           time: '00:00-24:00'
-        },{
+        }, {
           name: '全家便利店 (虹梅路二店)',
           distance: '433米',
           location: '宜山路2007号',
@@ -244,7 +247,7 @@
           pct: '56.3',
           lge: '670.2',
           time: '00:00-24:00'
-        },{
+        }, {
           name: '全家便利店 (宜山路)',
           distance: '654米',
           location: '宜山路2007号',
@@ -253,16 +256,62 @@
           pct: '56.3',
           lge: '670.2',
           time: '00:00-24:00'
-        },{
-          name: '全家便利店 (虹梅路三店虹梅路三店虹梅梅路)…',
+        }, {
+          name: '全家便利店 (常德店)…',
           distance: '766米',
-          location: '宜山路2007号',
+          location: '常德路333号',
           turnover: '3254.12',
           vol: '542',
           pct: '56.3',
           lge: '670.2',
           time: '00:00-24:00'
-        }],
+        }, {
+          name: '全家便利店 (亚新店)',
+          distance: '433米',
+          location: '长寿路401号后广场',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        }, {
+          name: '全家便利店 (长峰店)',
+          distance: '433米',
+          location: '延安西路1088号',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        }, {
+          name: '全家便利店 (万科店)',
+          distance: '433米',
+          location: '闵行七莘路3333弄七新区27号103',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        }, {
+          name: '全家便利店 (武定店)',
+          distance: '433米',
+          location: '静安新区武定路409-411号底层',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        }, {
+          name: '全家便利店 (石门店)',
+          distance: '433米',
+          location: '石门二路3号',
+          turnover: '3254.12',
+          vol: '542',
+          pct: '56.3',
+          lge: '670.2',
+          time: '00:00-24:00'
+        }
+        ],
         
         popupShadeVisible: false,
         sortPopupVisible: false,
@@ -272,13 +321,13 @@
           {
             label: '综合',
             value: 'multiple'
-          },{
+          }, {
             label: '营业额',
             value: 'turnover'
-          },{
+          }, {
             label: '客单价',
             value: 'pct'
-          },{
+          }, {
             label: '坪效',
             value: 'lge'
           }
@@ -287,7 +336,7 @@
           {
             label: '由高到低',
             value: 'desc'
-          },{
+          }, {
             label: '由低到高',
             value: 'asc'
           }
@@ -298,7 +347,7 @@
         },
         currentSort: '',
         
-        ranges: ['附近','热门商区','静安区','长宁区','徐汇区','杨浦区','虹口区'],
+        ranges: ['附近', '热门商区', '静安区', '长宁区', '徐汇区', '杨浦区', '虹口区'],
         distances: ['500米', '1000米', '2000米'],
         currentRange: '附近',
         currentDistance: '500米'
@@ -573,6 +622,7 @@
       rangeAreaSelect(range) {
         if (this.currentRange !== range) {
           this.currentRange = range;
+          this.currentDistance = '500米';
         }
       },
       
@@ -584,7 +634,7 @@
         this.distancePopupVisible = false;
         this.popupShadeVisible = false;
       },
-  
+      
       // 点击popup内遮罩
       closePopupShade() {
         this.sortPopupVisible = false;
@@ -593,34 +643,34 @@
       },
     },
     mounted: function () {
-
-      document.querySelector("#container").addEventListener('touchmove', function (e) {
-        e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
-      }, {passive: false}); //passive 参数不能省略，用来兼容ios和android
-
+      
+      // document.querySelector("#container").addEventListener('touchmove', function (e) {
+      //   e.preventDefault(); //阻止默认的处理方式(阻止下拉滑动的效果)
+      // }, {passive: false}); //passive 参数不能省略，用来兼容ios和android
+      
       let recaptchaScript = document.createElement('script');
       recaptchaScript.setAttribute('src', 'https://webapi.amap.com/maps?v=1.4.14&key=687288a4144c83a67b11a316ec4c35bb');
       document.head.appendChild(recaptchaScript);
       recaptchaScript.onload = () => {
-
+        
         console.debug("高德地图加载成功");
-
+        
         //初始化地图对象，加载地图
         this.map = new AMap.Map("container", {
           zoom: 15,
           resizeEnable: false,
           zoomEnable: false
         });
-
+        
         //定位
         this.initGeolocation();
-
+        
         //加载全家便利店
         this.initBuilding();
-
+        
         //加载热力度
         this.initHeapMap();
-
+        
         //添加/移除建筑物
         // let marker = new AMap.Marker({
         //   position: new AMap.LngLat(lng, lat),
@@ -637,7 +687,7 @@
         // setTimeout(() => {
         //   map.remove(marker);
         // }, 5000);
-
+        
         //热力点
         // map.plugin(["AMap.Heatmap"], function () {
         //   //初始化heatmap对象
@@ -865,7 +915,7 @@
     left: 0;
     width: 100%;
     height: 100vh;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 10000;
   }
   
@@ -896,12 +946,12 @@
     height: 32px;
     margin: 0 8px 0 0;
   }
-
+  
   .shop-list-popup__hd .icon img {
     width: 100%;
     height: 100%;
   }
-
+  
   .shop-list-popup__hd .text {
     height: 33px;
     line-height: 33px;
@@ -928,7 +978,7 @@
     justify-content: center;
     font-size: 0;
   }
-
+  
   .shop-list-popup .sort-box .item .text {
     height: 37px;
     line-height: 37px;
@@ -938,42 +988,47 @@
     text-align: justify;
     margin: 0 4px 0 0;
   }
-
+  
   .shop-list-popup .sort-box .item.item_first .text {
     font-family: PingFangSC-Medium;
     color: #262626;
   }
-
+  
   .shop-list-popup .sort-box .item .icon {
     width: 24px;
     height: 24px;
   }
-
+  
   .shop-list-popup .sort-box .item .icon img {
     width: 100%;
     height: 100%;
   }
-
+  
   .shop-list-popup__bd {
     width: 100%;
     height: 1108px;
     background: #ffffff;
     padding: 0 30px;
+    overflow-y: scroll;
   }
-
+  
   .shop-list-popup__bd .shop-box {
     width: 100%;
     height: 262px;
     padding: 30px 0 0 30px;
-    border-bottom: 1px solid rgba(238,238,238,0.6);
+    border-bottom: 1px solid rgba(238, 238, 238, 0.6);
     position: relative;
   }
-
+  
+  .shop-list-popup__bd .shop-box:last-child {
+    margin-bottom: 20px;
+  }
+  
   .shop-list-popup__bd .shop-box .shop-box__bd {
     width: 100%;
     position: relative;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .rank {
     position: absolute;
     top: 0;
@@ -985,7 +1040,7 @@
     height: 42px;
     line-height: 42px;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-name {
     width: 100%;
     height: 42px;
@@ -999,7 +1054,7 @@
     text-overflow: ellipsis;
     margin: 0 0 6px 0;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-location {
     width: 100%;
     height: 37px;
@@ -1008,7 +1063,7 @@
     font-size: 0;
     margin: 0 0 19px 0;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-location .distance {
     height: 37px;
     line-height: 37px;
@@ -1018,7 +1073,7 @@
     margin: 0 25px 0 0;
     position: relative;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-location .distance:after {
     content: '';
     width: 1px;
@@ -1033,7 +1088,7 @@
     -o-transform: translate(0, -50%);
     transform: translate(0, -50%);
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-location .location {
     height: 37px;
     line-height: 37px;
@@ -1041,12 +1096,12 @@
     font-size: 26px;
     color: #575C68;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info {
     width: 100%;
     
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail {
     display: flex;
     width: 100%;
@@ -1054,14 +1109,14 @@
     flex-wrap: wrap;
     margin: 0 0 6px 0;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail .item {
     height: 33px;
     display: flex;
     align-items: center;
     margin: 0 60px 2px 0;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail .item .character {
     height: 33px;
     line-height: 33px;
@@ -1071,7 +1126,7 @@
     color: #8D93A4;
     text-align: justify;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .detail .item .num {
     height: 31px;
     line-height: 31px;
@@ -1080,25 +1135,25 @@
     color: #8D93A4;
     text-align: justify;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time {
     width: 100%;
     height: 30px;
     display: flex;
     align-items: center;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .icon {
     width: 22px;
     height: 22px;
     margin: 0 6px 0 0;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .icon img {
     width: 100%;
     height: 100%;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .character {
     height: 30px;
     line-height: 30px;
@@ -1107,7 +1162,7 @@
     color: #8D93A4;
     text-align: justify;
   }
-
+  
   .shop-list-popup__bd .shop-box .shop-box__bd .shop-info .time .num {
     height: 30px;
     line-height: 30px;
@@ -1116,7 +1171,7 @@
     color: #8D93A4;
     text-align: justify;
   }
-
+  
   .shop-list-popup__bd .shop-box > .btn {
     width: 92px;
     height: 131px;
@@ -1128,18 +1183,18 @@
     align-content: center;
     bottom: 0;
   }
-
+  
   .shop-list-popup__bd .shop-box > .btn .icon {
     width: 50px;
     height: 50px;
     margin: 0 0 4px 0;
   }
-
+  
   .shop-list-popup__bd .shop-box > .btn .icon img {
     width: 100%;
     height: 100%;
   }
-
+  
   .shop-list-popup__bd .shop-box > .btn .text {
     width: 100%;
     height: 25px;
@@ -1165,7 +1220,7 @@
     position: absolute;
     top: 54px;
     left: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 1;
   }
   
@@ -1173,7 +1228,6 @@
     position: relative;
     z-index: 2;
   }
-  
   
   .shop-list-popup .sort-popup {
     width: 100%;
@@ -1184,12 +1238,12 @@
     z-index: 2;
     padding: 28px 30px 0;
   }
-
+  
   .shop-list-popup .sort-popup .select-box {
     width: 100%;
     margin: 0 0 38px 0;
   }
-
+  
   .shop-list-popup .sort-popup .select-box .title {
     width: 100%;
     height: 33px;
@@ -1200,14 +1254,14 @@
     text-align: justify;
     margin: 0 0 12px 0;
   }
-
+  
   .shop-list-popup .sort-popup .select-box .list {
     width: 100%;
     display: flex;
     align-items: center;
     flex-wrap: wrap;
   }
-
+  
   .shop-list-popup .sort-popup .select-box .list .item {
     width: 158px;
     height: 56px;
@@ -1220,11 +1274,11 @@
     text-align: center;
     margin: 0 18px 0 0;
   }
-
+  
   .shop-list-popup .sort-popup .select-box .list .item.nm {
     margin: 0 0 0 0;
   }
-
+  
   .shop-list-popup .sort-popup .select-box .list .item.active {
     background: #262626;
     color: #ffffff;
@@ -1244,7 +1298,6 @@
     position: relative;
     left: 454px;
   }
-
   
   .shop-list-popup .distance-popup {
     width: 100%;
@@ -1254,15 +1307,15 @@
     background: #ffffff;
     z-index: 2;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__tabs {
     width: 100%;
-    height:  60px;
+    height: 60px;
     background: #ffffff;
     display: flex;
     border-bottom: 1px solid #EEEEEE;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__tabs .tab {
     flex: 1;
     height: 60px;
@@ -1272,24 +1325,24 @@
     font-size: 28px;
     color: #575C68;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__tabs .tab.active {
     color: #F9AB10;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd {
     width: 100%;
     display: flex;
     background: #ffffff;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .left {
     flex: 1;
     height: 750px;
     overflow: scroll;
     background: #F6F6F6;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .left .range {
     width: 100%;
     height: 98px;
@@ -1299,17 +1352,17 @@
     font-size: 28px;
     color: #575C68;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .left .range.active {
     background: #ffffff;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right {
     flex: 1;
     height: 750px;
     overflow: scroll;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .character {
     width: 100%;
     height: 62px;
@@ -1320,7 +1373,7 @@
     color: #8D93A4;
     text-align: left;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .nearby {
     width: 100%;
     height: 88px;
@@ -1331,7 +1384,7 @@
     color: #575C68;
     text-align: left;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .distance {
     width: 100%;
     height: 88px;
@@ -1340,13 +1393,13 @@
     align-items: center;
     position: relative;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .distance .text {
     font-family: SFUIDisplay-Medium;
     font-size: 26px;
     color: #575C68;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .distance .icon {
     display: none;
     width: 44px;
@@ -1359,11 +1412,11 @@
     width: 100%;
     height: 100%;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .distance.active .text {
     color: #F9AB10;
   }
-
+  
   .shop-list-popup .distance-popup .distance-popup__bd .right .distance.active .icon {
     display: block;
   }

@@ -134,6 +134,8 @@
 import echarts  from 'echarts'
 import { mapActions } from 'vuex'
 import eventBus from '@/assets/js/eventBus'
+import { ReportApi } from "../../service/ReportApi";
+
 export default {
   name: "stockedGoodsReport",
   data() {
@@ -168,22 +170,26 @@ export default {
       seriesData2:[],
       seriesData3:[],
       currentTimeIndex: 0,
-      data: {
-        salesRank: 1,
-        revenueRank: 5,
-        strike: 642.32,
-        strikeNum: 102,
-        gross: 212.09,
-        netProfit: 143.43,
-        stock: 98,
-        mprate: '105%',
-        sinkToPin: 2
-      },
+      // data: {
+      //   salesRank: 1,
+      //   revenueRank: 5,
+      //   strike: 642.32,
+      //   strikeNum: 102,
+      //   gross: 212.09,
+      //   netProfit: 143.43,
+      //   stock: 98,
+      //   mprate: '105%',
+      //   sinkToPin: 2
+      // },
+      data: {},
       compareGoods: [],
       number: 1
     }
   },
   created(){
+    
+    this.getGoodsAnalysisData();
+    
     eventBus.$on('selectCompareGoods',this.onGoodsUpdate);
     this.getChartData1();
     this.getChartData2();
@@ -551,6 +557,20 @@ export default {
       console.debug('跳转至商品选择页');
       this.$router.push({
         path: '/compareSelect'
+      });
+    },
+    
+    // 通过id向后台请求商品分析数据
+    getGoodsAnalysisData() {
+      ReportApi.getGoodsAnalysisData({
+        id: this.$route.query.id
+      }).then((res) => {
+        console.debug('获取商品分析数据成功');
+        console.debug(res);
+        Object.assign(this.data, res.data);
+        this.$forceUpdate();
+      }).catch((err) => {
+        console.error('获取商品分析数据出错', err);
       });
     },
   }

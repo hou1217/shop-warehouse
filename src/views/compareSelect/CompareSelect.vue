@@ -69,6 +69,8 @@
 <script>
 import eventBus from '@/assets/js/eventBus'
 import Toast from '@/components/common/Toast'
+import { ReportApi } from "../../service/ReportApi";
+
 export default {
   name: "CompareSelect",
   components: {
@@ -199,12 +201,13 @@ export default {
   },
   created() {
     eventBus.$on('selectedCompareGoods', this.comparedGoods);
-    this.getGoodsListData();
+    // this.getGoodsListData();
   },
-  // mounted() {
+  mounted() {
   //   console.debug('mounted');
   //   eventBus.$on('selectedCompareGoods', this.comparedGoods);
-  // },
+    this.getGoodsListData();
+  },
   beforeDestroy() {
     eventBus.$off("selectedCompareGoods", this.comparedGoods)
   },
@@ -226,16 +229,6 @@ export default {
         return false;
       }
       
-      if (this.selectedNum >= 3) {
-        this.tipData.message = '已超出可选范围';
-        this.tipData.visible = true;
-        setTimeout(() => {
-          this.tipData.visible = false;
-          this.tipData.message = '';
-        }, 2000);
-        return false;
-      }
-      
       if (this.selected.indexOf(goods) > -1) {
         let index = this.selected.indexOf(goods);
         this.selected.splice(index, 1);
@@ -243,6 +236,15 @@ export default {
         this.selectedNum--;
       } else {
         // 最多只能选择3个
+        if (this.selectedNum >= 3) {
+          this.tipData.message = '已超出可选范围';
+          this.tipData.visible = true;
+          setTimeout(() => {
+            this.tipData.visible = false;
+            this.tipData.message = '';
+          }, 2000);
+          return false;
+        }
         this.selected.push(goods);
         this.selectedNum++;
       }
@@ -277,17 +279,17 @@ export default {
       for (let item of data) {  // 将已选商品存入需要传递的参数列表
         this.transitiveData.push(item);
       }
-      
-      for (let key in this.goods) {  // 修改已选商品选中状态
-        for (let item of data) {
-          this.goods[key] = this.goods[key].map(d => {
-            if (d.id === item.id) {
-              d.selected = true;
-            }
-            return d;
-          });
-        }
-      }
+      // for (let key in this.goods) {  // 修改已选商品选中状态
+      //   console.debug(key);
+      //   for (let item of data) {
+      //     this.goods[key] = this.goods[key].map(d => {
+      //       if (d.id === item.id) {
+      //         d.selected = true;
+      //       }
+      //       return d;
+      //     });
+      //   }
+      // }
       
       console.debug(this.goods);
       this.$forceUpdate();
@@ -311,20 +313,68 @@ export default {
     
     // 获取数据
     getGoodsListData() {
-      // console.debug('getGoodsListData');
+      console.debug('getGoodsListData');
+      let that = this;
       // 获取到数据
-      if (this.testData) {
-        
-        // 处理获取到的数据，给每个数据添加selected属性
-        for (let key in this.testData) {
-          this.goods[key] = this.testData[key].map(item => {
-            item.selected = false;
-            return item;
-          });
+      // if (this.testData) {
+      //
+      //   // 处理获取到的数据，给每个数据添加selected属性
+      //   for (let key in this.testData) {
+      //     this.goods[key] = this.testData[key].map(item => {
+      //       item.selected = false;
+      //       return item;
+      //     });
+      //   }
+      //
+      //   console.debug(this.goods);
+      // }
+      
+      ReportApi.getCompareGoodsList().then((res) => {
+        console.debug(res.data);
+        console.debug(that.transitiveData);
+        if (res.data) {
+          
+          Object.assign(that.goods, res.data);
+          
+          for (let key in that.goods) {
+            for (let item of that.transitiveData) {
+              that.goods[key] = that.goods[key].map(d => {
+                if (d.id === item.id) {
+                  d.selected = true;
+                }
+                return d;
+              });
+            }
+          }
+          
+          // for (let key in res.data) {
+          //   // for (let item of that.transitiveData) {
+          //   //   console.debug(item);
+          //   //   that.goods[key] = res.data[key].map(d => {
+          //   //     if (d.id === item.id) {
+          //   //       d.selected = true;
+          //   //     }
+          //   //     console.debug(d);
+          //   //     return d;
+          //   //   });
+          //   // }
+          //
+          //   // this.goods[key] = res.data[key].map(item => {
+          //   //   item.selected = false;
+          //   //   return item;
+          //   // });
+          //
+          //   this.goods[key] = res.data[key].map(item => {
+          //     // for (let d )
+          //     return item;
+          //   });
+          // }
         }
-        
         console.debug(this.goods);
-      }
+        this.$forceUpdate();
+      }).catch((err) => {
+        console.debug('获取对比商品列表出错', err);
+      });
     },
   }
 }

@@ -4,7 +4,7 @@
     <div class="good-images-box">
       <mt-swipe :auto="0" class="mint-swipe_good-detail">
         <mt-swipe-item class="swipe-item-1 item"
-                       v-for="(src, srcIndex) in imageList"
+                       v-for="(src, srcIndex) in goodsDetailData.headIds"
                        :key="srcIndex">
           <img :src="src">
         </mt-swipe-item>
@@ -33,7 +33,7 @@
       <div class="good-desc">
         <div class="top">
           <div class="name">
-            商品名称商品名称商品名称商品名称商品名称商品名称商品名称商品名称商称商品名称商品名...
+            {{goodsDetailData.name}}
           </div>
           <div class="money-box money-box_price">
             <div class="money-box__left">
@@ -42,12 +42,12 @@
                 <div class="icon">
                   <img src="@/assets/images/shop_money@2x.png"/>
                 </div>
-                <div class="text">39.6</div>
+                <div class="text">{{goodsDetailData.price}}</div>
               </div>
             </div>
             <div class="money-box__right">
               <div class="character">今日进货</div>
-              <div class="num">3323</div>
+              <div class="num">{{goodsDetailData.purchase}}</div>
             </div>
           </div>
           <div class="money-box money-box_profit">
@@ -57,12 +57,12 @@
                 <div class="icon">
                   <img src="@/assets/images/shop_money@2x.png"/>
                 </div>
-                <div class="text">8.5</div>
+                <div class="text">{{goodsDetailData.profit}}</div>
               </div>
             </div>
             <div class="money-box__right">
               <div class="character">总仓库存</div>
-              <div class="num">5432</div>
+              <div class="num">{{goodsDetailData.warehouse}}</div>
             </div>
           </div>
         </div>
@@ -182,7 +182,7 @@
         </div>
         <div class="good__bd">
           <div class="similar-box"
-               v-for="(similar, similarIndex) in similars"
+               v-for="(similar, similarIndex) in goodsDetailData.similars"
                :key="similarIndex">
             <div class="img">
               <img :src="similar.headId">
@@ -205,15 +205,17 @@
           <div class="text">商品详情</div>
         </div>
         <div class="good__bd">
-          <div class="image">
-            <img src="@/assets/images/img1@2x.png">
+          <div class="image"
+               v-for="(img, imgIndex) in goodsDetailData.details"
+               :key="imgIndex">
+            <img :src="img">
           </div>
-          <div class="image">
-            <img src="@/assets/images/img2@2x.png">
-          </div>
-          <div class="image">
-            <img src="@/assets/images/img3@2x.png">
-          </div>
+          <!--<div class="image">-->
+            <!--<img src="@/assets/images/img2@2x.png">-->
+          <!--</div>-->
+          <!--<div class="image">-->
+            <!--<img src="@/assets/images/img3@2x.png">-->
+          <!--</div>-->
         </div>
       </div>
     </div>
@@ -289,7 +291,8 @@
 
 <script>
   // import Bscroll from 'better-scroll'
-  
+  import { GoodsApi } from "../../service/GoodsApi";
+
   export default {
     name: "GoodsDetail",
     data() {
@@ -373,13 +376,17 @@
         // 测试图片地址
         imageList: [
           require('@/assets/images/demo/goods_1.png'),
-          require('@/assets/images/demo/goods_2.png'),
-          require('@/assets/images/demo/goods_3.png'),
-          require('@/assets/images/demo/goods_4.png')
-        ]
+          require('@/assets/images/demo/goods_8.png'),
+          // require('@/assets/images/demo/goods_1.png'),
+          // require('@/assets/images/demo/goods_8.png')
+        ],
+        
+        // 测试商品详情
+        goodsDetailData: {},
       }
     },
     created() {
+      this.getGoodsDetailData();
     },
     mounted() {
       // if (this.$refs.wrapper) {
@@ -454,6 +461,22 @@
           });
         }
       },
+      
+      // 获取商品详情
+      getGoodsDetailData() {
+        GoodsApi.getGoodsDetail({
+          id: this.$route.query.id
+        }).then((res) => {
+          console.debug('获取商品数据成功');
+          console.debug(res);
+          if (res.data) {
+            Object.assign(this.goodsDetailData, res.data);
+          }
+          this.$forceUpdate();
+        }).catch((err) => {
+          console.error('获取商品详情出错', err);
+        });
+      }
     }
   }
 </script>
