@@ -3,7 +3,7 @@
     <!-- 标题 -->
     <HeaderTitle :title="'店铺库存'" :name="'category'"/>
     <!-- 筛选排序 -->
-    <HeaderSort @PopupVisible="handlePop"/>  
+    <HeaderSort @PopupVisible="handlePop"/>
     <!-- 类别分类 -->
     <NavbarTop />
     <!-- 悬浮框 -->
@@ -11,18 +11,19 @@
     <!-- 加载中 -->
     <LoadingBox v-if="reload && loading"/>
     <!-- toast -->
-    <Toast 
+    <Toast
       :toastVisible="toastVisible"
       :toastData="toastData"/>
     <!-- 遮罩层 -->
-    <Shade 
+    <Shade
       :shadeVisible="shadeVisible"
       @click.native="handleShadeClick()"/>
     <!-- 快捷补货 -->
-    <AddGoods 
+    <AddGoods
       :data="goodsData"
       :addGoodsVisible="addGoodsVisible"
-      @addGoodsVisibleHandler="addGoodsVisibleHandler"/>
+      @addGoodsVisibleHandler="addGoodsVisibleHandler"
+      @addToPurchase="addToPurchase"/>
     <!-- 主体盒子 -->
     <div class="main-box" >
       <vue-data-loading
@@ -39,9 +40,9 @@
             <div class="portrait">
               <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
               <div class="addgoods" @click.stop="addgoods(card)">
-                <img 
+                <img
                   :src="card.stockNum < 10?
-                  require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
+                  require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')"
                   alt="">
               </div>
             </div>
@@ -98,7 +99,7 @@ import NavbarTop from '@/components/NavbarTop'
 import FloatingBox from '@/components/FloatingBox'
 import VueDataLoading from 'vue-data-loading'
 
-
+import  store from '@/store/index'
 export default {
   components:{
     HeaderTitle,
@@ -125,7 +126,7 @@ export default {
       defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
             + '"',
       cards:[
-        
+      
       ],
       loading:true,
       reload: true,
@@ -155,6 +156,9 @@ export default {
   created(){
     this.getListData();
   },
+  destroyed() {
+    eventBus.$emit('purchaseOrder', [this.goodsData]);
+  },
   methods:{
     ...mapActions([
       'REQUEST_API'
@@ -173,7 +177,7 @@ export default {
       }
     },
     addGoodsVisibleHandler(){
-       
+      
       this.shadeVisible = false;
 
       this.addGoodsVisible = false;
@@ -221,7 +225,7 @@ export default {
         console.log(res);
         if(res  && res.cards.length > 0){
           if(this.reload){
-            this.cards =  res.cards; 
+            this.cards =  res.cards;
           }else{
             this.cards = [].concat(this.cards,res.cards);
 
@@ -237,7 +241,17 @@ export default {
       .catch((err) => {
         console.debug('列表数据异常：', err);
       });
-    }
+    },
+    
+    // 商品添加到进货单
+    addToPurchase() {
+      console.debug('商品添加到订货单');
+      console.debug(this.goodsData);
+      store.commit('setPurchaseOrder', this.goodsData);
+      this.addGoodsVisible = false;
+      this.shadeVisible = false;
+      this.goodsData = {};
+    },
   }
 }
 </script>

@@ -2,6 +2,9 @@ import axios from 'axios'
 import router from '../router/index.js'
 const APP_HOST = process.env.VUE_APP_APP_HOST;
 const TEST_HOST = process.env.VUE_APP_TEST_HOST;
+
+import store from '../store/index'
+
 // axios响应拦截器
 axios.interceptors.response.use((res)=> {
   console.log(res);
@@ -35,6 +38,9 @@ const testApi = function (url, params) {
     //   'WALLAN-DEVICENUM': JSON.parse(localStorage.getItem('ticket'))["WALLAN-DEVICENUM"]
     // }
   })
+  // switch (url) {
+  //   case '':
+  // }
 }
 const fetchApi = function (url, params) {
   return  axios({

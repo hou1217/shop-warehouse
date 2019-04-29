@@ -101,10 +101,12 @@ export default {
       this.currentIndex = val;
     },
     joinLists(){
-      this.$router.push({
-        name:"purchaseOrder"
-      })
-      // this.$emit('addGoodsVisibleHandler',false);
+      console.debug('加入订货单');
+      // console.debug(this.data);
+      // this.$router.push({
+      //   name:"purchaseOrder"
+      // })
+      this.$emit('addToPurchase');
     },
     handleImmediate(){
       this.$router.push({
@@ -119,13 +121,13 @@ export default {
 <style lang="stylus" scoped>
 
 .category-popup{
-  position fixed 
+  position fixed
   bottom 0px
   z-index 51
   width 100%
   background #ffffff
   .content{
-    padding 32px  
+    padding 32px
   }
   .header{
     display flex
@@ -138,26 +140,26 @@ export default {
         font-size: 42px;
         color: #E93A0F;
         text-align left
-      }  
+      }
       .choose{
         
-        display flex 
+        display flex
         .item{
           &:first-child{
             margin-right   10px
           }
-          color: #8D93A4; 
+          color: #8D93A4;
           font-size: 24px;
         }
-         
+        
         
       }
       
     }
   }
   .title{
-    text-align left 
-    margin-bottom 12px 
+    text-align left
+    margin-bottom 12px
   }
   ul{
     display flex
@@ -165,7 +167,7 @@ export default {
     li{
       &.active{
         background: #262626;
-        color: #FFFFFF;   
+        color: #FFFFFF;
       }
       color: #ADB1BE;
       // width 132px
@@ -180,7 +182,7 @@ export default {
     }
   }
   .numbers{
-    display flex  
+    display flex
     justify-content space-between
   }
   .btns{

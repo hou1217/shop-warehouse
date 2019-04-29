@@ -21,7 +21,8 @@ export default {
       if (event.target.nodeName == 'IMG') {
         if (event.offsetX > 0 && event.offsetX < 20) {
           console.debug('减');
-          if(this.number === 0){
+          if(this.number === 1){
+            this.$emit('minimum');
             return false;
           }
           this.number -= 1;

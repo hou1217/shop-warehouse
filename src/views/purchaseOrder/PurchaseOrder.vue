@@ -19,13 +19,14 @@
            v-for="(goods, goodsIndex) in goodsList"
            :key="goodsIndex">
         <div class="select-btn"
-             @click="selectGoods(goods.id)">
-          <img v-if="selectedList.indexOf(goods.id) > -1"
+             @click="selectGoods(goods)">
+          <!--selectedList.indexOf(goods.id) > -1-->
+          <img v-if="goods.selected"
                src="@/assets/images/shop_multi_select@2x.png">
           <img v-else src="@/assets/images/shop_multi_unselect@2x.png">
         </div>
         <div class="goods-img">
-          <img :src="goods.image">
+          <img :src="imgSrc(goods.id)">
         </div>
         <div class="goods-detail">
           <div class="name">{{goods.name}}</div>
@@ -46,7 +47,7 @@
               <div class="num">{{goods.price}}</div>
             </div>
             <div class="num-control">
-              <plus-minus></plus-minus>
+              <plus-minus @minimum="showToast('minimum')"></plus-minus>
             </div>
           </div>
           <div class="activities"
@@ -86,6 +87,9 @@
 <script>
   import PlusMinus from '@/components/common/PlusMinus'
   import Toast from '@/components/common/Toast'
+  import store from '@/store/index'
+  import eventBus from '@/assets/js/eventBus'
+  import { mapActions } from 'vuex'
   export default {
     name: "PurchaseOrder",
     components: {
@@ -94,33 +98,34 @@
     },
     data() {
       return {
-        goodsList: [
-          {
-            image: require('@/assets/images/demo/goods_1.png'),
-            name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
-            price: 8.5,
-            num: 34,
-            id: '1',
-            countLess: true,
-            activity: []
-          },{
-            image: require('@/assets/images/demo/goods_2.png'),
-            name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
-            price: 8.5,
-            num: 340,
-            id: '2',
-            countLess: false,
-            activity: ['满25减5', '新品上市第二件半价']
-          },{
-            image: require('@/assets/images/demo/goods_3.png'),
-            name: '商品名称商品名称商商',
-            price: 58.4,
-            num: 34,
-            id: '3',
-            countLess: true,
-            activity: []
-          }
-        ],
+        // goodsList: [
+        //   {
+        //     image: require('@/assets/images/demo/goods_1.png'),
+        //     name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
+        //     price: 8.5,
+        //     num: 34,
+        //     id: '1',
+        //     countLess: true,
+        //     activity: []
+        //   },{
+        //     image: require('@/assets/images/demo/goods_2.png'),
+        //     name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
+        //     price: 8.5,
+        //     num: 340,
+        //     id: '2',
+        //     countLess: false,
+        //     activity: ['满25减5', '新品上市第二件半价']
+        //   },{
+        //     image: require('@/assets/images/demo/goods_3.png'),
+        //     name: '商品名称商品名称商商',
+        //     price: 58.4,
+        //     num: 34,
+        //     id: '3',
+        //     countLess: true,
+        //     activity: []
+        //   }
+        // ],
+        goodsList: [],
         selectedList: [],
         tipVisible: false,
         tipData: {
@@ -129,24 +134,64 @@
         }
       }
     },
+    computed:{
+      imgSrc(){
+        return function(id){
+          id = id%16
+          return require ('@/assets/images/demo/goods_'+(id)+'.png')
+        }
+      }
+    },
+    created() {
+      this.getPurchaseOrderListData();
+      this.test();
+    },
+    destroyed() {
+      eventBus.$emit('purchaseOrder', this.selectedList);
+    },
     methods: {
+      ...mapActions([
+        'REQUEST_API'
+      ]),
       // 全选
       selectAll() {
+        this.selectedList = [];
         for (let item of this.goodsList) {
-          if (this.selectedList.indexOf(item.id) === -1) {
-            this.selectedList.push(item.id);
-          }
+          this.selectedList.push(item);
+          item.selected = true;
         }
+        this.$forceUpdate();
       },
       
       // 选中商品
-      selectGoods(goodsId) {
-        if (this.selectedList.indexOf(goodsId) > -1) {
-          let index = this.selectedList.indexOf(goodsId);
-          this.selectedList.splice(index, 1);
+      selectGoods(goods) {
+        console.debug('selectGoods');
+        console.debug(this.selectedList);
+        // if (this.selectedList.indexOf(goodsId) > -1) {
+        //   let index = this.selectedList.indexOf(goodsId);
+        //   this.selectedList.splice(index, 1);
+        // } else {
+        //   this.selectedList.push(goodsId);
+        // }
+        
+        if (this.selectedList.length === 0) {
+          this.selectedList.push(goods);
         } else {
-          this.selectedList.push(goodsId);
+          for (let i = 0; i < this.selectedList.length; i++) {
+            if (this.selectedList[i].id === goods.id) {
+              this.selectedList.splice(i, 1);
+              break;
+            } else {
+              if (i === this.selectedList.length - 1) {
+                this.selectedList.push(goods);
+                break;
+              }
+            }
+          }
         }
+        // console.debug(this.selectedList);
+        goods.selected = !goods.selected;
+        this.$forceUpdate();
       },
       
       // 确认进货
@@ -173,6 +218,50 @@
           path: '/purchaseOrderManage'
         });
       },
+      
+      // 获取进货单列表
+      getPurchaseOrderListData() {
+        store.dispatch('getPurchaseOrderList').then((res) => {
+          console.debug('获取进货单列表成功');
+          console.debug(res);
+          if (res.data && res.data.length) {
+            Object.assign(this.goodsList, res.data);
+            this.goodsList.forEach(item => {
+              item['activity'] = [];
+              item['activity'].push(item.labels);
+              item['selected'] = false;
+              return item;
+            })
+          }
+          this.$forceUpdate();
+        }).catch(err => {
+          console.debug('获取进货单列表出错', err);
+        })
+      },
+      
+      // 显示提示
+      showToast(type) {
+        console.debug('showToast');
+        if (type === 'minimum') {
+          this.tipData.msg = '商品不能再少了';
+          this.tipVisible = true;
+          setTimeout(() => {
+            this.tipVisible = false;
+            this.tipData.msg = '';
+          }, 2000);
+        }
+      },
+      
+      // 测试
+      test() {
+        this.REQUEST_API({
+          api: 'testGetData',
+          params: {}
+        }).then(res => {
+          console.debug('test');
+          console.debug(res);
+        });
+      }
     }
   }
 </script>

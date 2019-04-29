@@ -247,7 +247,7 @@ export default {
             let item = {
               type: 'line',
               data: res[i]
-            }
+            };
             arr.push(item);
           }
           this.seriesData1 = arr;
