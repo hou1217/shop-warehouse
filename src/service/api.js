@@ -42,6 +42,19 @@ const testApi = function (url, params) {
   //   case '':
   // }
 }
+const testGetApi = function(url,params){
+  if(url.includes('/stock/')){
+    return {
+      cards:store.state.stockGoodsList
+    }
+  }
+  else if(url.includes('/generalStock/')){
+    return{
+      cards:store.state.generalGoodsList
+    }
+  }
+  
+}
 const fetchApi = function (url, params) {
   return  axios({
     method: 'POST',
@@ -57,9 +70,9 @@ const APIs = {
   //获取分类数据列表
   getCategoryList: params => testApi('/categoryList',params.params),
   //获取stock列表
-  getStockList: params => testApi(`/stock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
+  getStockList: params => testGetApi(`/stock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
   //获取商品总仓列表
-  getGeneralStockList: params => testApi(`/generalStock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
+  getGeneralStockList: params => testGetApi(`/generalStock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
 
   //店铺报表--
   //获取单品排行
