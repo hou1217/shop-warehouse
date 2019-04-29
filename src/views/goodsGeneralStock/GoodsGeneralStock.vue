@@ -107,7 +107,7 @@
                   <li 
                     v-for="(item,index) in card.otherGoods"
                     :key="index">
-                    <img src="@/assets/images/demo2.png" alt="">
+                    <img :src="imgSrc(item.id)" alt="">
                   </li>
                 </ul>
               </div>
