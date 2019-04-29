@@ -33,8 +33,152 @@ const state = {
     address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
   },
   purchaseOrder: [],
-  orderList: [],
-  
+  orderList: [
+    {
+      id: 100000000001,
+      state: 'confirm',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {
+          id: 1,
+          num: 54
+        },
+        {
+          id: 2,
+          num: 9
+        },
+        {
+          id: 3,
+          num: 54
+        }
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 16:46',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000002,
+      state: 'send',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 2,
+          num: 54},
+        {id: 3,
+          num: 9},
+        {id: 4,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 17:05',
+      dispatchData: {
+        date: '周四',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000003,
+      state: 'receive',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 3,
+          num: 54},
+        {id: 4,
+          num: 9},
+        {id: 5,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 20:31',
+      dispatchData: {
+        date: '周二',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000004,
+      state: 'service',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 1,
+          num: 54},
+        {id: 2,
+          num: 9},
+        {id: 3,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-20 15:37',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000005,
+      state: 'receive',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 2,
+          num: 54},
+        {id: 3,
+          num: 9},
+        {id: 4,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-8-16 16:46',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000006,
+      state: 'confirm',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 3,
+          num: 54},
+        {id: 4,
+          num: 9},
+        {id: 5,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 16:46',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    }
+  ],
 }
 export default new Vuex.Store({
   state,

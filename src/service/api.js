@@ -38,9 +38,6 @@ const testApi = function (url, params) {
     //   'WALLAN-DEVICENUM': JSON.parse(localStorage.getItem('ticket'))["WALLAN-DEVICENUM"]
     // }
   })
-  // switch (url) {
-  //   case '':
-  // }
 }
 const testGetApi = function(url,params){
   if(url.includes('/stock/')){
@@ -53,7 +50,47 @@ const testGetApi = function(url,params){
       cards:store.state.generalGoodsList
     }
   }
-  
+  else if (url.includes('/shop/order')) {
+    console.debug(params);
+    if (params.state === 'all' || params.state === '') {
+      return{
+        data: store.state.orderList
+      }
+    } else {
+      let arr = [];
+      for (let item of store.state.orderList) {
+        if (item.state === params.state) {
+          arr.push(item);
+        }
+      }
+      return {
+        data: arr
+      };
+    }
+  }
+  else if (url.includes('/order/detail')) {
+    for (let item of store.state.orderList) {
+      if (item.id == params.orderId) {
+        return {
+          data: item
+        }
+      }
+    }
+  }
+  else if (url.includes('/order/list')) {
+    console.debug(params.ids);
+    let arr = [];
+    for (let i = 0; i < store.state.stockGoodsList.length; i++) {
+      for (let item of params.ids) {
+        if (item.id == store.state.stockGoodsList[i].id) {
+          arr.push(store.state.stockGoodsList[i]);
+        }
+      }
+    }
+    return {
+      data: arr
+    }
+  }
 }
 const fetchApi = function (url, params) {
   return  axios({
@@ -93,5 +130,12 @@ const APIs = {
   getClassifiedNums: params =>  getApi('/report/classifiedNums',params.params),
   getSectionSales: params =>  getApi('/report/sectionSales',params.params),
   getClassifiedProfit: params =>  getApi('/report/classifiedProfit',params.params),
+  
+  // 获取店铺订单列表
+  getShopOrderList: params => testGetApi('/shop/order', params.params),
+  // 获取订单详情
+  getOrderDetail: params => testGetApi('/order/detail', params.params),
+  // 获取进货清单
+  getGoodsDetails: params => testGetApi('/order/list', params.params),
 }
 export default APIs

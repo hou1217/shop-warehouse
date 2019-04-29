@@ -13,7 +13,7 @@
            v-for="(goods, goodsIndex) in goodsList"
            :key="goodsIndex">
         <div class="goods-img">
-          <img :src="goods.image">
+          <img :src="imgSrc(goods.id)">
         </div>
         <div class="goods-detail">
           <div class="name">{{goods.name}}</div>
@@ -39,40 +39,43 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import eventBus from '@/assets/js/eventBus'
   export default {
     name: "PurchaseOrderList",
     data() {
       return {
-        goodsList: [
-          {
-            image: require('@/assets/images/demo/goods_1.png'),
-            name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
-            price: 8.5,
-            num: 54,
-            id: '1',
-            countLess: true,
-            activity: [],
-            specifications: '商规格商品规格规商品规格商品规格商品规格…'
-          },{
-            image: require('@/assets/images/demo/goods_2.png'),
-            name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
-            price: 8.5,
-            num: 9,
-            id: '2',
-            countLess: false,
-            activity: ['满25减5', '新品上市第二件半价'],
-            specifications: '商规格商品规格规商品'
-          },{
-            image: require('@/assets/images/demo/goods_3.png'),
-            name: '商品名称商品名称商商',
-            price: 58.4,
-            num: 54,
-            id: '3',
-            countLess: true,
-            activity: [],
-            specifications: '商规格商品规格规商品规格'
-          }
-        ],
+        // goodsList: [
+        //   {
+        //     image: require('@/assets/images/demo/goods_1.png'),
+        //     name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
+        //     price: 8.5,
+        //     num: 54,
+        //     id: '1',
+        //     countLess: true,
+        //     activity: [],
+        //     specifications: '商规格商品规格规商品规格商品规格商品规格…'
+        //   },{
+        //     image: require('@/assets/images/demo/goods_2.png'),
+        //     name: '商品名称商品名称商商品名称商品名称商名称商品名称商品名称商名称…',
+        //     price: 8.5,
+        //     num: 9,
+        //     id: '2',
+        //     countLess: false,
+        //     activity: ['满25减5', '新品上市第二件半价'],
+        //     specifications: '商规格商品规格规商品'
+        //   },{
+        //     image: require('@/assets/images/demo/goods_3.png'),
+        //     name: '商品名称商品名称商商',
+        //     price: 58.4,
+        //     num: 54,
+        //     id: '3',
+        //     countLess: true,
+        //     activity: [],
+        //     specifications: '商规格商品规格规商品规格'
+        //   }
+        // ],
+        goodsList: [],
         selectedList: [],
         tipVisible: false,
         tipData: {
@@ -81,7 +84,47 @@
         }
       }
     },
-    methods: {}
+    computed:{
+      imgSrc(){
+        return function(id){
+          id = id%16
+          return require ('@/assets/images/demo/goods_'+(id)+'.png')
+        }
+      }
+    },
+    created() {
+      eventBus.$on('goodsIds', this.getGoodsIds);
+    },
+    methods: {
+      ...mapActions([
+        'REQUEST_API'
+      ]),
+      
+      // 接收获取到的商品id
+      getGoodsIds(data) {
+        console.debug('getGoodsIds');
+        console.debug(data);
+        this.getGoodsDetails(data);
+      },
+      
+      // 获取商品详情列表
+      getGoodsDetails(data) {
+        this.REQUEST_API({
+          api: 'getGoodsDetails',
+          params: {
+            ids: data
+          }
+        }).then(res => {
+          console.debug('获取商品详情列表成功');
+          console.debug(res);
+          for (let item of res.data) {
+            this.goodsList.push(item);
+          }
+        }).catch(err => {
+          console.debug('获取商品详情列表出错', err);
+        });
+      },
+    }
   }
 </script>
 

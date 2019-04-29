@@ -15,7 +15,8 @@
         </div>
         <div class="text">{{orderData.isSend ? '仓库已发货' : '等待仓库确认'}}</div>
       </div>
-      <div class="consignee-info">
+      <div class="consignee-info"
+           v-if="orderData.consignee">
         <div class="consignee">
           <div class="consignee__name">{{orderData.consignee.name}}</div>
           <div class="consignee__phone">{{orderData.consignee.phone}}</div>
@@ -30,12 +31,12 @@
       <div class="goods-info">
         <div class="goods-list">
           <div class="goods"
-               v-for="(goods, goodsIndex) in orderData.goodsList"
+               v-for="(goods, goodsIndex) in orderData.goods"
                :key="goodsIndex">
-            <img :src="goods.image">
+            <img :src="imgSrc(goods.id)">
           </div>
           <div class="goods goods_more" @click.stop="turnToList">
-            <div class="text">共{{orderData.goodsNum}}件</div>
+            <div class="text" v-if="orderData.goods">共{{orderData.goods.length}}件</div>
             <div class="icon">
               <img src="@/assets/images/arrow_enter_g@2x.png">
             </div>
@@ -66,7 +67,7 @@
           <div class="character">下单时间</div>
           <div class="text">{{orderData.createdAt}}</div>
         </div>
-        <div class="dispatch">
+        <div class="dispatch" v-if="orderData.dispatchData">
           <div class="character">配送时间</div>
           <div class="text">
             {{orderData.dispatchData.date + orderData.dispatchData.timeRange}}
@@ -84,40 +85,61 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+  import eventBus from '@/assets/js/eventBus'
   export default {
     name: "purchaseOrderDetail",
     data() {
       return {
-        orderData: {
-          id: '123456784843',
-          createdAt: '2018-09-18 10:39',
-          isSend: false,
-          consignee: {
-            name: '名字名字名字',
-            phone: '15643223300',
-            address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
-          },
-          goodsList: [
-            {
-              image: require('@/assets/images/demo/goods_1.png')
-            },{
-              image: require('@/assets/images/demo/goods_2.png')
-            },{
-              image: require('@/assets/images/demo/goods_3.png')
-            },{
-              image: require('@/assets/images/demo/goods_4.png')
-            }
-          ],
-          goodsNum: 15,
-          dispatchData: {
-            date: '今天',
-            timeRange: '10:00-11:00'
-          },
-          message: '我是留言我是留言我是留言我是留言我是留言我是留言我是留言我是留言言我是留言言我是留言言我是留言言我是留'
+        // orderData: {
+        //   id: '123456784843',
+        //   createdAt: '2018-09-18 10:39',
+        //   isSend: false,
+        //   consignee: {
+        //     name: '名字名字名字',
+        //     phone: '15643223300',
+        //     address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+        //   },
+        //   goodsList: [
+        //     {
+        //       image: require('@/assets/images/demo/goods_1.png')
+        //     },{
+        //       image: require('@/assets/images/demo/goods_2.png')
+        //     },{
+        //       image: require('@/assets/images/demo/goods_3.png')
+        //     },{
+        //       image: require('@/assets/images/demo/goods_4.png')
+        //     }
+        //   ],
+        //   goodsNum: 15,
+        //   dispatchData: {
+        //     date: '今天',
+        //     timeRange: '10:00-11:00'
+        //   },
+        //   message: '我是留言我是留言我是留言我是留言我是留言我是留言我是留言我是留言言我是留言言我是留言言我是留言言我是留'
+        // }
+        orderData: {}
+      }
+    },
+    computed:{
+      imgSrc(){
+        return function(id){
+          id = id%16
+          return require ('@/assets/images/demo/goods_'+(id)+'.png')
         }
       }
     },
+    created() {
+      this.getDetailData();
+    },
+    destroyed() {
+      eventBus.$emit('goodsIds', this.orderData.goods);
+    },
     methods: {
+      ...mapActions([
+        'REQUEST_API'
+      ]),
+      
       // 联系仓库
       contactStore() {
         console.debug('联系仓库');
@@ -142,6 +164,24 @@
       turnToList() {
         this.$router.push({
           path: '/purchaseOrderList'
+        });
+      },
+      
+      // 获取订单详情
+      getDetailData() {
+        this.REQUEST_API({
+          api: 'getOrderDetail',
+          params: {
+            orderId: this.$route.query.orderId
+          }
+        }).then(res => {
+          console.debug('获取订单详情成功');
+          console.debug(res);
+          Object.assign(this.orderData, res.data);
+          
+          this.$forceUpdate();
+        }).catch(err => {
+          console.debug('获取订单详情出错', err);
         });
       },
     }
