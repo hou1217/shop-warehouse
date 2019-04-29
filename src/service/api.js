@@ -1,5 +1,4 @@
 import axios from 'axios'
-import router from '../router/index.js'
 const APP_HOST = process.env.VUE_APP_APP_HOST;
 const TEST_HOST = process.env.VUE_APP_TEST_HOST;
 
@@ -42,15 +41,75 @@ const testApi = function (url, params) {
   //   case '':
   // }
 }
-const testGetApi = function(url,params){
-  if(url.includes('/stock/')){
+//暂停函数
+function sleep(ms){
+  return new Promise((resolve)=>{
+	setTimeout(resolve,ms);
+  })
+}
+//排序函数
+function compare(property,sort){
+  return function(obj1,obj2){
+      var value1 = obj1[property];
+      var value2 = obj2[property];
+      if(sort){
+        return value1 - value2;     // 升序
+      }else{
+        return value2 - value1;     // 降序
+      }
+      
+  }
+}
+
+const testGetApi = async function(url,params){
+  if(url.includes('/categoryList')){
+    await sleep(500);
+    let data = store.state.categoryList;
     return {
-      cards:store.state.stockGoodsList
+      cards: data
+    }
+  }
+  else if(url.includes('/stock/')){
+    console.log(params)
+    let type = params.type;
+    let order = params.order;
+    let sort = params.isAsc;
+    console.log(sort);
+    await sleep(500);
+    //对数据进行筛选
+    let data = type-1 === 0?store.state.stockGoodsList:store.state.stockGoodsList.filter(item=>{
+      return item.type === String(type-1)      
+    });
+    //对数据进行排序
+    data = data.sort(compare(order,sort));
+    console.warn(data);
+    return {
+      cards: data
     }
   }
   else if(url.includes('/generalStock/')){
+    console.log(params)
+    let type = params.type;
+    let order = params.order;
+    let sort = params.isAsc;
+    console.log(sort);
+    await sleep(500);
+    //对数据进行筛选
+    let data = type-1 === 0?store.state.generalGoodsList:store.state.generalGoodsList.filter(item=>{
+      return item.type === String(type-1)      
+    });
+    //对数据进行排序
+    data = data.sort(compare(order,sort));
+    console.warn(data);
+    return {
+      cards: data
+    }
+  }
+  else if(url.includes('/mateList')){
+    await sleep(100);
+    let data = store.state.mateList;
     return{
-      cards:store.state.generalGoodsList
+      cards: data
     }
   }
   
@@ -68,7 +127,7 @@ const fetchApi = function (url, params) {
 }
 const APIs = {
   //获取分类数据列表
-  getCategoryList: params => testApi('/categoryList',params.params),
+  getCategoryList: params => testGetApi('/categoryList',params.params),
   //获取stock列表
   getStockList: params => testGetApi(`/stock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
   //获取商品总仓列表
@@ -78,7 +137,7 @@ const APIs = {
   //获取单品排行
   getRankList: params => getApi('/rankList',params.params),
   //获取最佳伴侣
-  getMateList: params => testApi('/mateList',params.params),
+  getMateList: params => testGetApi('/mateList',params.params),
   //销量
   getGoodsSalesNum: params => getApi(`/report/goodsSalesNum/${params.params.number}`,params.params),
   //动销率

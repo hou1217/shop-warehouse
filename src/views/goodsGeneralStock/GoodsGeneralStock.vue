@@ -49,11 +49,11 @@
               <h3>{{card.name}}</h3>
               <div class="sales-num">
                 <span>售价¥{{card.price}}</span>
-                <span>今日销售{{card.salesNum}}</span>
+                <span>今日销售{{card.salesNumToday}}</span>
               </div>
               <div class="sales-num">
                 <span>毛利¥{{card.profit}}</span>
-                <span class="stock" :class="{red:card.stockNum < 10}">库存{{card.stockNum}}</span>
+                <span class="stock" :class="{red:card.stockNum < 100}">库存{{card.stockNum}}</span>
               </div>
               <div class="labels">
                 <div class="icon">
