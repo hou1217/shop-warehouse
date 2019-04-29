@@ -92,7 +92,7 @@ const testGetApi = async function(url,params){
     let type = params.type;
     let order = params.order;
     let sort = params.isAsc;
-    console.log(sort);
+    // console.log(sort);
     await sleep(500);
     //对数据进行筛选
     let data = type-1 === 0?store.state.generalGoodsList:store.state.generalGoodsList.filter(item=>{
@@ -110,6 +110,21 @@ const testGetApi = async function(url,params){
     let data = store.state.mateList;
     return{
       cards: data
+    }
+  }
+  else if(url.includes('/goodsDetail')){
+    let id = params.id;
+    console.log(id);
+    await sleep(10);
+
+    
+    let array = store.state.dataDetailList;
+    let data = null;
+    data = array.filter(item => {
+      return item.id === String(id) 
+    }) 
+    return{
+      data: data[0]
     }
   }
   
@@ -132,7 +147,8 @@ const APIs = {
   getStockList: params => testGetApi(`/stock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
   //获取商品总仓列表
   getGeneralStockList: params => testGetApi(`/generalStock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`,params.params),
-
+  //获取商品详情
+  getGoodsDetail: params => testGetApi(`/goodsDetail`,params.params),
   //店铺报表--
   //获取单品排行
   getRankList: params => getApi('/rankList',params.params),
