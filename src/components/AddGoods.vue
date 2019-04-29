@@ -1,12 +1,16 @@
 <template>
   <!-- 弹窗 -->
   <div class="category-popup" v-if="addGoodsVisible">
+    <!-- 关闭按钮 -->
+    <div class="close-btn" @click="close">
+      <img src="@/assets/images/close_envelop@2x.png" alt="">
+    </div>
     <div class="content">
       <div class="header">
         <div class="portrait">
           <img :src="imgSrc(data.id)" :onerror="defaultSrc"/>
         </div>
-        <div class="content">
+        <div class="text-content">
           <div class="price">
             ¥{{data.price}}
           </div>
@@ -97,6 +101,9 @@ export default {
     }
   },
   methods:{
+    close(){
+      this.$emit('addGoodsVisibleHandler',false);
+    },
     handleSelectKinds(val){
       this.currentIndex = val;
     },
@@ -104,7 +111,7 @@ export default {
       this.$router.push({
         name:"purchaseOrder"
       })
-      // this.$emit('addGoodsVisibleHandler',false);
+      
     },
     handleImmediate(){
       this.$router.push({
@@ -129,23 +136,32 @@ export default {
   }
   .header{
     display flex
+    overflow hidden
+    align-items center
     .portrait{
+      flex-shrink 0
       width  182px
       height 182px
     }
-    .content{
+    .text-content{
+      box-sizing border-box
+      width calc(100% - 182px)
       .price{
         font-size: 42px;
         color: #E93A0F;
         text-align left
       }  
       .choose{
-        
         display flex 
         .item{
           &:first-child{
+            width 72px
             margin-right   10px
           }
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+          width calc(100% - 82px)
           color: #8D93A4; 
           font-size: 24px;
         }
@@ -182,6 +198,13 @@ export default {
   .numbers{
     display flex  
     justify-content space-between
+  }
+  .close-btn{
+    width  54px
+    height 54px
+    position absolute
+    right 14px
+    top 14px
   }
   .btns{
     display flex
