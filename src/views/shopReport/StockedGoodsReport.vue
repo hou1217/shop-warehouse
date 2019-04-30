@@ -121,8 +121,8 @@
   
           <div class="echarts-box">
             <div class="echart-box" id="chart1"></div>
-            <div class="echart-box" id="chart2"></div>
-            <div class="echart-box" id="chart3"></div>
+            <div class="echart-box" id="chart2" v-show="notToday"></div>
+            <div class="echart-box" id="chart3" v-show="notToday"></div>
           </div>
         </div>
       </div>
@@ -141,6 +141,7 @@ export default {
   data() {
     return {
       goodName: '商品名称',
+      notToday: false,
       timeList: [
         {
           label: '今日',
@@ -169,7 +170,9 @@ export default {
       seriesData1:[],
       seriesData2:[],
       seriesData3:[],
+      xData:[],
       currentTimeIndex: 0,
+      timeType: 0,
       // data: {
       //   salesRank: 1,
       //   revenueRank: 5,
@@ -191,6 +194,7 @@ export default {
     this.getGoodsAnalysisData();
     
     eventBus.$on('selectCompareGoods',this.onGoodsUpdate);
+    this.getXData();
     this.getChartData1();
     this.getChartData2();
     this.getChartData3();
@@ -200,6 +204,7 @@ export default {
       handler(){
         this.number = this.compareGoods.length + 1
         console.error(this.number);
+        this.getXData();
         this.getChartData1();
         this.getChartData2();
         this.getChartData3();
@@ -226,11 +231,32 @@ export default {
     },
     // 选择时间
     choseTime(index) {
+      if(index === 0){
+        this.notToday = false;
+      }else{
+        this.notToday = true;
+      }
       this.currentTimeIndex = index;
+      this.timeType = index;
+      this.getXData();
       this.getChartData1();
       this.getChartData2();
       this.getChartData3();
 
+    },
+    getXData(){
+      this.REQUEST_API({
+        api: 'getXData',
+        params: {
+          timeType:this.timeType
+        }
+      })
+      .then((res) => {
+        this.xData = res
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
     },
     getChartData1(){
       this.REQUEST_API({
@@ -365,7 +391,7 @@ export default {
             interval: 0
 
           },
-          data:  ['09点', '10点', '11点', '12点', '13点']
+          data:  this.xData
         }],
         yAxis: [{
           type: 'value',
@@ -441,7 +467,7 @@ export default {
             interval: 0
 
           },
-          data:  ['09点', '10点', '11点', '12点', '13点']
+          data:  this.xData
         }],
         yAxis: [{
           type: 'value',
@@ -517,7 +543,7 @@ export default {
             interval: 0
 
           },
-          data:  ['09点', '10点', '11点', '12点', '13点']
+          data:  this.xData
         }],
         yAxis: [{
           type: 'value',
