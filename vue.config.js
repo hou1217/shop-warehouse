@@ -10,7 +10,7 @@ module.exports = {
     // publicPath: '/', //publicPath 和 historyApiFallback 不应该被修改，因为它们需要和开发服务器的 publicPath 同步以保障正常的工作
     // historyApiFallback: true, //当使用 HTML5 History API 时，任意的 404 响应都可能需要被替代，默认是false
     compress: false,
-    host: '192.168.9.109', //host、port 和 https 可能会被命令行参数覆写
+    host: '192.168.9.153', //host、port 和 https 可能会被命令行参数覆写
     hot: true,
     port: 8088,// 端口号
     open: true, //配置自动启动浏览器
@@ -26,7 +26,7 @@ module.exports = {
   },
   runtimeCompiler: true,//是否使用包含运行时编译器的 Vue 构建版本,设置为 true 后你就可以在 Vue 组件中使用 template 选项了
   publicPath: process.env.NODE_ENV === 'production'
-      ? './'
+      ? '/quanjia/'
       : '/',
   outputDir: 'dist',//默认是dist
   assetsDir: 'static',//默认是''
