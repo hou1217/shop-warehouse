@@ -3,7 +3,7 @@
     <!-- 标题 -->
     <HeaderTitle :title="'商品总仓'" :name="'stock'"/>
     <!-- 筛选排序 -->
-    <HeaderSort @PopupVisible="handlePop"/>  
+    <HeaderSort @PopupVisible="handlePop"/>
     <!-- 类别分类 -->
     <NavbarTop />
     <!-- 悬浮框 -->
@@ -11,18 +11,20 @@
     <!-- 加载中 -->
     <LoadingBox v-if="reload && loading"/>
     <!-- toast -->
-    <Toast 
+    <Toast
       :toastVisible="toastVisible"
       :toastData="toastData"/>
     <!-- 遮罩层 -->
-    <Shade 
+    <Shade
       :shadeVisible="shadeVisible"
       @click.native="handleShadeClick()"/>
     <!-- 快捷补货 -->
-    <AddGoods 
+    <AddGoods
       :data="goodsData"
       :addGoodsVisible="addGoodsVisible"
-      @addGoodsVisibleHandler="addGoodsVisibleHandler"/>
+      @addGoodsVisibleHandler="addGoodsVisibleHandler"
+      @addToPurchase="addToPurchase"
+      @goodsNumber="getGoodsNumber"/>
     <!-- 主体盒子 -->
     <div class="main-box" >
       <vue-data-loading
@@ -39,9 +41,9 @@
             <div class="portrait">
               <img :src="imgSrc(card.id)" :onerror="defaultSrc"/>
               <div class="addgoods" @click.stop="addgoods(card)">
-                <img 
+                <img
                   :src="card.stockNum < 10?
-                  require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')" 
+                  require('@/assets/images/shop_stockgoods@2x.png'):require('@/assets/images/shop_addgoods_s@2x.png')"
                   alt="">
               </div>
             </div>
@@ -88,11 +90,11 @@
                 <div class="label">
                   今日销量 {{card.salesNumToday}}
                 </div>
-                <div 
-                  class="drop-btn" 
+                <div
+                  class="drop-btn"
                   @click.stop="handleDrop(card)">
                   <img :src="card.dropVisible?
-                    require('@/assets/images/shop_drop_up@2x.png'):require('@/assets/images/shop_drop_down@2x.png')" 
+                    require('@/assets/images/shop_drop_up@2x.png'):require('@/assets/images/shop_drop_down@2x.png')"
                     alt="">
                 </div>
               </div>
@@ -104,7 +106,7 @@
                 </div>
                 <div class="title">相似商品推荐</div>
                 <ul class="other-goods">
-                  <li 
+                  <li
                     v-for="(item,index) in card.otherGoods"
                     :key="index">
                     <img :src="imgSrc(item.id)" alt="">
@@ -116,6 +118,8 @@
         </div>
       </vue-data-loading>
     </div>
+    
+    <toast :toast-visible="tipVisible" :toast-data="tipData"></toast>
   </div>
 </template>
 <script>
@@ -176,13 +180,18 @@ export default {
       defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
             + '"',
       cards:[
-        
+      
       ],
       loading:true,
       reload: true,
       completed: false,
       offset: -110,
-      shadeVisible:false
+      shadeVisible:false,
+      tipVisible: false,
+      tipData: {
+        icon: null,
+        msg: ''
+      }
     }
   },
   computed:{
@@ -205,6 +214,9 @@ export default {
   },
   created(){
     this.getListData();
+  },
+  destroyed() {
+    eventBus.$emit('purchaseOrder', [this.goodsData]);
   },
   methods:{
     ...mapActions([
@@ -270,7 +282,7 @@ export default {
         console.log(res);
         if(res  && res.cards.length > 0){
           if(this.reload){
-            this.cards =  res.cards; 
+            this.cards =  res.cards;
           }else{
             this.cards = [].concat(this.cards,res.cards);
 
@@ -286,7 +298,44 @@ export default {
       .catch((err) => {
         console.debug('列表数据异常：', err);
       });
-    }
+    },
+  
+    // 商品添加到进货单
+    addToPurchase() {
+      console.debug('商品添加到订货单');
+      console.debug(this.goodsData);
+      // store.commit('setPurchaseOrder', this.goodsData);
+      this.REQUEST_API({
+        api: 'addGoods',
+        params: {
+          goodsData: this.goodsData
+        }
+      }).then(res => {
+        if (res.status === 200) {
+          // console.debug('添加成功');
+          this.tipData.msg = '添加成功';
+          this.tipVisible = true;
+          setTimeout(() => {
+            this.tipVisible = false;
+            this.tipData.msg = '';
+          }, 2000);
+        }
+      }).catch(err => {
+        console.debug('添加失败', err);
+      });
+      this.addGoodsVisible = false;
+      this.shadeVisible = false;
+      this.goodsData = {};
+    },
+  
+    //
+    getGoodsNumber(data) {
+      console.debug('getGoodsNumber');
+      console.debug(data);
+      if (this.goodsData) {
+        this.goodsData['num'] = data;
+      }
+    },
   }
 }
 </script>
