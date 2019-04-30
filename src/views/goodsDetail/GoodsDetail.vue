@@ -286,6 +286,8 @@
         </div>
       </div>
     </div>
+    
+    <toast :toastVisible="tipVisible" :toast-data="tipData"></toast>
   </div>
 </template>
 
@@ -295,9 +297,13 @@
   import {mapActions} from 'vuex'
   import store from '@/store/index'
   import eventBus from '@/assets/js/eventBus'
+  import Toast from '@/components/common/Toast'
   
   export default {
     name: "GoodsDetail",
+    components: {
+      Toast
+    },
     data() {
       return {
         shopData: {
@@ -388,6 +394,11 @@
         
         // 测试商品详情
         goodsDetailData: {},
+        tipData: {
+          icon: null,
+          msg: ''
+        },
+        tipVisible: false
       }
     },
     created() {
@@ -416,7 +427,25 @@
         // this.$router.push({
         //   name: "purchaseOrder"
         // })
-        store.commit('setPurchaseOrder', this.goodsDetailData);
+        // store.commit('setPurchaseOrder', this.goodsDetailData);
+        this.REQUEST_API({
+          api: 'addGoods',
+          params: {
+            goodsData: this.goodsDetailData
+          }
+        }).then(res => {
+          if (res.status === 200) {
+            // console.debug('添加成功');
+            this.tipData.msg = '添加成功';
+            this.tipVisible = true;
+            setTimeout(() => {
+              this.tipVisible = false;
+              this.tipData.msg = '';
+            }, 2000);
+          }
+        }).catch(err => {
+          console.debug('添加失败', err);
+        });
       },
       //确认订单
       goToPurchaseOrderConfirm() {

@@ -85,6 +85,8 @@
         </div>
       </vue-data-loading>
     </div>
+    
+    <toast :toast-visible="tipVisible" :toast-data="tipData"></toast>
   </div>
 </template>
 <script>
@@ -134,7 +136,12 @@ export default {
       completed: false,
       offset: -110,
       shadeVisible:false,
-      goodsNum: 0
+      goodsNum: 0,
+      tipVisible: false,
+      tipData: {
+        icon: null,
+        msg: ''
+      }
     }
   },
   computed:{
@@ -249,7 +256,25 @@ export default {
     addToPurchase() {
       console.debug('商品添加到订货单');
       console.debug(this.goodsData);
-      store.commit('setPurchaseOrder', this.goodsData);
+      // store.commit('setPurchaseOrder', this.goodsData);
+      this.REQUEST_API({
+        api: 'addGoods',
+        params: {
+          goodsData: this.goodsData
+        }
+      }).then(res => {
+        if (res.status === 200) {
+          // console.debug('添加成功');
+          this.tipData.msg = '添加成功';
+          this.tipVisible = true;
+          setTimeout(() => {
+            this.tipVisible = false;
+            this.tipData.msg = '';
+          }, 2000);
+        }
+      }).catch(err => {
+        console.debug('添加失败', err);
+      });
       this.addGoodsVisible = false;
       this.shadeVisible = false;
       this.goodsData = {};

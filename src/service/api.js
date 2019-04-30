@@ -275,6 +275,12 @@ const testGetApi = async function (url, params) {
     // console.warn(data);
     return data
   }
+  else if (url.includes('/purchaseOrder/add')) {
+    store.commit('setPurchaseOrder', params.goodsData);
+    return {
+      status: 200
+    }
+  }
   //历史记录
   else if(url.includes('/historyRecord1')){
     await sleep(100);
@@ -441,6 +447,8 @@ const APIs = {
   createOrder: params => testGetApi('/order/create', params.params),
   // 订货单修改
   editPurchaseOrder: params => testGetApi('/purchaseOrder/edit', params.params),
+  // 订货单添加商品
+  addGoods: params => testGetApi('/purchaseOrder/add', params.params),
   getClassifiedNums: params => testGetApi('/report/classifiedNums', params.params),
   getSectionSales: params => testGetApi('/report/sectionSales', params.params),
   getClassifiedProfit: params => testGetApi('/report/classifiedProfit', params.params),
