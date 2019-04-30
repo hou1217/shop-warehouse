@@ -60,7 +60,6 @@ function compare(property,sort){
       
   }
 }
-
 const testGetApi = async function(url,params){
   if(url.includes('/categoryList')){
     await sleep(500);
@@ -127,7 +126,52 @@ const testGetApi = async function(url,params){
       data: data[0]
     }
   }
-  
+  // 总仓报表
+  else if(url.includes('/report/classifiedNums')){
+    await sleep(100);
+    let data = [
+      {"name":"美妆护理","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"面包甜点","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"特价套餐","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"休闲零食","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"湃客咖啡","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"精选饮料","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"冷藏乳饮","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"美味鲜食","value":Math.floor(Math.random() * 50 + 50)}
+    ];
+    // console.warn(data);
+    return data
+  }
+  else if(url.includes('/report/sectionSales')){
+    await sleep(100);
+    let data = [
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+    ];
+    // console.warn(data);
+    return data
+  }
+  else if(url.includes('/report/classifiedProfit')){
+    await sleep(100);
+    let data = [
+      {"name":"美妆护理","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"面包甜点","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"特价套餐","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"休闲零食","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"湃客咖啡","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"精选饮料","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"冷藏乳饮","value":Math.floor(Math.random() * 50 + 50)},
+      {"name":"美味鲜食","value":Math.floor(Math.random() * 50 + 50)}
+    ];
+    // console.warn(data);
+    return data
+  }
 }
 const fetchApi = function (url, params) {
   return  axios({
@@ -165,8 +209,8 @@ const APIs = {
   getHistoryRecord1: params =>  getApi('/historyRecord1',params.params),
 
   //总仓报表
-  getClassifiedNums: params =>  getApi('/report/classifiedNums',params.params),
-  getSectionSales: params =>  getApi('/report/sectionSales',params.params),
-  getClassifiedProfit: params =>  getApi('/report/classifiedProfit',params.params),
+  getClassifiedNums: params =>  testGetApi('/report/classifiedNums',params.params),
+  getSectionSales: params =>  testGetApi('/report/sectionSales',params.params),
+  getClassifiedProfit: params =>  testGetApi('/report/classifiedProfit',params.params),
 }
 export default APIs
