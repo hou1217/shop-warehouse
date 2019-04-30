@@ -409,6 +409,7 @@ const APIs = {
   getGeneralStockList: params => testGetApi(`/generalStock/${params.params.type}?order=${params.params.order}&isAsc=${params.params.isAsc}`, params.params),
   //获取商品详情
   getGoodsDetail: params => testGetApi(`/goodsDetail`, params.params),
+  
   //店铺报表--
   //获取单品排行
   getRankList: params => testGetApi('/rankList', params.params),
@@ -426,11 +427,6 @@ const APIs = {
   getHistoryRecord: params =>  testGetApi('/historyRecord',params.params),
   getHistoryRecord1: params =>  testGetApi('/historyRecord1',params.params),
 
-  //总仓报表
-  // getClassifiedNums: params =>  getApi('/report/classifiedNums',params.params),
-  // getSectionSales: params =>  getApi('/report/sectionSales',params.params),
-  // getClassifiedProfit: params =>  getApi('/report/classifiedProfit',params.params),
-  
   // 获取店铺订单列表
   getShopOrderList: params => testGetApi('/shop/order', params.params),
   // 获取订单详情
@@ -449,6 +445,8 @@ const APIs = {
   editPurchaseOrder: params => testGetApi('/purchaseOrder/edit', params.params),
   // 订货单添加商品
   addGoods: params => testGetApi('/purchaseOrder/add', params.params),
+
+  //总仓报表
   getClassifiedNums: params => testGetApi('/report/classifiedNums', params.params),
   getSectionSales: params => testGetApi('/report/sectionSales', params.params),
   getClassifiedProfit: params => testGetApi('/report/classifiedProfit', params.params),
