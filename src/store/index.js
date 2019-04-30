@@ -42,6 +42,14 @@ const state = {
     {"id":4,"headId":null,"name1":"巧克力","name2":"榴莲","price":30.12,"salesNum":35,"profit":2.65,"stockNum":43,"labels":"满25减5","props":86,"type":"2","ratio":8},
     // {"id":5,"headId":null,"name1":"榴莲","name2":"白酒","price":21.12,"salesNum":39,"profit":4.65,"stockNum":39,"labels":"满25减5","props":83,"type":"1","ratio":4}
   ],
+  //rankList
+  rankList: [
+    {"id":5,"headId":null,"name":"榴莲泰国进口金枕头 新鲜水果生鲜孕妇水果 9-10斤（1-2个）","price":159,"salesNum":13,"profit":24.65,"salesNumToday":39,"labels":"满25减5","props":103,"type":"1","ratio":4},
+    {"id":4,"headId":null,"name":"诺梵 纯黑可可脂苦巧克力礼盒100%可可含量特苦高纯黑巧休闲零食婚庆喜糖130g","price":30.12,"salesNum":21,"profit":2.65,"salesNumToday":43,"labels":"满25减5","props":106,"type":"2","ratio":8},
+    {"id":3,"headId":null,"name":"维他奶（vitasoy） 维他柠檬茶饮料 维他奶出品饮品 250ml*24盒装 锡兰红茶","price":59.95,"salesNum":4,"profit":8.5,"salesNumToday":12,"labels":"满25减5","props":110,"type":"3","ratio":4},
+    {"id":2,"headId":null,"name":"法国原装进口 依云（evian）天然矿泉水 500ml*24瓶 整箱 新老包装替换，随机发货","price":49.95,"salesNum":3,"profit":8.5,"salesNumToday":8,"labels":"满25减5","props":105,"type":"3","ratio":2},
+    {"id":1,"headId":null,"name":"Apple 苹果 iPhone XR 手机【全新国行 带票 全网通版】（上海可门店自提） 黑色 全网通 128GB","price":8322,"salesNum":3,"profit":222,"salesNumToday":8,"labels":"满25减5","props":105,"type":"1","ratio":2}
+  ],
   //商品详情数据
   dataDetailList: [
     {

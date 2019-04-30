@@ -254,6 +254,8 @@ export default {
   },
   data() {
     return {
+      order:'id',
+      isAsc:false,
       defaultSrc: 'this.src="' + require('@/assets/images/bitmap.png')
             + '"',
       cards:[],
@@ -570,7 +572,11 @@ export default {
     getRankData(){
       this.REQUEST_API({
         api: 'getRankList',
-        params: {}
+        params: {
+          type:this.$route.params.type,
+          order:this.order,
+          isAsc:this.isAsc
+        }
       })
       .then((res) => {
         console.log(res);
@@ -600,7 +606,11 @@ export default {
     handlePop(val){
       console.warn(val);
       this.shadeVisible = val;
-      if(!val){
+      if(val.order){
+        this.order = val.order;
+      }
+      this.isAsc = val.isAsc;
+      if(!val.visible){
         this.loading = true;
         this.reload = true;
         this.getRankData();

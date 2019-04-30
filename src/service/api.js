@@ -281,6 +281,113 @@ const testGetApi = async function (url, params) {
       status: 200
     }
   }
+  //历史记录
+  else if(url.includes('/historyRecord1')){
+    await sleep(100);
+    let data = [
+      {"id":1,"headId":null,"title":"12","times":[{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)}]},
+      {"id":2,"headId":null,"title":"11","times":[{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)},{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)}]},
+      {"id":3,"headId":null,"title":"10","times":[{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)},{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)}]},
+      {"id":4,"headId":null,"title":"09","times":[{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)},{"totalSales":Math.floor(Math.random() * 900 + 100),"number":Math.floor(Math.random() * 30 + 1)}]}
+    ]
+    return {
+      kind:'day',
+      cards: data
+    }
+  }
+  else if(url.includes('/historyRecord')){
+    await sleep(100);
+    let data = [
+      {"id":1,"headId":null,"name":"本","totalSales":Math.floor(Math.random() * 900 + 100)},
+      {"id":2,"headId":null,"name":"上","totalSales":Math.floor(Math.random() * 900 + 100)},
+      {"id":3,"headId":null,"name":"08","totalSales":Math.floor(Math.random() * 900 + 100)},
+      {"id":4,"headId":null,"name":"07","totalSales":Math.floor(Math.random() * 900 + 100)}
+    ]
+    return {
+      kind:'month',
+      cards: data
+    }
+  }
+  //店铺报表
+  //x轴数据
+  else if(url.includes('/getXData')){
+    let type = params.timeType;
+    console.log(type);
+    let data = [];
+    switch(type){
+      case(0):
+        data = ['8点','9点','10点','11点','12点'];
+        break;
+      case(1):
+        data = ['16日','17日','18日','19日','20日'];
+        break;
+      case(2):
+        data = ['4月6日','4月13日','4月20日'];
+        break;
+      case(3):
+        data = ['2月20日','3月20日','4月20日'];
+        break;
+      case(4):
+        data = ['11月','12月','1月','2月','3月'];
+        break;
+    }
+    
+    return data;
+  }
+  //销量
+  else if(url.includes('/report/goodsSalesNum/')){
+    let number = params.number;
+    await sleep(100);
+    let data = [
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)]
+    ].filter((item,index) => index < number)
+    return data
+  }
+  //动销率
+  else if(url.includes('/report/salesRate/')){
+    let number = params.number;
+    await sleep(100);
+    let data = [
+      [Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50)],
+      [Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50)],
+      [Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50)],
+      [Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50),Math.floor(Math.random() * 50 + 50)]
+    ].filter((item,index) => index < number)
+    return data
+  }
+  //库销比
+  else if(url.includes('/report/salesRatio/')){
+    let number = params.number;
+    await sleep(100);
+    let data = [
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)],
+      [Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1),Math.floor(Math.random() * 10 + 1)]
+    ].filter((item,index) => index < number)
+    return data
+  }
+  else if(url.includes('/rankList')){
+    console.log(params)
+    let type = params.type;
+    let order = params.order;
+    let sort = params.isAsc;
+    console.log(sort);
+    await sleep(10);
+    //对数据进行筛选
+    let data = type - 1 === 0 ? store.state.rankList : store.state.rankList.filter(item => {
+      return item.type === String(type - 1)
+    });
+    //对数据进行排序
+    data = data.sort(compare(order, sort));
+    console.warn(data);
+    return {
+      cards: data
+    }
+  }
 }
 const fetchApi = function (url, params) {
   return axios({
@@ -304,19 +411,21 @@ const APIs = {
   getGoodsDetail: params => testGetApi(`/goodsDetail`, params.params),
   //店铺报表--
   //获取单品排行
-  getRankList: params => getApi('/rankList', params.params),
+  getRankList: params => testGetApi('/rankList', params.params),
   //获取最佳伴侣
-  getMateList: params => testGetApi('/mateList', params.params),
+  getMateList: params => testGetApi('/mateList',params.params),
+  //x轴数据
+  getXData: params => testGetApi('/getXData',params.params),
   //销量
-  getGoodsSalesNum: params => getApi(`/report/goodsSalesNum/${params.params.number}`, params.params),
+  getGoodsSalesNum: params => testGetApi(`/report/goodsSalesNum/${params.params.number}`,params.params),
   //动销率
-  getSalesRate: params => getApi(`/report/salesRate/${params.params.number}`, params.params),
+  getSalesRate: params => testGetApi(`/report/salesRate/${params.params.number}`,params.params),
   //库销比
-  getSalesRatio: params => getApi(`/report/salesRatio/${params.params.number}`, params.params),
+  getSalesRatio: params => testGetApi(`/report/salesRatio/${params.params.number}`,params.params),
   //历史记录
-  getHistoryRecord: params => getApi('/historyRecord', params.params),
-  getHistoryRecord1: params => getApi('/historyRecord1', params.params),
-  
+  getHistoryRecord: params =>  testGetApi('/historyRecord',params.params),
+  getHistoryRecord1: params =>  testGetApi('/historyRecord1',params.params),
+
   //总仓报表
   // getClassifiedNums: params =>  getApi('/report/classifiedNums',params.params),
   // getSectionSales: params =>  getApi('/report/sectionSales',params.params),
