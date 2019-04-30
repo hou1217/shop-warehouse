@@ -292,7 +292,7 @@
           }
         }).then(res => {
           if (res.status === 200) {
-            this.$route.go(-1);
+            this.$router.go(-1);
           }
         }).catch(err => {
           console.debug('更改订货单数据失败', err);
