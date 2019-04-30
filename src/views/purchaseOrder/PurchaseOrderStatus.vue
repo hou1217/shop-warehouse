@@ -43,7 +43,10 @@
       // 跳转至订单详情
       turnToDetail() {
         this.$router.push({
-          path: '/purchaseOrderDetail'
+          path: '/purchaseOrderDetail',
+          query: {
+            orderId: this.$route.query.orderId
+          }
         });
       },
     }

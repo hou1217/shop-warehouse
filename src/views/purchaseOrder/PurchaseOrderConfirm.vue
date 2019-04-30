@@ -49,7 +49,9 @@
       </div>
       <div class="leave-message">
         <div class="character">店长留言</div>
-        <textarea contenteditable placeholder="建议留言前先与仓库沟通确认"/>
+        <textarea contenteditable
+                  placeholder="建议留言前先与仓库沟通确认"
+                  v-model="message"></textarea>
       </div>
     </div>
     
@@ -64,6 +66,7 @@
 <script>
   import store from '@/store/index'
   import eventBus from '@/assets/js/eventBus'
+  import { mapActions } from 'vuex'
   export default {
     name: "PurchaseOrderConfirm",
     data() {
@@ -89,7 +92,9 @@
         dispatchData: {
           date: '今天',
           timeRange: '10:00-11:00'
-        }
+        },
+        clearPurchase: false,
+        message: ''
       }
     },
     computed:{
@@ -98,6 +103,17 @@
           id = id%16
           return require ('@/assets/images/demo/goods_'+(id)+'.png')
         }
+      }
+    },
+    beforeRouteEnter(to, from, next) {
+      console.debug(from);
+      if (from.path === '/purchaseOrder') {
+        next(vm => {
+          console.debug(vm);
+          vm.clearPurchase = true;
+        });
+      } else {
+        next();
       }
     },
     created() {
@@ -121,14 +137,65 @@
       eventBus.$off('purchaseOrder');
     },
     methods: {
+      ...mapActions([
+        'REQUEST_API'
+      ]),
+      
       // 确认下单
       orderConfirm() {
         console.debug('确认下单');
         
         // todo 跳转至下单成功页面
-        this.$router.push({
-          path: '/purchaseOrderStatus'
-        });
+        if (this.clearPurchase) {
+          console.debug('需要调用购物车结算');
+          // 购物车结算
+          let goodsIds = [];
+          for (let item of this.goodsList) {  // 获取结算商品id
+            goodsIds.push(item.id);
+          }
+          this.REQUEST_API({
+            api: 'clearPurchaseOrder',
+            params: {
+              ids: goodsIds,
+              message: this.message
+            }
+          }).then(res => {
+            if (res.status === 200) {
+              console.debug('下单成功');
+              this.$router.replace({
+                path: '/purchaseOrderStatus',
+                query: {
+                  orderId: res.data.orderId
+                }
+              });
+            }
+          }).catch(err => {
+            console.error('下单失败', err);
+          });
+        } else {
+          // 立即购买
+          this.REQUEST_API({
+            api: 'createOrder',
+            params: {
+              id: this.goodsList[0].id,
+              message: this.message
+            }
+          }).then(res => {
+            if (res.status === 200) {
+              this.$router.replace({
+                path: '/purchaseOrderStatus',
+                query: {
+                  orderId: res.data.orderId
+                }
+              });
+            }
+          }).catch(err => {
+            console.error('立即购买出错', err);
+          });
+        }
+        // this.$router.push({
+        //   path: '/purchaseOrderStatus'
+        // });
       },
       
       // 接收下单的商品

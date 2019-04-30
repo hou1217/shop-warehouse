@@ -2,16 +2,27 @@
   <div class="rule-table__item__tb__per-editing">
     <div @click="changeRankBonusPer($event)">
       <img src="@/assets/images/goods_add@2x.png">
-      <input :value="number">
+      <input :value="num">
       <!--{{number}}-->
     </div>
   </div>
 </template>
 <script>
 export default {
+  props: {
+    number: {
+      type: Number,
+      default: 1
+    },
+    index: {
+      type: Number,
+      default: null
+    }
+  },
   data(){
     return{
-      number:1
+      // number:1,
+      num: this.number
     }
   },
   methods:{
@@ -21,15 +32,23 @@ export default {
       if (event.target.nodeName == 'IMG') {
         if (event.offsetX > 0 && event.offsetX < 20) {
           console.debug('减');
-          if(this.number === 1){
+          if(this.num === 1){
             this.$emit('minimum');
             return false;
           }
-          this.number -= 1;
+          this.num -= 1;
         } else if (event.offsetX > 60 && event.offsetX < 80) {
           console.debug('加');
-          this.number += 1;
+          this.num += 1;
         }
+      }
+      if (this.index !== 0 && !this.index) {
+        this.$emit('numberChange', this.num);
+      } else {
+        this.$emit('numberChange', {
+          num: this.num,
+          index: this.index
+        });
       }
       this.$forceUpdate();
     },

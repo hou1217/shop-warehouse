@@ -9,7 +9,7 @@
       <div class="location-icon">
         <img src="@/assets/images/shopl_local@2x.png">
       </div>
-      <div class="complete-btn" @click="$router.go(-1)">
+      <div class="complete-btn" @click="complete">
         完成
       </div>
     </div>
@@ -47,7 +47,8 @@
               <div class="num">{{goods.price}}</div>
             </div>
             <div class="num-control">
-              <plus-minus></plus-minus>
+              <plus-minus :number="goods.num"
+                          :index="goodsIndex" @numberChange="getGoodsNum"></plus-minus>
             </div>
           </div>
           <div class="activities"
@@ -92,6 +93,7 @@
   import Toast from '@/components/common/Toast'
   import store from '@/store/index'
   import eventBus from '@/assets/js/eventBus'
+  import { mapActions } from 'vuex'
   export default {
     name: "PurchaseOrderManage",
     components: {
@@ -152,6 +154,9 @@
       // eventBus.$off('purchaseOrder');
     },
     methods: {
+      ...mapActions([
+        'REQUEST_API'
+      ]),
       // 全选
       selectAll() {
         this.selectedList = [];
@@ -221,7 +226,18 @@
         }
         
         // todo 发起删除订单请求
-        store.dispatch('deletePurchaseOrder', this.selectedList).then(() => {
+        // store.dispatch('deletePurchaseOrder', this.selectedList).then(() => {
+        //   this.getPurchaseOrderListData();
+        // }).catch(err => {
+        //   console.debug('删除失败', err);
+        // });
+        this.REQUEST_API({
+          api: 'deletePurchaseOrderList',
+          params: {
+            list: this.selectedList
+          }
+        }).then((res) => {
+          console.debug('删除成功');
           this.getPurchaseOrderListData();
         }).catch(err => {
           console.debug('删除失败', err);
@@ -230,23 +246,57 @@
   
       // 获取进货单列表
       getPurchaseOrderListData() {
-        store.dispatch('getPurchaseOrderList').then((res) => {
+        // store.dispatch('getPurchaseOrderList').then((res) => {
+        //   console.debug('获取进货单列表成功');
+        //   console.debug(res);
+        //   this.goodsList = [];
+        //   if (res.data && res.data.length) {
+        //     Object.assign(this.goodsList, res.data);
+        //     this.goodsList.forEach(item => {
+        //       item['activity'] = [];
+        //       item['activity'].push(item.labels);
+        //       item['selected'] = false;
+        //       return item;
+        //     })
+        //   }
+        //   this.$forceUpdate();
+        // }).catch(err => {
+        //   console.debug('获取进货单列表出错', err);
+        // })
+        this.REQUEST_API({
+          api: 'getPurchaseOrderList'
+        }).then(res => {
           console.debug('获取进货单列表成功');
           console.debug(res);
           this.goodsList = [];
-          if (res.data && res.data.length) {
-            Object.assign(this.goodsList, res.data);
-            this.goodsList.forEach(item => {
-              item['activity'] = [];
-              item['activity'].push(item.labels);
-              item['selected'] = false;
-              return item;
-            })
+          for (let item of res.data) {
+            this.goodsList.push(item);
           }
           this.$forceUpdate();
         }).catch(err => {
           console.debug('获取进货单列表出错', err);
-        })
+        });
+      },
+  
+      getGoodsNum(data) {
+        console.debug('getGoodsNum');
+        console.debug(data);
+        this.goodsList[data.index].num = data.num;
+      },
+  
+      complete() {
+        this.REQUEST_API({
+          api: 'editPurchaseOrder',
+          params: {
+            list: this.goodsList
+          }
+        }).then(res => {
+          if (res.status === 200) {
+            this.$router.go(-1);
+          }
+        }).catch(err => {
+          console.debug('更改订货单数据失败', err);
+        });
       },
     }
   }

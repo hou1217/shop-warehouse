@@ -42,8 +42,16 @@ const state = {
     {"id":4,"headId":null,"name1":"巧克力","name2":"榴莲","price":30.12,"salesNum":35,"profit":2.65,"stockNum":43,"labels":"满25减5","props":86,"type":"2","ratio":8},
     // {"id":5,"headId":null,"name1":"榴莲","name2":"白酒","price":21.12,"salesNum":39,"profit":4.65,"stockNum":39,"labels":"满25减5","props":83,"type":"1","ratio":4}
   ],
+  //rankList
+  rankList: [
+    {"id":5,"headId":null,"name":"榴莲泰国进口金枕头 新鲜水果生鲜孕妇水果 9-10斤（1-2个）","price":159,"salesNum":13,"profit":24.65,"salesNumToday":39,"labels":"满25减5","props":103,"type":"1","ratio":4},
+    {"id":4,"headId":null,"name":"诺梵 纯黑可可脂苦巧克力礼盒100%可可含量特苦高纯黑巧休闲零食婚庆喜糖130g","price":30.12,"salesNum":21,"profit":2.65,"salesNumToday":43,"labels":"满25减5","props":106,"type":"2","ratio":8},
+    {"id":3,"headId":null,"name":"维他奶（vitasoy） 维他柠檬茶饮料 维他奶出品饮品 250ml*24盒装 锡兰红茶","price":59.95,"salesNum":4,"profit":8.5,"salesNumToday":12,"labels":"满25减5","props":110,"type":"3","ratio":4},
+    {"id":2,"headId":null,"name":"法国原装进口 依云（evian）天然矿泉水 500ml*24瓶 整箱 新老包装替换，随机发货","price":49.95,"salesNum":3,"profit":8.5,"salesNumToday":8,"labels":"满25减5","props":105,"type":"3","ratio":2},
+    {"id":1,"headId":null,"name":"Apple 苹果 iPhone XR 手机【全新国行 带票 全网通版】（上海可门店自提） 黑色 全网通 128GB","price":8322,"salesNum":3,"profit":222,"salesNumToday":8,"labels":"满25减5","props":105,"type":"1","ratio":2}
+  ],
   //商品详情数据
-  dataDetailList : [  
+  dataDetailList: [
     {
       id: '1',
       name: 'Apple 苹果 iPhone XR 手机【全新国行 带票 全网通版】（上海可门店自提） 黑色 全网通 128GB',
@@ -211,8 +219,152 @@ const state = {
     address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
   },
   purchaseOrder: [],
-  orderList: [],
-  
+  orderList: [
+    {
+      id: 100000000001,
+      state: 'confirm',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {
+          id: 1,
+          num: 54
+        },
+        {
+          id: 2,
+          num: 9
+        },
+        {
+          id: 3,
+          num: 54
+        }
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 16:46',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000002,
+      state: 'send',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 2,
+          num: 54},
+        {id: 3,
+          num: 9},
+        {id: 4,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 17:05',
+      dispatchData: {
+        date: '周四',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000003,
+      state: 'receive',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 3,
+          num: 54},
+        {id: 4,
+          num: 9},
+        {id: 5,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 20:31',
+      dispatchData: {
+        date: '周二',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000004,
+      state: 'service',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 1,
+          num: 54},
+        {id: 2,
+          num: 9},
+        {id: 3,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-20 15:37',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000005,
+      state: 'receive',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 2,
+          num: 54},
+        {id: 3,
+          num: 9},
+        {id: 4,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-8-16 16:46',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    },
+    {
+      id: 100000000006,
+      state: 'confirm',
+      consignee: {
+        name: 'jd_542542',
+        phone: 15643223300,
+        address: '上海浦东新区耀华路488号信建大厦806室上海浦东新区耀华路488号信建大厦806室'
+      },
+      goods: [
+        {id: 3,
+          num: 54},
+        {id: 4,
+          num: 9},
+        {id: 5,
+          num: 54}
+      ],
+      message: '工作日人不在家，快递直接放在代收点',
+      createdAt: '2018-09-18 16:46',
+      dispatchData: {
+        date: '今天',
+        timeRange: '10:00-11:00'
+      }
+    }
+  ],
 }
 export default new Vuex.Store({
   state,
