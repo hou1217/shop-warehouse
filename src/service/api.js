@@ -75,7 +75,7 @@ const testGetApi = async function(url,params){
     await sleep(500);
     //对数据进行筛选
     let data = type-1 === 0?store.state.stockGoodsList:store.state.stockGoodsList.filter(item=>{
-      return item.type === String(type-1)      
+      return item.type === String(type-1)
     });
     //对数据进行排序
     data = data.sort(compare(order,sort));
@@ -93,7 +93,7 @@ const testGetApi = async function(url,params){
     await sleep(500);
     //对数据进行筛选
     let data = type-1 === 0?store.state.generalGoodsList:store.state.generalGoodsList.filter(item=>{
-      return item.type === String(type-1)      
+      return item.type === String(type-1)
     });
     //对数据进行排序
     data = data.sort(compare(order,sort));
@@ -118,8 +118,8 @@ const testGetApi = async function(url,params){
     let array = store.state.dataDetailList;
     let data = null;
     data = array.filter(item => {
-      return item.id === String(id) 
-    }) 
+      return item.id === String(id)
+    })
     return{
       data: data[0]
     }
@@ -163,6 +163,67 @@ const testGetApi = async function(url,params){
     }
     return {
       data: arr
+    }
+  }
+  else if (url.includes('/purchaseOrder/list')) {
+    let arr = store.state.purchaseOrder;
+    let data = [];
+    if (arr.length) {
+      data = arr.map(item => {
+        item['activity'] = [];
+        if (item.labels) {
+          item['activity'].push(item.labels);
+        }
+        item['selected'] = false;
+        return item;
+      });
+    }
+    return {
+      data: data
+    };
+  }
+  else if (url.includes('/purchaseOrder/delete')) {
+    console.debug('删除');
+    console.debug(params);
+    let list = params.list;
+    store.commit('delPurchaseOrder', list);
+  }
+  else if (url.includes('/purchaseOrder/clear')) {
+    console.debug('购物车结算');
+    console.debug(params);
+    let list = params.ids;
+    let message = params.message;
+    let del_list = [];
+    for (let item of list) {
+      del_list.push({id: item});
+    }
+    store.commit('createOrder', {list: list, message: message});  // 生成新订单
+    store.commit('delPurchaseOrder', del_list);  // 清除订货单内结算的商品
+    return {
+      status: 200,
+      data: {
+        orderId: 100000000000 + store.state.orderList.length
+      }
+    }
+  }
+  else if (url.includes('/order/create')) {
+    console.debug('立即购买');
+    let list = [params.id];
+    let message = params.message;
+    store.commit('createOrder', {list: list, message: message});
+    return {
+      status: 200,
+      data: {
+        orderId: 100000000000 + store.state.orderList.length
+      }
+    }
+  }
+  else if (url.includes('/purchaseOrder/edit')) {
+    console.debug('订货单信息修改');
+    console.debug(params);
+    store.commit('editPurchaseOrder', params);
+    return {
+      status: 200
     }
   }
 }
@@ -212,5 +273,15 @@ const APIs = {
   getOrderDetail: params => testGetApi('/order/detail', params.params),
   // 获取进货清单
   getGoodsDetails: params => testGetApi('/order/list', params.params),
+  // 获取进货单列表（购物车列表）
+  getPurchaseOrderList: params => testGetApi('/purchaseOrder/list', params.params),
+  // 删除进货单列表数据
+  deletePurchaseOrderList: params => testGetApi('/purchaseOrder/delete', params.params),
+  // 购物车结算并创建订单
+  clearPurchaseOrder: params => testGetApi('/purchaseOrder/clear', params.params),
+  // 立即购买结算（创建订单）
+  createOrder: params => testGetApi('/order/create', params.params),
+  // 订货单修改
+  editPurchaseOrder: params => testGetApi('/purchaseOrder/edit', params.params),
 }
 export default APIs

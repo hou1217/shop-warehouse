@@ -47,7 +47,10 @@
               <div class="num">{{goods.price}}</div>
             </div>
             <div class="num-control">
-              <plus-minus @minimum="showToast('minimum')"></plus-minus>
+              <plus-minus @minimum="showToast('minimum')"
+                          :number="goods.num"
+                          :index="goodsIndex"
+                          @numberChange="getGoodsNum"></plus-minus>
             </div>
           </div>
           <div class="activities"
@@ -144,7 +147,6 @@
     },
     created() {
       this.getPurchaseOrderListData();
-      this.test();
     },
     destroyed() {
       eventBus.$emit('purchaseOrder', this.selectedList);
@@ -214,29 +216,52 @@
       
       // 跳转至进货单管理
       turnToOrderManage() {
-        this.$router.push({
-          path: '/purchaseOrderManage'
+        this.REQUEST_API({
+          api: 'editPurchaseOrder',
+          params: {
+            list: this.goodsList
+          }
+        }).then(res => {
+          if (res.status === 200) {
+            this.$router.push({
+              path: '/purchaseOrderManage'
+            });
+          }
+        }).catch(err => {
+          console.debug('更改订货单数据失败', err);
         });
       },
       
       // 获取进货单列表
       getPurchaseOrderListData() {
-        store.dispatch('getPurchaseOrderList').then((res) => {
+        // store.dispatch('getPurchaseOrderList').then((res) => {
+        //   console.debug('获取进货单列表成功');
+        //   console.debug(res);
+        //   if (res.data && res.data.length) {
+        //     Object.assign(this.goodsList, res.data);
+        //     this.goodsList.forEach(item => {
+        //       item['activity'] = [];
+        //       item['activity'].push(item.labels);
+        //       item['selected'] = false;
+        //       return item;
+        //     })
+        //   }
+        //   this.$forceUpdate();
+        // }).catch(err => {
+        //   console.debug('获取进货单列表出错', err);
+        // })
+        this.REQUEST_API({
+          api: 'getPurchaseOrderList'
+        }).then(res => {
           console.debug('获取进货单列表成功');
           console.debug(res);
-          if (res.data && res.data.length) {
-            Object.assign(this.goodsList, res.data);
-            this.goodsList.forEach(item => {
-              item['activity'] = [];
-              item['activity'].push(item.labels);
-              item['selected'] = false;
-              return item;
-            })
+          for (let item of res.data) {
+            this.goodsList.push(item);
           }
           this.$forceUpdate();
         }).catch(err => {
           console.debug('获取进货单列表出错', err);
-        })
+        });
       },
       
       // 显示提示
@@ -251,16 +276,11 @@
           }, 2000);
         }
       },
-      
-      // 测试
-      test() {
-        this.REQUEST_API({
-          api: 'testGetData',
-          params: {}
-        }).then(res => {
-          console.debug('test');
-          console.debug(res);
-        });
+  
+      getGoodsNum(data) {
+        console.debug('getGoodsNum');
+        console.debug(data);
+        this.goodsList[data.index].num = data.num;
       }
     }
   }

@@ -23,7 +23,8 @@
       :data="goodsData"
       :addGoodsVisible="addGoodsVisible"
       @addGoodsVisibleHandler="addGoodsVisibleHandler"
-      @addToPurchase="addToPurchase"/>
+      @addToPurchase="addToPurchase"
+      @goodsNumber="getGoodsNumber"/>
     <!-- 主体盒子 -->
     <div class="main-box" >
       <vue-data-loading
@@ -132,7 +133,8 @@ export default {
       reload: true,
       completed: false,
       offset: -110,
-      shadeVisible:false
+      shadeVisible:false,
+      goodsNum: 0
     }
   },
   computed:{
@@ -251,6 +253,15 @@ export default {
       this.addGoodsVisible = false;
       this.shadeVisible = false;
       this.goodsData = {};
+    },
+    
+    //
+    getGoodsNumber(data) {
+      console.debug('getGoodsNumber');
+      console.debug(data);
+      if (this.goodsData) {
+        this.goodsData['num'] = data;
+      }
     },
   }
 }

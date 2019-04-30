@@ -29,7 +29,7 @@
             </div>
             <div class="amount">
               <div class="icon">×</div>
-              <div class="num">{{goods.num}}</div>
+              <div class="num">{{goods.num ? goods.num : 1}}</div>
             </div>
           </div>
         </div>

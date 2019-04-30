@@ -9,10 +9,10 @@
           <img :src="src">
         </mt-swipe-item>
         <!--<mt-swipe-item class="swipe-item-2 item">-->
-          <!--<img :src="src2">-->
+        <!--<img :src="src2">-->
         <!--</mt-swipe-item>-->
         <!--<mt-swipe-item class="swipe-item-3 item">-->
-          <!--<img :src="src3">-->
+        <!--<img :src="src3">-->
         <!--</mt-swipe-item>-->
       </mt-swipe>
       <div class="btn btn_back" @click="$router.go(-1)">
@@ -104,7 +104,7 @@
           <div class="left-block"></div>
           <div class="text" v-if="isStocked">店铺数据</div>
           <div class="text" v-else>商品数据</div>
-
+          
           <div class="report-icon" @click.stop="turnToReport">
             <img src="@/assets/images/shop_report@2x.png">
           </div>
@@ -211,10 +211,10 @@
             <img :src="img">
           </div>
           <!--<div class="image">-->
-            <!--<img src="@/assets/images/img2@2x.png">-->
+          <!--<img src="@/assets/images/img2@2x.png">-->
           <!--</div>-->
           <!--<div class="image">-->
-            <!--<img src="@/assets/images/img3@2x.png">-->
+          <!--<img src="@/assets/images/img3@2x.png">-->
           <!--</div>-->
         </div>
       </div>
@@ -290,202 +290,211 @@
 </template>
 
 <script>
-// import Bscroll from 'better-scroll'
-// import { GoodsApi } from "../../service/GoodsApi";
-import { mapActions } from 'vuex'
-export default {
-  name: "GoodsDetail",
-  data() {
-    return {
-      shopData: {
-        sales: '105%',
-        inventory: 2,
-        mprate: '5%',
-        sinkToPin: 2
-      },
-      goodData: {
-        mprate: '105%',
-        sinkToPin: 2,
-        returnRate: '5%'
-      },
-      commentKeywords: [
-        '评论关键词(53)',
-        '关键词(53)',
-        '关键关键词关键词词(453)',
-        '关键关键词关键词词(453)',
-      ],
-      comments: [
-        {
-          author: {
-            name: '大K家的壁虎',
-            portrait: ''
-          },
-          text: '2017年中国游戏直播平台市场规模为87亿元游戏直播市场稳步增长',
-          images: [{
-            url: require('@/assets/images/demo/comment_1.png'),
-            width: 0,
-            height: 0
+  // import Bscroll from 'better-scroll'
+  // import { GoodsApi } from "../../service/GoodsApi";
+  import {mapActions} from 'vuex'
+  import store from '@/store/index'
+  import eventBus from '@/assets/js/eventBus'
+  
+  export default {
+    name: "GoodsDetail",
+    data() {
+      return {
+        shopData: {
+          sales: '105%',
+          inventory: 2,
+          mprate: '5%',
+          sinkToPin: 2
+        },
+        goodData: {
+          mprate: '105%',
+          sinkToPin: 2,
+          returnRate: '5%'
+        },
+        commentKeywords: [
+          '评论关键词(53)',
+          '关键词(53)',
+          '关键关键词关键词词(453)',
+          '关键关键词关键词词(453)',
+        ],
+        comments: [
+          {
+            author: {
+              name: '大K家的壁虎',
+              portrait: ''
+            },
+            text: '2017年中国游戏直播平台市场规模为87亿元游戏直播市场稳步增长',
+            images: [{
+              url: require('@/assets/images/demo/comment_1.png'),
+              width: 0,
+              height: 0
+            }, {
+              url: require('@/assets/images/demo/comment_2.png'),
+              width: 0,
+              height: 0
+            }, {
+              url: require('@/assets/images/demo/comment_3.png'),
+              width: 0,
+              height: 0
+            }],
+            like: 0,
+            isLike: false
           }, {
-            url: require('@/assets/images/demo/comment_2.png'),
-            width: 0,
-            height: 0
+            author: {
+              name: '用户昵称',
+              portrait: ''
+            },
+            text: '2017年中国游戏稳步增长直播平台市场规模为87亿元游戏直播市场稳步增长稳步增长',
+            images: [],
+            like: 5424,
+            isLike: true
+          }
+        ],
+        similars: [
+          {
+            headId: require('@/assets/images/demo/comment_4.png'),
+            name: '商a品商品商品名称商品名称商名称…',
+            price: 39.6
           }, {
-            url: require('@/assets/images/demo/comment_3.png'),
-            width: 0,
-            height: 0
-          }],
-          like: 0,
-          isLike: false
-        }, {
-          author: {
-            name: '用户昵称',
-            portrait: ''
-          },
-          text: '2017年中国游戏稳步增长直播平台市场规模为87亿元游戏直播市场稳步增长稳步增长',
-          images: [],
-          like: 5424,
-          isLike: true
-        }
-      ],
-      similars: [{
-        headId: require('@/assets/images/demo/comment_4.png'),
-        name: '商a品商品商品名称商品名称商名称…',
-        price: 39.6
-      }, {
-        headId: require('@/assets/images/demo/comment_5.png'),
-        name: '商a品商品商品名称商品名称商名称…',
-        price: 39.6
-      }, {
-        headId: require('@/assets/images/demo/comment_6.png'),
-        name: '商a品商品商品名称商品名称商名称…',
-        price: 39.6
-      }],
-      // imageList: [],
-      scroll: null,
-      activityPopupVisible: false,
-      dispatchPopupVisible: false,
-      shadeVisible: false,
-      dispatchDate: ['4月16日 [周二]', '4月17日 [周三]', '4月18日 [周四]', '4月19日 [周五]', '4月20日 [周一]'],
-      dispatchTime: ['09:00-12:30', '13:00-15:30', '16:00-18:30', '19:00-21:30'],
-      currentDateIndex: 0,
-      currentTimeIndex: 0,
-      
-      // 测试商品是否未已进货商品
-      isStocked: true,
-      
-      // 测试图片地址
-      imageList: [
-        require('@/assets/images/demo/goods_1.png'),
-        require('@/assets/images/demo/goods_8.png'),
-        // require('@/assets/images/demo/goods_1.png'),
-        // require('@/assets/images/demo/goods_8.png')
-      ],
-      
-      // 测试商品详情
-      goodsDetailData: {},
-    }
-  },
-  created() {
-    this.getGoodsDetailData();
-  },
-  mounted() {
-    // if (this.$refs.wrapper) {
-    //   this.scroll = new Bscroll(this.$refs.wrapper, {
-    //     click: true,
-    //     bounce: false
-    //   });
-    // }
-    document.querySelector('.container_good-detail').addEventListener('touchStart', function(e) {
-      console.debug('touchStart')
-    });
-  },
-  methods: {
-    ...mapActions([
-      'REQUEST_API'
-    ]),
-    // 加入进货单
-    goToPurchaseOrder(){
-      this.$router.push({
-        name:"purchaseOrder"
-      })
-    },
-    //确认订单
-    goToPurchaseOrderConfirm(){
-      this.$router.push({
-        name:"purchaseOrderConfirm"
-      })
-    },
-    // 打开活动窗口
-    openActivityPopup() {
-      this.shadeVisible = true;
-      this.activityPopupVisible = true;
-    },
-    
-    // 打开配送窗口
-    openDispatchPopup() {
-      this.shadeVisible = true;
-      this.dispatchPopupVisible = true;
-    },
-    
-    // 关闭活动窗口
-    closeActivityPopup() {
-      this.activityPopupVisible = false;
-      this.shadeVisible = false;
-    },
-    
-    // 选择日期
-    choseDate(index) {
-      this.currentDateIndex = index;
-    },
-    
-    // 选择时间
-    choseTime(index) {
-      this.currentTimeIndex = index;
-      this.dispatchPopupVisible = false;
-      this.shadeVisible = false;
-    },
-    
-    // 点击遮罩层
-    onShadeClick() {
-      this.dispatchPopupVisible = false;
-      this.activityPopupVisible = false;
-      this.shadeVisible = false;
-    },
-    
-    // 跳转至数据分析页
-    turnToReport() {
-      if (this.isStocked) {
-        this.$router.push({
-          path: '/stockedGoodsReport'
-        });
-      } else {
-        this.$router.push({
-          path: '/noStockedGoodsReport'
-        });
+            headId: require('@/assets/images/demo/comment_5.png'),
+            name: '商a品商品商品名称商品名称商名称…',
+            price: 39.6
+          }, {
+            headId: require('@/assets/images/demo/comment_6.png'),
+            name: '商a品商品商品名称商品名称商名称…',
+            price: 39.6
+          }
+        ],
+        // imageList: [],
+        scroll: null,
+        activityPopupVisible: false,
+        dispatchPopupVisible: false,
+        shadeVisible: false,
+        dispatchDate: ['4月16日 [周二]', '4月17日 [周三]', '4月18日 [周四]', '4月19日 [周五]', '4月20日 [周一]'],
+        dispatchTime: ['09:00-12:30', '13:00-15:30', '16:00-18:30', '19:00-21:30'],
+        currentDateIndex: 0,
+        currentTimeIndex: 0,
+        
+        // 测试商品是否未已进货商品
+        isStocked: true,
+        
+        // 测试图片地址
+        imageList: [
+          require('@/assets/images/demo/goods_1.png'),
+          require('@/assets/images/demo/goods_8.png'),
+          // require('@/assets/images/demo/goods_1.png'),
+          // require('@/assets/images/demo/goods_8.png')
+        ],
+        
+        // 测试商品详情
+        goodsDetailData: {},
       }
     },
-    
-    // 获取商品详情
-    getGoodsDetailData() {
-      this.REQUEST_API({
-        api: 'getGoodsDetail',
-        params: {
-          id: this.$route.query.id
-        }
-      })
-      .then((res) => {
-        console.debug('获取商品数据成功');
-        console.debug(res);
-        if (res.data) {
-          Object.assign(this.goodsDetailData, res.data);
-        }
-        this.$forceUpdate();
-      }).catch((err) => {
-        console.error('获取商品详情出错', err);
+    created() {
+      this.getGoodsDetailData();
+    },
+    destroyed() {
+      eventBus.$emit('purchaseOrder', [this.goodsDetailData]);
+    },
+    mounted() {
+      // if (this.$refs.wrapper) {
+      //   this.scroll = new Bscroll(this.$refs.wrapper, {
+      //     click: true,
+      //     bounce: false
+      //   });
+      // }
+      document.querySelector('.container_good-detail').addEventListener('touchStart', function (e) {
+        console.debug('touchStart')
       });
+    },
+    methods: {
+      ...mapActions([
+        'REQUEST_API'
+      ]),
+      // 加入进货单
+      goToPurchaseOrder() {
+        // this.$router.push({
+        //   name: "purchaseOrder"
+        // })
+        store.commit('setPurchaseOrder', this.goodsDetailData);
+      },
+      //确认订单
+      goToPurchaseOrderConfirm() {
+        this.$router.push({
+          name: "purchaseOrderConfirm"
+        })
+      },
+      // 打开活动窗口
+      openActivityPopup() {
+        this.shadeVisible = true;
+        this.activityPopupVisible = true;
+      },
+      
+      // 打开配送窗口
+      openDispatchPopup() {
+        this.shadeVisible = true;
+        this.dispatchPopupVisible = true;
+      },
+      
+      // 关闭活动窗口
+      closeActivityPopup() {
+        this.activityPopupVisible = false;
+        this.shadeVisible = false;
+      },
+      
+      // 选择日期
+      choseDate(index) {
+        this.currentDateIndex = index;
+      },
+      
+      // 选择时间
+      choseTime(index) {
+        this.currentTimeIndex = index;
+        this.dispatchPopupVisible = false;
+        this.shadeVisible = false;
+      },
+      
+      // 点击遮罩层
+      onShadeClick() {
+        this.dispatchPopupVisible = false;
+        this.activityPopupVisible = false;
+        this.shadeVisible = false;
+      },
+      
+      // 跳转至数据分析页
+      turnToReport() {
+        if (this.isStocked) {
+          this.$router.push({
+            path: '/stockedGoodsReport'
+          });
+        } else {
+          this.$router.push({
+            path: '/noStockedGoodsReport'
+          });
+        }
+      },
+      
+      // 获取商品详情
+      getGoodsDetailData() {
+        this.REQUEST_API({
+          api: 'getGoodsDetail',
+          params: {
+            id: this.$route.query.id
+          }
+        })
+            .then((res) => {
+              console.debug('获取商品数据成功');
+              console.debug(res);
+              if (res.data) {
+                Object.assign(this.goodsDetailData, res.data);
+              }
+              this.$forceUpdate();
+            }).catch((err) => {
+          console.error('获取商品详情出错', err);
+        });
+      }
     }
   }
-}
 </script>
 
 <style scoped lang="stylus" src="./GoodsDetail.styl"></style>

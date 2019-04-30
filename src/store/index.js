@@ -43,7 +43,7 @@ const state = {
     // {"id":5,"headId":null,"name1":"榴莲","name2":"白酒","price":21.12,"salesNum":39,"profit":4.65,"stockNum":39,"labels":"满25减5","props":83,"type":"1","ratio":4}
   ],
   //商品详情数据
-  dataDetailList : [  
+  dataDetailList: [
     {
       id: '1',
       name: 'Apple 苹果 iPhone XR 手机【全新国行 带票 全网通版】（上海可门店自提） 黑色 全网通 128GB',

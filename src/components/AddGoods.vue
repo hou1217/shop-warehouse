@@ -41,7 +41,7 @@
         <div>
           数量
         </div>
-        <PlusMinus />
+        <PlusMinus @numberChange="getGoodsNum"/>
       </div>
     </div>
     
@@ -120,6 +120,10 @@ export default {
         name:"purchaseOrderConfirm"
       })
       // this.$emit('addGoodsVisibleHandler',false);
+    },
+    getGoodsNum(data) {
+      console.debug(data);
+      this.$emit('goodsNumber', data);
     }
   }
 }
