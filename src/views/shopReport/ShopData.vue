@@ -43,7 +43,9 @@ export default {
   },
   data(){
     return{
+      xData:[],
       currentTimeIndex: 0,
+      timeType: 1,
       kind: 0,
       datas:[
         {
@@ -93,6 +95,7 @@ export default {
   },
   created(){
     this.getShopData();
+    this.getXData();
     this.getChartData1();
     this.getChartData2();
   },
@@ -102,20 +105,40 @@ export default {
     ]),
     choseTime(index){
       this.currentTimeIndex = index;
+      this.timeType = index+1;
       this.kind = index;
       this.getShopData();
+      this.getXData();
       this.getChartData1();
       this.getChartData2();
+    },
+    getXData(){
+      this.REQUEST_API({
+        api: 'getXData',
+        params: {
+          timeType:this.timeType
+        }
+      })
+      .then((res) => {
+        this.xData = res
+      })
+      .catch((err) => {
+        console.debug('列表数据异常：', err);
+      });
     },
     getChartData1(){
       this.REQUEST_API({
         api: 'getSalesRate',
-        params: {}
+        params: {
+          number:1
+        }
       })
       .then((res) => {
         console.log(res);
         if(res){
-          this.seriesData1 = res;
+          
+          this.seriesData1 = res[0];
+          console.log(this.seriesData1);
           this.initChart1();
         }
         console.warn('加载结束');
@@ -128,12 +151,16 @@ export default {
     getChartData2(){
       this.REQUEST_API({
         api: 'getSalesRatio',
-        params: {}
+        params: {
+          number:1
+        }
       })
       .then((res) => {
         console.log(res);
         if(res){
-          this.seriesData2 = res
+         
+          this.seriesData2 = res[0];
+          console.log(this.seriesData2);
           this.initChart2();
         }
         console.warn('加载结束');
@@ -190,7 +217,7 @@ export default {
             interval: 0
 
           },
-          data:  ['09点', '10点', '11点', '12点', '13点']
+          data:  this.xData
         }],
         yAxis: [{
           type: 'value',
@@ -239,6 +266,7 @@ export default {
          
         ]
       }
+      this.chart1.clear();
       this.chart1.setOption(
         option1
       )
@@ -290,7 +318,7 @@ export default {
             interval: 0
 
           },
-          data:  ['09点', '10点', '11点', '12点', '13点']
+          data:  this.xData
         }],
         yAxis: [{
           type: 'value',
@@ -338,6 +366,7 @@ export default {
           }
         ]
       }
+      this.chart2.clear();
       this.chart2.setOption(
         option2
       )
@@ -345,20 +374,20 @@ export default {
     getShopData(){
       
 
-      this.REQUEST_API({
-        api: 'getShopData',
-        params: {
-          kind:this.kind
-        }
-      })
-      .then((res) => {
-        console.log(res);
-        this.data = res;     
+      // this.REQUEST_API({
+      //   api: 'getShopData',
+      //   params: {
+      //     kind:this.kind
+      //   }
+      // })
+      // .then((res) => {
+      //   console.log(res);
+      //   this.data = res;     
         console.warn('加载结束');
-      })
-      .catch((err) => {
-        console.debug('列表数据异常：', err);
-      });
+      // })
+      // .catch((err) => {
+      //   console.debug('列表数据异常：', err);
+      // });
     }
   }
 } 
